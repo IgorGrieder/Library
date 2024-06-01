@@ -4,11 +4,11 @@ import booksRoutes from './booksRoutes.js'
 
 const setUpRoutes = (app) => {
   // setting up cors and some middlewears
-  app.use(cors())
-  app.use(express.json())
+  app.use(cors());
+  app.use(express.json());
 
   // setting up routes
-  app.use(booksRoutes)
+  app.use(booksRoutes);
 
 }
 
