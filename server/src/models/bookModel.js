@@ -5,7 +5,8 @@ import { authorSchema } from './authorModel.js'
 const bookSchema = new mongoose.Schema({
   id: { type: mongoose.SchemaTypes.ObjectId },
   name: { type: mongoose.SchemaTypes.String },
-  editor: { type: mongoose.SchemaTypes.String },
+  category: [{ type: mongoose.SchemaTypes.String }],
+  price: { type: mongoose.SchemaTypes.Number },
   author: authorSchema,
   image: [{ type: mongoose.SchemaTypes.String }]
 }, { versionKey: false })
