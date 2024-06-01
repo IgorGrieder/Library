@@ -12,6 +12,17 @@ class AuthorController {
       res.status(500).json({ message: `Error: ${err.message}` }) // Sending the response if a error happens
     }
   }
+
+  // Method to add a author
+  static async addAuthor(req, res) {
+
+    try {
+      const newAut = await author.create(req.body) // Creating a author in the DB
+      res.status(201).json(newAut) // Sending the response
+    } catch (err) {
+      res.status(500).json({ message: `Error: ${err.message}` }) // Sending the response if a error happens
+    }
+  }
 }
 
 export default AuthorController

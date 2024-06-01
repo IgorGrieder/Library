@@ -12,6 +12,17 @@ class BookController {
       res.status(500).json({ message: `Error: ${err.message}` }) // Sending the response if a error happens
     }
   }
+
+  // Method to add a book
+  static async addBook(req, res) {
+
+    try {
+      const newBook = await book.create(req.body) // Creating a book in the DB
+      res.status(201).json(newBook) // Sending the response
+    } catch (err) {
+      res.status(500).json({ message: `Error: ${err.message}` }) // Sending the response if a error happens
+    }
+  }
 }
 
 export default BookController
