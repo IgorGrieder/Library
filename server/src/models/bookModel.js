@@ -1,11 +1,14 @@
 import mongoose from 'mongoose'
 
-// creating a book schema with the infos that a book will have
+// Creating a book schema with the infos that a book will have
 const bookSchema = new mongoose.Schema({
-  id: { type: mongoose.SchemaTypes.ObjectId }
+  id: { type: mongoose.SchemaTypes.ObjectId },
+  name: { type: mongoose.SchemaTypes.String },
+  editor: { type: mongoose.SchemaTypes.String },
+  author: { type: mongoose.Schema.ObjectId, ref: 'authors' }
 }, { versionKey: false })
 
-// creating a model that will indicate to the respective collection the infofrmation about the elements on it
-const book = mongoose.model("books", bookSchema)
+// Creating a model that will indicate to the respective collection the infofrmation about the elements on it
+const book = mongoose.model('books', bookSchema)
 
-export default book
+export { book, bookSchema }
