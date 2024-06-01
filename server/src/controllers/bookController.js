@@ -13,6 +13,17 @@ class BookController {
     }
   }
 
+  // Method to get a books
+  static async getBook(req, res) {
+    const name = req.query.name
+    try {
+      const books = await book.findOne({ name }) // Getting all the books
+      res.status(200).json(books) // Sending the response
+    } catch (err) {
+      res.status(500).json({ message: `Error: ${err.message}` }) // Sending the response if a error happens
+    }
+  }
+
   // Method to add a book
   static async addBook(req, res) {
 

@@ -3,10 +3,21 @@ import { author } from "../models/authorModel.js";
 class AuthorController {
 
   // Method to get all authors
-  static async getAuthor(req, res) {
+  static async getAuthors(req, res) {
 
     try {
       const aut = await author.find({}) // Getting all the authors
+      res.status(200).json(aut) // Sending the response
+    } catch (err) {
+      res.status(500).json({ message: `Error: ${err.message}` }) // Sending the response if a error happens
+    }
+  }
+
+  // Method to get a author
+  static async getAuthor(req, res) {
+    const name = req.query.name
+    try {
+      const aut = await author.findOne({ name }) // Getting all the authors
       res.status(200).json(aut) // Sending the response
     } catch (err) {
       res.status(500).json({ message: `Error: ${err.message}` }) // Sending the response if a error happens

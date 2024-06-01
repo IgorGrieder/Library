@@ -6,7 +6,8 @@ const bookSchema = new mongoose.Schema({
   id: { type: mongoose.SchemaTypes.ObjectId },
   name: { type: mongoose.SchemaTypes.String },
   editor: { type: mongoose.SchemaTypes.String },
-  author: authorSchema
+  author: authorSchema,
+  image: [{ type: mongoose.SchemaTypes.String }]
 }, { versionKey: false })
 
 // Creating a model that will indicate to the respective collection the infofrmation about the elements on it

@@ -6,6 +6,7 @@ const authorSchema = new mongoose.Schema({
   name: { type: mongoose.SchemaTypes.String },
   nationality: { type: mongoose.SchemaTypes.String },
   age: { type: mongoose.SchemaTypes.Number },
+  image: [{ type: mongoose.SchemaTypes.String }]
 })
 
 // Creating a model that will indicate to the respective collection the infofrmation about the elements on it
