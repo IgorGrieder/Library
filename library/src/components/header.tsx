@@ -12,8 +12,13 @@ const Header = () => {
     router.push('/signIn');
   };
 
+  const seeUser = () => {
+    console.log(userContext?.user);
+  };
+
   return (
     <div className="bg-green-700 text-white flex items-center px-10 py-8 justify-center">
+      <button onClick={seeUser}>See user</button>
       <h1 className="text-center font-Barlow text-3xl">
         Welcome to <br /> Grieder`s Library
       </h1>
