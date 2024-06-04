@@ -14,3 +14,9 @@ export type Book = {
   image: string[];
   author: Author;
 };
+
+export type User = {
+  name: string | null;
+  region: string | null;
+  age: Number | null;
+};
