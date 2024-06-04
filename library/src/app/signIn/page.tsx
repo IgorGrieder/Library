@@ -1,23 +1,27 @@
 'use client';
+import PrimaryButtons from '@/components/primaryButtons';
 import { userCtx } from '@/context/userContext';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 
 const SignIn = () => {
-  const [userInput, setUserInput] = useState({ name: '', password: '' }); // State object to control the user and the password input
+  const [userInput, setUserInput] = useState({ user: '', password: '' }); // State object to control the user and the password input
   const userContext = useContext(userCtx); // Importing the user context
   const router = useRouter(); // Creating an instance of router
 
   // Function to handle the submit process on the form
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (userInput.name !== '' && userInput.password !== '') {
+    e.preventDefault(); // Preventing the default behavior of a form
+    // If the fields arent empty try to see if they're in the database
+    if (userInput.user !== '' && userInput.password !== '') {
+      // TO - DO create a db that will contain the admins and another with the users to consult here if theyre logged in or not
       userContext?.setUser({
-        name: 'Igor',
-        age: 20,
-        region: 'BR',
+        user: userInput.user,
+        id: 1,
       });
-      router.replace('/');
+      router.replace('/'); // Changing the url to the main page
+      // Cleaning the inputs for safety reasons
+      setUserInput({ user: '', password: '' });
     }
   };
 
@@ -32,27 +36,29 @@ const SignIn = () => {
   };
 
   return (
-    <div className="text-black bg-white h-screen">
-      <form onSubmit={handleFormSubmit}>
-        <label>
-          <span>User</span>
-          <input
-            type="text"
-            name="User"
-            placeholder="User"
-            onChange={handleInputs}
-          />
-        </label>
-        <label>
-          <span>Password</span>
-          <input
-            type="password"
-            name="Password"
-            placeholder="Password"
-            onChange={handleInputs}
-          />
-        </label>
-        <button>Log in</button>
+    <div className="flex h-screen items-center justify-center bg-white p-40 text-black">
+      <form
+        onSubmit={handleFormSubmit}
+        className="flex w-full flex-col items-center rounded-3xl border border-black bg-green-300 px-8 py-16 sm:min-h-[500px] sm:w-auto sm:min-w-[400px]"
+      >
+        <h1 className="font-Barlow mb-20 text-center text-3xl">Log in</h1>
+        <input
+          type="text"
+          name="user"
+          className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
+          placeholder="User"
+          onChange={handleInputs}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          className="mb-auto w-full rounded-lg border border-black px-4 py-2 outline-none"
+          placeholder="Password"
+          onChange={handleInputs}
+          required
+        />
+        <PrimaryButtons text="Log in"></PrimaryButtons>
       </form>
     </div>
   );

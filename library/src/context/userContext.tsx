@@ -16,9 +16,8 @@ export const userCtx = createContext<ContextUser | undefined>(undefined);
 const UserContext = ({ children }: Props) => {
   const [user, setUser] = useState<User>({
     // Creating a context to provide current logged on user
-    name: null,
-    age: null,
-    region: null,
+    user: null,
+    id: null,
   });
 
   return (

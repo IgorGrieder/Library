@@ -16,7 +16,6 @@ export type Book = {
 };
 
 export type User = {
-  name: string | null;
-  region: string | null;
-  age: Number | null;
+  user: string | null;
+  id: number | null;
 };
