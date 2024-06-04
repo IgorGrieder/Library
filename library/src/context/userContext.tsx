@@ -11,7 +11,7 @@ type ContextUser = {
   setUser: React.Dispatch<React.SetStateAction<User>>;
 };
 
-export const userCtx = createContext<ContextUser | undefined>(undefined);
+export const userCtx = createContext<ContextUser | null>(null);
 
 const UserContext = ({ children }: Props) => {
   const [user, setUser] = useState<User>({
