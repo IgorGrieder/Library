@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import booksRoutes from './booksRoutes.js'
 import authorsRoutes from './authorsRoutes.js'
+import usersRoutes from './usersRoutes.js'
 
 const setUpRoutes = (app) => {
 
@@ -19,6 +20,7 @@ const setUpRoutes = (app) => {
   // Setting up routes
   app.use(booksRoutes);
   app.use(authorsRoutes);
+  app.use(usersRoutes);
 
   app.use('/not-found', (req, res) => {
     res.send('404 - Not found')
