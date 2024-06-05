@@ -575,10 +575,6 @@ video {
 .col-span-2 {
   grid-column: span 2 / span 2;
 }
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
-}
 .mb-20 {
   margin-bottom: 5rem;
 }

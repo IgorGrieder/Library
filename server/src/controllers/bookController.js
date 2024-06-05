@@ -5,7 +5,6 @@ class BookController {
 
   // Method to get all books
   static async getBooks(req, res) {
-
     try {
       const books = await book.find({}) // Getting all the books
       res.status(200).json(books) // Sending the response
