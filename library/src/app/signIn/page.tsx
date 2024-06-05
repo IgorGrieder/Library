@@ -1,4 +1,5 @@
 'use client';
+import { USER_ID_KEY } from '@/components/header';
 import PrimaryButtons from '@/components/primaryButtons';
 import { userCtx } from '@/context/userContext';
 import { useRouter } from 'next/navigation';
@@ -19,6 +20,8 @@ const SignIn = () => {
         user: userInput.user,
         id: 1,
       });
+      // Setting info to the local storage
+      localStorage.setItem(USER_ID_KEY, JSON.stringify(userInput));
       router.replace('/'); // Changing the url to the main page
       // Cleaning the inputs for safety reasons
       setUserInput({ user: '', password: '' });

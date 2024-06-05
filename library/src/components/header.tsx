@@ -1,18 +1,19 @@
 'use client';
 import { userCtx } from '@/context/userContext';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
+
+export const USER_ID_KEY = 'USER_ID';
 
 const Header = () => {
   const userContext = useContext(userCtx); // Getting the context
-  const [showSignOut, setShowSignOut] = useState(false); // State variable to control if the signout box is going to show or not
-  const isLogged = userContext?.user.id !== null ? true : false; // Variable to control if the user is logged or not
+  const [showSignOut, setShowSignOut] = useState(false); // State variable to control the sign out box
   const router = useRouter(); // Instance of router to change the url
 
   // Function to handle the click on the log in zone
   const handleClickSignIn = () => {
     // Checking if the user has already logged on or not
-    if (!isLogged) {
+    if (userContext?.user.id === null) {
       router.push('/signIn');
     } else {
       setShowSignOut(!showSignOut);
@@ -21,8 +22,19 @@ const Header = () => {
 
   // Function to handle the sign out
   const handleClickSignOut = () => {
-    // Clear the user data
+    // Clearing the user data
     userContext?.setUser({ user: null, id: null });
+    localStorage.removeItem(USER_ID_KEY);
+    setShowSignOut(false);
+  };
+
+  // Function to show the log out menu
+  const handleHoverIn = () => {
+    setShowSignOut(true);
+  };
+
+  // Function to show the log out menu
+  const handleHoverOut = () => {
     setShowSignOut(false);
   };
 
@@ -31,41 +43,46 @@ const Header = () => {
       <h1 className="font-Barlow text-center text-3xl">
         Welcome to <br /> Grieder`s Library
       </h1>
-      <button
-        className="absolute right-12 flex flex-row gap-3"
-        onClick={handleClickSignIn}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-8"
+      <div className="grid-cols-custom absolute right-0 mr-10 grid gap-2 rounded-xl border p-3">
+        <button
+          onClick={handleClickSignIn}
+          className="flex items-center justify-center"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z"
-          />
-        </svg>
-        <div className="flex flex-col gap-4">
-          <h1 className="text-xl font-light hover:underline">
-            {isLogged ? userContext?.user.user : 'Log in'}
-          </h1>
-          {showSignOut && (
-            <div className="flex flex-col items-center">
-              <span>Welcome {userContext?.user.user}!</span>
-              <button
-                className="underline-white block text-blue-400 underline hover:text-black"
-                onClick={handleClickSignOut}
-              >
-                Sign out
-              </button>
-            </div>
-          )}
-        </div>
-      </button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+            />
+          </svg>
+        </button>
+        <button
+          className="text-md capitalize hover:underline"
+          onClick={handleClickSignIn}
+        >
+          {
+            // Showing just the first name of the user
+          }
+          {userContext?.user.user !== null ? userContext?.user.user : 'Log in'}
+        </button>
+        {showSignOut && (
+          <div className="col-span-2 flex justify-center">
+            <button
+              className="text-black hover:text-white hover:underline"
+              onClick={handleClickSignOut}
+            >
+              Log out
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
