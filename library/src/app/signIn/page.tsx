@@ -21,8 +21,13 @@ const SignIn = () => {
         },
       });
       if (result.data.found) {
-        console.log('Achou o usuario!');
-      } else console.log('Nao foi encontrado...');
+        // Setting the user Context to the equivalent inputs
+        userContext?.setUser({
+          user: result.data.userInfo.name,
+          id: result.data.userInfo.id,
+        });
+        router.push('/'); // Returning to the main page if the login was sucessful
+      } else alert('User not found... try again');
     } catch (err: any) {
       console.log('Request failed, try again');
       console.log(err.message);
