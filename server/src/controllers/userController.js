@@ -4,12 +4,17 @@ class UserController {
 
   // Method to validate if the user is a admin or not
   static async validateUser(req, res) {
+    console.log(req.method)
+    console.log(req.url)
+    console.log(req.query.name)
+    console.log(req.query.password)
     try {
       const userDB = await user.findOne({ name: req.query.name, password: req.query.password }) // Getting the proper user
-      if (userDB !== null) { // Checking if the user name and password are correct 
-        res.status(200).json({ isAdmin: userDB.role === 'admin' ? true : false, message: 'User found' })
+      console.log(userDB)
+      if (userDB != null) { // Checking if the user name and password are correct 
+        res.status(200).json({ isAdmin: userDB.role === 'admin' ? true : false, found: true })
       } else {
-        res.status(200).json({ isAdmin: null, message: 'Username or password incorrect, try again' })
+        res.status(200).json({ isAdmin: null, found: false })
       }
     } catch (err) {
       res.status(500).json({ message: `Error: ${err.message}` }) // Sending the response if a error happens

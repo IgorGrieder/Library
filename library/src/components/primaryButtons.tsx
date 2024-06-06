@@ -1,17 +1,15 @@
 type Props = {
   text: string;
-  eventHandler?: VoidFunction;
+  type: 'submit';
 };
 
-const PrimaryButtons = ({ text, eventHandler }: Props) => {
+const PrimaryButtons = ({ text, type }: Props) => {
   return (
     <button
-      onClick={eventHandler}
+      type={type}
       className="w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black"
     >
       {text}
     </button>
   );
 };
-
-export default PrimaryButtons;

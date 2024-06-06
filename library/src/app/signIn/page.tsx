@@ -1,7 +1,6 @@
 'use client';
-import { USER_ID_KEY } from '@/components/header';
-import PrimaryButtons from '@/components/primaryButtons';
 import { userCtx } from '@/context/userContext';
+import axiosInstance from '@/utils/axios';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 
@@ -11,20 +10,22 @@ const SignIn = () => {
   const router = useRouter(); // Creating an instance of router
 
   // Function to handle the submit process on the form
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Preventing the default behavior of a form
-    // If the fields arent empty try to see if they're in the database
-    if (userInput.user !== '' && userInput.password !== '') {
-      // TO - DO create a db that will contain the admins and another with the users to consult here if theyre logged in or not
-      userContext?.setUser({
-        user: userInput.user,
-        id: 1,
+  const handleLogIn = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Preventing the event to happen
+    const form = e.currentTarget.closest('form'); // Getting the form to send it after the request
+    try {
+      const result = await axiosInstance.get(`/signIn`, {
+        params: {
+          name: userInput.user,
+          password: userInput.password,
+        },
       });
-      // Setting info to the local storage
-      localStorage.setItem(USER_ID_KEY, JSON.stringify(userInput));
-      router.replace('/'); // Changing the url to the main page
-      // Cleaning the inputs for safety reasons
-      setUserInput({ user: '', password: '' });
+      if (result.data.found) {
+        console.log('Achou o usuario!');
+      } else console.log('Nao foi encontrado...');
+    } catch (err: any) {
+      console.log('Request failed, try again');
+      console.log(err.message);
     }
   };
 
@@ -41,8 +42,8 @@ const SignIn = () => {
   return (
     <div className="flex h-screen items-center justify-center bg-white p-40 text-black">
       <form
-        onSubmit={handleFormSubmit}
         className="flex w-full flex-col items-center rounded-3xl border border-black bg-green-300 px-8 py-16 sm:min-h-[500px] sm:w-auto sm:min-w-[400px]"
+        onSubmit={handleLogIn}
       >
         <h1 className="font-Barlow mb-20 text-center text-3xl">Log in</h1>
         <input
@@ -61,7 +62,9 @@ const SignIn = () => {
           onChange={handleInputs}
           required
         />
-        <PrimaryButtons text="Log in"></PrimaryButtons>
+        <button type="submit" className="bg-red-500">
+          Log in
+        </button>
       </form>
     </div>
   );
