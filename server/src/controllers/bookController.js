@@ -17,8 +17,10 @@ class BookController {
   static async getBook(req, res) {
     const name = req.query.name
     try {
-      const books = await book.findOne({ name }) // Getting all the books
-      res.status(200).json(books) // Sending the response
+      const foundBook = await book.findOne({ name }) // Getting a specific book
+      if (foundBook) {
+        res.status(200).json({ found: true, foundBook }) // Sending the response
+      } else res.status(200).json({ found: false })
     } catch (err) {
       res.status(500).json({ message: `Error: ${err.message}` }) // Sending the response if a error happens
     }
