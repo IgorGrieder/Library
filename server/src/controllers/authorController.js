@@ -17,8 +17,10 @@ class AuthorController {
   static async getAuthor(req, res) {
     const name = req.query.name
     try {
-      const aut = await author.findOne({ name }) // Getting all the authors
-      res.status(200).json(aut) // Sending the response
+      const foundAuthor = await author.findOne({ name }) // Getting a specific author
+      if (foundAuthor) {
+        res.status(200).json({ found: true, foundAuthor }) // Sending the response
+      } else res.status(200).json({ found: false })
     } catch (err) {
       res.status(500).json({ message: `Error: ${err.message}` }) // Sending the response if a error happens
     }
