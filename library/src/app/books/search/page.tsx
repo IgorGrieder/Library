@@ -1,4 +1,5 @@
 'use client';
+import BookPage from '@/components/bookPage';
 import Header from '@/components/header';
 import NameQueryError from '@/components/nameQueryError';
 import { Book } from '@/types/types';
@@ -9,6 +10,7 @@ const Page = () => {
   const [book, setBook] = useState<Book | null>(null); // State variable to control the book information
   const [nameQuery, setNameQuery] = useState(false); // State variable to control if there's a name query
   const [isLoading, setIsLoading] = useState(false); // State variabel to control if the request is being made
+  const showError = !nameQuery && isLoading;
 
   const useEffectCallback = async () => {
     // Getting the URL info to make the request
@@ -36,13 +38,22 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="h-screen bg-white text-black">
+    <div className="h-screen overflow-hidden bg-white text-black">
       <Header></Header>
-      {!nameQuery && isLoading && <NameQueryError></NameQueryError>}
-      pagina de busca de livro
-      <div>{book?.name}</div>
-      <div>{book?.author.name}</div>
-      <div>{book?.price}</div>
+      {showError && <NameQueryError></NameQueryError>}
+      <div className="flex justify-center">
+        {book && (
+          <BookPage
+            id={book?.id}
+            category={book?.category}
+            author={book?.author}
+            name={book?.name}
+            price={book?.price}
+            image={book?.image[0]}
+            key={crypto.randomUUID()}
+          ></BookPage>
+        )}
+      </div>
     </div>
   );
 };

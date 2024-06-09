@@ -63,7 +63,7 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-white p-40 text-black">
+    <div className="flex h-screen items-center justify-center overflow-hidden bg-white p-40 text-black">
       <form
         className="flex w-full flex-col items-center rounded-3xl border border-black bg-green-300 px-8 py-16 sm:min-h-[500px] sm:w-auto sm:min-w-[400px]"
         onSubmit={handleLogIn}

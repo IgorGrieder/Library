@@ -622,6 +622,9 @@ video {
 .h-\[200px\] {
   height: 200px;
 }
+.h-full {
+  height: 100%;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -646,8 +649,23 @@ video {
 .w-auto {
   width: auto;
 }
+.w-96 {
+  width: 24rem;
+}
 .max-w-\[100\%\] {
   max-width: 100%;
+}
+.max-w-72 {
+  max-width: 18rem;
+}
+.max-w-96 {
+  max-width: 24rem;
+}
+.max-w-\[400px\] {
+  max-width: 400px;
+}
+.max-w-\[600px\] {
+  max-width: 600px;
 }
 .cursor-pointer {
   cursor: pointer;
@@ -664,6 +682,9 @@ video {
 .items-center {
   align-items: center;
 }
+.justify-start {
+  justify-content: flex-start;
+}
 .justify-center {
   justify-content: center;
 }
@@ -678,6 +699,9 @@ video {
 }
 .gap-1 {
   gap: 0.25rem;
+}
+.overflow-hidden {
+  overflow: hidden;
 }
 .rounded-2xl {
   border-radius: 1rem;
@@ -697,6 +721,9 @@ video {
 .border {
   border-width: 1px;
 }
+.border-t {
+  border-top-width: 1px;
+}
 .border-black {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
@@ -704,6 +731,10 @@ video {
 .border-white {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
+}
+.border-gray-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
 }
 .bg-black {
   --tw-bg-opacity: 1;
@@ -736,6 +767,10 @@ video {
 .bg-red-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(248 113 113 / var(--tw-bg-opacity));
+}
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 .p-3 {
   padding: 0.75rem;
@@ -781,14 +816,27 @@ video {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
 }
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+.pt-2 {
+  padding-top: 0.5rem;
+}
 .text-left {
   text-align: left;
 }
 .text-center {
   text-align: center;
 }
+.text-justify {
+  text-align: justify;
+}
 .font-Barlow {
   font-family: Barlow, sans-serif;
+}
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 .text-3xl {
   font-size: 1.875rem;
