@@ -1,4 +1,5 @@
 'use client';
+import { USER_ID_KEY } from '@/components/header';
 import { userCtx } from '@/context/userContext';
 import axiosInstance from '@/utils/axios';
 import { useRouter } from 'next/navigation';
@@ -21,11 +22,25 @@ const SignIn = () => {
         },
       });
       if (result.data.found) {
+        // Gattering the data
+        let user = result.data.userInfo.name;
+        let id = result.data.userInfo.id;
+
         // Setting the user Context to the equivalent inputs
         userContext?.setUser({
-          user: result.data.userInfo.name,
-          id: result.data.userInfo.id,
+          user,
+          id,
         });
+
+        // Setting the localStorage to have the user identification too
+        localStorage.setItem(
+          USER_ID_KEY,
+          JSON.stringify({
+            user,
+            id,
+          }),
+        );
+
         router.push('/'); // Returning to the main page if the login was sucessful
       } else alert('User not found... try again');
     } catch (err: any) {
