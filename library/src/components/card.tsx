@@ -1,10 +1,18 @@
 import { Book } from '@/types/types';
+import { useRouter } from 'next/navigation';
 
 const Card = ({ name, category, price, author, image }: Book) => {
+  const router = useRouter(); // Creating an instance of router
+
+  // Function to open the specific page relate to the book
+  const handleOpenPage = () => {
+    router.push(`/books/search?name=${name}`);
+  };
+
   return (
     <div
-      className="flex cursor-pointer flex-col gap-1 px-5 py-10 text-black"
-      onClick={() => console.log('modal opeend')}
+      className="flex cursor-pointer flex-col gap-1 rounded-3xl border border-black px-5 py-10 text-black"
+      onClick={handleOpenPage}
     >
       <img
         src={`${image}`}

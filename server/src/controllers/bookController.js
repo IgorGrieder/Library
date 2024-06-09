@@ -13,7 +13,7 @@ class BookController {
     }
   }
 
-  // Method to get a books
+  // Method to get a book
   static async getBook(req, res) {
     const name = req.query.name
     try {

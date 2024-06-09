@@ -44,7 +44,6 @@ const SignIn = () => {
 
         router.push('/'); // Returning to the main page if the login was sucessful
       } else {
-        alert('User not found... try again');
         setWrongLogIn(true);
       }
     } catch (err: any) {
