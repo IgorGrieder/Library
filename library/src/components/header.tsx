@@ -28,16 +28,6 @@ const Header = () => {
     setShowSignOut(false);
   };
 
-  // Function to show the log out menu
-  const handleHoverIn = () => {
-    setShowSignOut(true);
-  };
-
-  // Function to show the log out menu
-  const handleHoverOut = () => {
-    setShowSignOut(false);
-  };
-
   return (
     <div className="flex items-center justify-center bg-green-700 px-10 py-8 text-white">
       <h1 className="font-Barlow text-center text-3xl">

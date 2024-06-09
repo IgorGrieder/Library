@@ -9,7 +9,7 @@ export type Author = {
 export type Book = {
   id: string;
   name: string;
-  category: string;
+  category: string[];
   price: number;
   image: string[];
   author: Author;

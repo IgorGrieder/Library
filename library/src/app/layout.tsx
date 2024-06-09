@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import UserContext from '@/context/userContext';
+import BookContext from '@/context/booksContext';
+import AuthorContext from '@/context/authorsContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <UserContext>{children}</UserContext>
+        <BookContext>
+          <AuthorContext>
+            <UserContext>{children}</UserContext>
+          </AuthorContext>
+        </BookContext>
       </body>
     </html>
   );

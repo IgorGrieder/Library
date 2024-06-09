@@ -1,14 +1,6 @@
-import { Author } from '@/types/types';
+import { Book } from '@/types/types';
 
-type Props = {
-  name: string;
-  category: string[];
-  price: string;
-  author: Author;
-  image: string[];
-};
-
-const Card = ({ name, category, price, author, image }: Props) => {
+const Card = ({ name, category, price, author, image }: Book) => {
   return (
     <div className="flex flex-col">
       <img src={image[0]} alt="Image of the book" />

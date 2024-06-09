@@ -1,3 +1,4 @@
+'use client';
 import { Book } from '@/types/types';
 import { createContext, Dispatch, ReactNode, useState } from 'react';
 
@@ -10,7 +11,7 @@ type Context = {
   setListBooks: Dispatch<React.SetStateAction<Book[]>>;
 };
 
-const bookCtx = createContext<Context | undefined>(undefined); // Creating our book context
+export const bookCtx = createContext<Context | undefined>(undefined); // Creating our book context
 
 const BookContext = ({ children }: Props) => {
   // Creating the listBook state

@@ -1,3 +1,4 @@
+'use client';
 import { Author } from '@/types/types';
 import { createContext, Dispatch, ReactNode, useState } from 'react';
 
