@@ -1,5 +1,6 @@
 'use client';
 import { USER_ID_KEY } from '@/components/header';
+import LogInErrorBox from '@/components/logInErrorBox';
 import { userCtx } from '@/context/userContext';
 import axiosInstance from '@/utils/axios';
 import { useRouter } from 'next/navigation';
@@ -7,6 +8,7 @@ import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 
 const SignIn = () => {
   const [userInput, setUserInput] = useState({ user: '', password: '' }); // State object to control the user and the password input
+  const [wrongLogIn, setWrongLogIn] = useState(false); // State to check if the user typed a wrong log in information
   const userContext = useContext(userCtx); // Importing the user context
   const router = useRouter(); // Creating an instance of router
 
@@ -41,7 +43,10 @@ const SignIn = () => {
         );
 
         router.push('/'); // Returning to the main page if the login was sucessful
-      } else alert('User not found... try again');
+      } else {
+        alert('User not found... try again');
+        setWrongLogIn(true);
+      }
     } catch (err: any) {
       console.log('Request failed, try again');
       console.log(err.message);
@@ -81,6 +86,7 @@ const SignIn = () => {
           onChange={handleInputs}
           required
         />
+        {wrongLogIn && <LogInErrorBox></LogInErrorBox>}
         <button
           type="submit"
           className="w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black"
