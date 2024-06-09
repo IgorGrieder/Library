@@ -30,9 +30,7 @@ const Header = () => {
 
   return (
     <div className="flex items-center justify-center bg-green-700 px-10 py-8 text-white">
-      <h1 className="font-Barlow text-center text-3xl">
-        Welcome to <br /> Grieder`s Library
-      </h1>
+      <h1 className="font-Barlow text-center text-3xl">Grieder`s Library</h1>
       <div className="grid-cols-custom absolute right-0 mr-10 grid gap-2 rounded-xl border p-3">
         <button
           onClick={handleClickSignIn}
