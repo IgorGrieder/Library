@@ -2,18 +2,38 @@ import { Book } from '@/types/types';
 
 const Card = ({ name, category, price, author, image }: Book) => {
   return (
-    <div className="flex flex-col">
-      <img src={image[0]} alt="Image of the book" />
-      <h1>
+    <div
+      className="flex cursor-pointer flex-col gap-1 px-5 py-10 text-black"
+      onClick={() => console.log('modal opeend')}
+    >
+      <img
+        src={`${image}`}
+        alt="Book image"
+        className="mx-auto mb-4 h-[200px] w-2/4 bg-gray-400"
+      />
+      <h1 className="font-Barlow text-bold text-2xl">
         {name}
-        <br /> <a>{author.name}</a> -{' '}
-        <p>
-          {category.map((item) => {
+        <br />{' '}
+        <a className="cursor-pointer text-lg hover:underline">{author.name}</a>
+      </h1>
+      <p>
+        {' '}
+        <span className="text-lg font-normal">Categorys: </span>
+        <span className="font-light">
+          {category.map((item, index) => {
+            if (index === category.length - 1) {
+              return item;
+            }
             return item + ' - ';
           })}
-        </p>
-      </h1>
-      <h4>{price}</h4>
+        </span>
+      </p>
+      <h4 className="font-semibold">
+        Price:{' '}
+        <span className="cursor-pointer font-light text-blue-600 hover:underline">
+          ${price}
+        </span>
+      </h4>
     </div>
   );
 };

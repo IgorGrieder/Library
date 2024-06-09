@@ -1,9 +1,9 @@
 'use client';
+import Card from '@/components/card';
 import Header, { USER_ID_KEY } from '@/components/header';
 import { bookCtx } from '@/context/booksContext';
 import { userCtx } from '@/context/userContext';
 import axiosInstance from '@/utils/axios';
-import axios from 'axios';
 import { useContext, useEffect } from 'react';
 
 const Home = () => {
@@ -34,6 +34,21 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white">
       <Header></Header>
+      <div className="grid grid-cols-3 gap-4 sm:px-20 sm:py-10">
+        {bookContext?.listBooks.map((item) => {
+          return (
+            <Card
+              key={crypto.randomUUID()}
+              id={item.id}
+              image={item.image[0]}
+              author={item.author}
+              price={item.price}
+              category={item.category}
+              name={item.name}
+            ></Card>
+          );
+        })}
+      </div>
     </div>
   );
 };

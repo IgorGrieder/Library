@@ -11,7 +11,7 @@ export type Book = {
   name: string;
   category: string[];
   price: number;
-  image: string[];
+  image: string;
   author: Author;
 };
 
