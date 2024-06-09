@@ -13,7 +13,6 @@ const SignIn = () => {
   // Function to handle the submit process on the form
   const handleLogIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Preventing the event to happen
-    const form = e.currentTarget.closest('form'); // Getting the form to send it after the request
     try {
       const result = await axiosInstance.get(`/signIn`, {
         params: {
@@ -82,7 +81,10 @@ const SignIn = () => {
           onChange={handleInputs}
           required
         />
-        <button type="submit" className="bg-red-500">
+        <button
+          type="submit"
+          className="w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black"
+        >
           Log in
         </button>
       </form>
