@@ -10,7 +10,7 @@ const Page = () => {
   const [Author, setAuthor] = useState<Author | null>(null); // State variable to control the Author information
   const [nameQuery, setNameQuery] = useState(false); // State variable to control if there's a name query
   const [isLoading, setIsLoading] = useState(false); // State variabel to control if the request is being made
-  const showError = !nameQuery && isLoading;
+  const showError = nameQuery && isLoading;
 
   const useEffectCallback = async () => {
     // Getting the URL info to make the request
@@ -38,7 +38,7 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="h-screen overflow-hidden bg-white text-black">
+    <div className="min-h-screen bg-white text-black">
       <Header></Header>
       {showError && <NameQueryError></NameQueryError>}
       <div className="flex justify-center">
