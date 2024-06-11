@@ -46,12 +46,20 @@ const Card = ({ name, category, price, author, image }: Book) => {
           })}
         </span>
       </p>
-      <h4 className="font-semibold">
+      <h4 className="mb-5 font-semibold">
         Price:{' '}
         <span className="cursor-pointer font-light text-blue-600 hover:underline">
           ${price}
         </span>
       </h4>
+      <div className="mt-auto flex justify-around">
+        <button className="rounded-lg border border-green-400 px-4 py-2 hover:border-black hover:bg-green-500 hover:text-white">
+          Add to Cart
+        </button>
+        <button className="rounded-lg border border-black px-4 py-2 hover:bg-green-500 hover:text-white">
+          Buy now
+        </button>
+      </div>
     </div>
   );
 };

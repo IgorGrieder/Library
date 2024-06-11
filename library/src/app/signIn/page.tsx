@@ -26,11 +26,13 @@ const SignIn = () => {
         // Gattering the data
         let user = result.data.userInfo.name;
         let id = result.data.userInfo.id;
+        let cartItems = {};
 
         // Setting the user Context to the equivalent inputs
         userContext?.setUser({
           user,
           id,
+          cartItems,
         });
 
         // Setting the localStorage to have the user identification too
@@ -39,6 +41,7 @@ const SignIn = () => {
           JSON.stringify({
             user,
             id,
+            cartItems,
           }),
         );
 

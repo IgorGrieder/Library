@@ -19,4 +19,5 @@ export type Book = {
 export type User = {
   user: string | null;
   id: number | null;
+  cartItems: { [key: string]: number };
 };

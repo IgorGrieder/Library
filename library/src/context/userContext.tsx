@@ -18,6 +18,7 @@ const UserContext = ({ children }: Props) => {
     // Creating a context to provide current logged on user
     user: null,
     id: null,
+    cartItems: {},
   });
 
   return (
