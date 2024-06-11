@@ -49,6 +49,9 @@ const Home = () => {
           );
         })}
       </div>
+      {
+        // TO DO - make the menu inside that div so when the user clicks on it will display shrinking the card
+      }
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { Author } from '@/types/types';
 import { useRouter } from 'next/navigation';
 
 const AuthorPage = ({ name, age, image, nationality, books }: Author) => {
-  const ageDisplay = age === 0 ? '' : ` - ${age}`; // Setting the logic to display the age of the Author (if he`s dead or not)
+  const ageDisplay = age === 0 ? '' : ` - ${age} years old`; // Setting the logic to display the age of the Author (if he`s dead or not)
   const router = useRouter(); // Creating an instance of router
 
   // Function to handle opening the specific book page

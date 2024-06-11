@@ -28,8 +28,29 @@ const Header = () => {
     setShowSignOut(false);
   };
 
+  // Function to get back to the main menu
+  const handleBackMenu = () => {
+    router.push('/'); // Changing the url to the main one
+  };
+
   return (
     <div className="flex items-center justify-center bg-green-700 px-10 py-8 text-white">
+      <button className="absolute left-0 ml-10" onClick={handleBackMenu}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m15 15-6 6m0 0-6-6m6 6V9a6 6 0 0 1 12 0v3"
+          />
+        </svg>
+      </button>
       <h1 className="font-Barlow text-center text-3xl">Grieder`s Library</h1>
       <div className="grid-cols-custom absolute right-0 mr-10 grid gap-2 rounded-xl border p-3">
         <button
