@@ -10,7 +10,7 @@ const Page = () => {
   const [book, setBook] = useState<Book | null>(null); // State variable to control the book information
   const [nameQuery, setNameQuery] = useState(false); // State variable to control if there's a name query
   const [isLoading, setIsLoading] = useState(false); // State variabel to control if the request is being made
-  const showError = nameQuery && isLoading;
+  const showError = nameQuery && isLoading; // Variable to determine if the error box is going to appear
 
   const useEffectCallback = async () => {
     // Getting the URL info to make the request

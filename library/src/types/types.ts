@@ -4,6 +4,7 @@ export type Author = {
   nationality: string;
   age: number;
   image: string[];
+  books: string[];
 };
 
 export type Book = {
