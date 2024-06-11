@@ -4,7 +4,7 @@ const BookPage = ({ name, category, price, author, image }: Book) => {
   return (
     <div className="flex flex-col items-center gap-2 py-5">
       <h1 className="font-Barlow mx-auto text-3xl">{name}</h1>
-      <div className="h-80 w-96 bg-gray-500"></div>
+      <div className="m-5 h-80 w-96 bg-gray-500"></div>
       <h4 className="font-bold">
         by:{' '}
         <a className="cursor-pointer text-lg font-normal hover:underline">

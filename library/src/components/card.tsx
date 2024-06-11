@@ -1,12 +1,16 @@
 import { Book } from '@/types/types';
 import { useRouter } from 'next/navigation';
+import { useRef } from 'react';
 
 const Card = ({ name, category, price, author, image }: Book) => {
   const router = useRouter(); // Creating an instance of router
+  const linkRef = useRef<HTMLAnchorElement>(null); // Creating a refference to a element
 
   // Function to open the specific page relate to the book
-  const handleOpenPage = () => {
-    router.push(`/books/search?name=${name}`);
+  const handleOpenPage = (event: React.MouseEvent<HTMLElement>) => {
+    if (event.target == linkRef.current) {
+      router.push(`/authors/search?name=${author.name}`);
+    } else router.push(`/books/search?name=${name}`);
   };
 
   return (
@@ -22,7 +26,13 @@ const Card = ({ name, category, price, author, image }: Book) => {
       <h1 className="font-Barlow text-bold text-2xl">
         {name}
         <br />{' '}
-        <a className="cursor-pointer text-lg hover:underline">{author.name}</a>
+        <a
+          ref={linkRef}
+          className="cursor-pointer text-lg hover:underline"
+          onClick={handleOpenPage}
+        >
+          {author.name}
+        </a>
       </h1>
       <p>
         {' '}

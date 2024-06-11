@@ -1,4 +1,5 @@
 'use client';
+import AuthorPage from '@/components/authorPage';
 import Header from '@/components/header';
 import NameQueryError from '@/components/nameQueryError';
 import { Author } from '@/types/types';
@@ -40,7 +41,18 @@ const Page = () => {
     <div className="h-screen overflow-hidden bg-white text-black">
       <Header></Header>
       {showError && <NameQueryError></NameQueryError>}
-      <div className="flex justify-center"></div>
+      <div className="flex justify-center">
+        {Author && (
+          <AuthorPage
+            id={Author.id}
+            age={Author?.age}
+            image={Author?.image}
+            name={Author?.name}
+            key={crypto.randomUUID()}
+            nationality={Author?.nationality}
+          ></AuthorPage>
+        )}
+      </div>
     </div>
   );
 };
