@@ -33,6 +33,11 @@ const Header = () => {
     router.push('/'); // Changing the url to the main one
   };
 
+  // Function to show the items in the cart
+  const handleShowCartItems = () => {
+    console.log(userContext?.user.cartItems);
+  };
+
   return (
     <div className="relative flex items-center justify-center bg-green-700 px-10 py-8 text-white">
       <button className="absolute left-0 ml-10" onClick={handleBackMenu}>
@@ -52,7 +57,7 @@ const Header = () => {
         </svg>
       </button>
       <h1 className="font-Barlow text-center text-3xl">Grieder`s Library</h1>
-      <button className="absolute right-0 mr-5">
+      <button className="absolute right-0 mr-5" onClick={handleShowCartItems}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
