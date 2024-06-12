@@ -10,27 +10,33 @@ const Card = ({ name, category, price, author, image }: Book) => {
   const btnCartRef = useRef<HTMLButtonElement>(null); // Creating a refference to the Add to cart button
   const btnBuyNowRef = useRef<HTMLButtonElement>(null); // Creating a refference to the Buy now button
 
+  // Function to make the logic of adding the books to the control hash
+  const addItem = () => {
+    // If the user clicks on the Add to cart button it will just add the item to the user context
+    if (userContext?.user.cartItems[name] === undefined) {
+      // If the user haven`t added any quantity of the specific book
+      userContext?.setUser({
+        ...userContext.user,
+        cartItems: { ...userContext.user.cartItems, [name]: 1 },
+      });
+    } else {
+      const quantity = userContext.user.cartItems[name] + 1; // Getting the quantity of the book and incrementing it
+      userContext.setUser({
+        ...userContext.user,
+        cartItems: { ...userContext.user.cartItems, [name]: quantity },
+      });
+    }
+  };
+
   // Function to open the specific page relate to the book
   const handleOpenPage = (event: React.MouseEvent<HTMLElement>) => {
     if (event.target === linkRef.current) {
       router.push(`/authors/search?name=${author.name}`);
     } else if (event.target === btnCartRef.current) {
-      // If the user clicks on the Add to cart button it will just add the item to the user context
-      if (userContext?.user.cartItems[name] === undefined) {
-        // If the user haven`t added any quantity of the specific book
-        userContext?.setUser({
-          ...userContext.user,
-          cartItems: { ...userContext.user.cartItems, [name]: 1 },
-        });
-      } else {
-        const quantity = userContext.user.cartItems[name] + 1; // Getting the quantity of the book and incrementing it
-        userContext.setUser({
-          ...userContext.user,
-          cartItems: { ...userContext.user.cartItems, [name]: quantity },
-        });
-      }
+      addItem();
     } else if (event.target === btnBuyNowRef.current) {
-      console.log('Btn buy now');
+      addItem();
+      router.push('/cart');
     } else {
       router.push(`/books/search?name=${name}`);
     }
