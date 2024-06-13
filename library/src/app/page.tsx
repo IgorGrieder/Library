@@ -10,19 +10,34 @@ const Home = () => {
   const userContext = useContext(userCtx); // Getting the contexts
   const bookContext = useContext(bookCtx);
 
-  const useEffectCallback = async () => {
-    // Capturing information from the localStorage
-    if (localStorage.getItem(USER_ID_KEY) !== null) {
-      // In case there is information into the local storage
-      const userObj = JSON.parse(localStorage.getItem(USER_ID_KEY) ?? '');
-      userContext?.setUser({ ...userObj }); // Setting the user context to the information saved in the localStorage
+  // Function to make the request and return the data
+  const req = async () => {
+    try {
+      const result = await axiosInstance.get('/books');
+      if (result.data) {
+        return result.data;
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) alert(err.message);
     }
+  };
 
-    // Making a request to get the books from the DB
+  const useEffectCallback = async () => {
+    try {
+      // Capturing information from the localStorage
+      if (localStorage.getItem(USER_ID_KEY) !== null) {
+        // In case there is information in the local storage
+        const userObj = JSON.parse(localStorage.getItem(USER_ID_KEY) ?? '');
+        userContext?.setUser({ ...userObj }); // Setting the user context to the information saved in the localStorage
+      }
 
-    const result = await axiosInstance.get('/books');
-    if (result.data) {
-      bookContext?.setListBooks(result.data); // Setting the context to the books
+      // Making a request to get the books from the DB
+      const books = await req();
+      if (books) {
+        bookContext?.setListBooks(books); // Setting the context to the books
+      }
+    } catch (err) {
+      console.error('Error in useEffectCallback:', err);
     }
   };
 
