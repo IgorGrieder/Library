@@ -26,11 +26,15 @@ const SignIn = () => {
         // Gattering the data
         let user = result.data.userInfo.name;
         let id = result.data.userInfo.id;
+        let address = result.data.userInfo.address;
+        let role = result.data.userInfo.role;
         let cartItems = {};
 
         // Setting the user Context to the equivalent inputs
         userContext?.setUser({
           user,
+          address,
+          role,
           id,
           cartItems,
         });

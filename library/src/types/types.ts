@@ -19,5 +19,13 @@ export type Book = {
 export type User = {
   user: string | null;
   id: number | null;
+  role: string | null;
+  address: {
+    street: string | null;
+    number: string | null;
+    neighborhood: string | null;
+    country: string | null;
+    complement: string | null;
+  };
   cartItems: { [key: string]: number };
 };

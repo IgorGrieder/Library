@@ -1,14 +1,27 @@
 'use client';
 import { userCtx } from '@/context/userContext';
 import { useRouter } from 'next/navigation';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 export const USER_ID_KEY = 'USER_ID';
 
 const Header = () => {
   const userContext = useContext(userCtx); // Getting the context
   const [showSignOut, setShowSignOut] = useState(false); // State variable to control the sign out box
+  const [showBoxLogIn, setShowBoxLogIn] = useState(false); // State variable to control if the user box is going to be shown
   const router = useRouter(); // Instance of router to change the url
+
+  useEffect(() => {
+    // Capturing information from the localStorage
+    if (localStorage.getItem(USER_ID_KEY) !== null) {
+      // In case there is information in the local storage
+      const userObj = JSON.parse(localStorage.getItem(USER_ID_KEY) ?? '');
+      userContext?.setUser({ ...userObj }); // Setting the user context to the information saved in the localStorage
+    }
+
+    // Showing the box after the process is done
+    setShowBoxLogIn(true);
+  }, []);
 
   // Function to handle the click on the log in zone
   const handleClickSignIn = () => {
@@ -23,7 +36,19 @@ const Header = () => {
   // Function to handle the sign out
   const handleClickSignOut = () => {
     // Clearing the user data
-    userContext?.setUser({ user: null, id: null, cartItems: {} });
+    userContext?.setUser({
+      user: null,
+      id: null,
+      role: null,
+      address: {
+        complement: null,
+        country: null,
+        neighborhood: null,
+        number: null,
+        street: null,
+      },
+      cartItems: {},
+    });
     localStorage.removeItem(USER_ID_KEY);
     setShowSignOut(false);
   };
@@ -73,46 +98,47 @@ const Header = () => {
           />
         </svg>
       </button>
-      <div className="grid-cols-custom absolute right-0 mr-16 grid gap-2 rounded-xl border p-3">
-        <button
-          onClick={handleClickSignIn}
-          className="flex items-center justify-center"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
+      {showBoxLogIn && (
+        <div className="grid-cols-custom absolute right-0 mr-16 grid gap-2 rounded-xl border p-3">
+          <button
+            onClick={handleClickSignIn}
+            className="flex items-center justify-center"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-            />
-          </svg>
-        </button>
-        <button
-          className="text-md capitalize hover:underline"
-          onClick={handleClickSignIn}
-        >
-          {
-            // Showing just the first name of the user
-          }
-          {userContext?.user.user !== null ? userContext?.user.user : 'Log in'}
-        </button>
-        {showSignOut && (
-          <div className="col-span-2 flex justify-center">
-            <button
-              className="text-black hover:text-white hover:underline"
-              onClick={handleClickSignOut}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
             >
-              Log out
-            </button>
-          </div>
-        )}
-      </div>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+              />
+            </svg>
+          </button>
+          <button
+            className="text-md capitalize hover:underline"
+            onClick={handleClickSignIn}
+          >
+            {userContext?.user.user !== null
+              ? userContext?.user.user
+              : 'Log in'}
+          </button>
+          {showSignOut && (
+            <div className="col-span-2 flex justify-center">
+              <button
+                className="text-black hover:text-white hover:underline"
+                onClick={handleClickSignOut}
+              >
+                Log out
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

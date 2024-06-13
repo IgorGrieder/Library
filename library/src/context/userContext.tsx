@@ -1,5 +1,6 @@
 'use client';
 import { User } from '@/types/types';
+import { stringify } from 'querystring';
 import { createContext, ReactNode, useState } from 'react';
 
 type Props = {
@@ -18,6 +19,14 @@ const UserContext = ({ children }: Props) => {
     // Creating a context to provide current logged on user
     user: null,
     id: null,
+    role: null,
+    address: {
+      street: null,
+      number: null,
+      neighborhood: null,
+      country: null,
+      complement: null,
+    },
     cartItems: {},
   });
 
