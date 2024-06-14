@@ -23,6 +23,7 @@ const SignIn = () => {
         },
       });
       if (result.data.found) {
+        console.log(result.data);
         // Gattering the data
         let user = result.data.userInfo.name;
         let id = result.data.userInfo.id;
@@ -45,6 +46,8 @@ const SignIn = () => {
           JSON.stringify({
             user,
             id,
+            address,
+            role,
             cartItems,
           }),
         );

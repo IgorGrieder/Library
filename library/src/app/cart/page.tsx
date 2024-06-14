@@ -16,6 +16,12 @@ const Page = () => {
           </h4>
           <div className="mb-2 border-b border-green-500 px-3 py-5">
             <h4 className="text-bold font-Barlow text-xl">Address</h4>
+            <h6 className="font-sans text-lg font-bold">
+              Street:{' '}
+              <span className="font-normal">
+                {userContext?.user.address.street}
+              </span>
+            </h6>
           </div>
           <div className="mb-2 border-b border-green-500 px-3 py-5">
             <h4 className="text-bold font-Barlow text-xl">Payment method</h4>

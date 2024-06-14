@@ -11,6 +11,10 @@ const Header = () => {
   const [showBoxLogIn, setShowBoxLogIn] = useState(false); // State variable to control if the user box is going to be shown
   const router = useRouter(); // Instance of router to change the url
 
+  const show = () => {
+    console.log(userContext?.user);
+  };
+
   useEffect(() => {
     // Capturing information from the localStorage
     if (localStorage.getItem(USER_ID_KEY) !== null) {
@@ -65,6 +69,9 @@ const Header = () => {
 
   return (
     <div className="relative flex items-center justify-center bg-green-700 px-10 py-8 text-white">
+      <button className="text-black" onClick={show}>
+        Ola
+      </button>
       <button className="absolute left-0 ml-10" onClick={handleBackMenu}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
