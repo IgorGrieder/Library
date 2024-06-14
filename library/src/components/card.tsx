@@ -1,4 +1,4 @@
-import UserContext, { userCtx } from '@/context/userContext';
+import { userCtx } from '@/context/userContext';
 import { Book } from '@/types/types';
 import { useRouter } from 'next/navigation';
 import { useContext, useRef } from 'react';
@@ -20,7 +20,8 @@ const Card = ({ name, category, price, author, image }: Book) => {
     // Update cartItems based on existing or new items
     const updatedCartItems = {
       ...user.cartItems,
-      [name]: (user.cartItems[name] || 0) + 1, // Increment quantity or start with 1
+      [name]:
+        (user.cartItems[name] !== undefined ? user.cartItems[name] : 0) + 1, // Increment quantity or start with 1
     };
 
     // Update userContext.user with new cartItems

@@ -29,6 +29,7 @@ const SignIn = () => {
         let id = result.data.userInfo.id;
         let address = result.data.userInfo.address;
         let role = result.data.userInfo.role;
+        let paymentMethod = result.data.userInfo.paymentMethod;
         let cartItems = {};
 
         // Setting the user Context to the equivalent inputs
@@ -37,6 +38,7 @@ const SignIn = () => {
           address,
           role,
           id,
+          paymentMethod,
           cartItems,
         });
 
@@ -48,6 +50,7 @@ const SignIn = () => {
             id,
             address,
             role,
+            paymentMethod,
             cartItems,
           }),
         );

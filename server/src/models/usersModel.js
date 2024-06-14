@@ -9,6 +9,13 @@ const addressSchema = new mongoose.Schema({
   complement: String
 });
 
+// Defining Payment Schema
+const paymentSchema = new mongoose.Schema({
+  number: String,
+  cvv: String,
+  expDate: String,
+})
+
 // Creating a user schema with the infos that a user will have
 const userSchema = new mongoose.Schema({
   id: { type: mongoose.SchemaTypes.ObjectId },
@@ -16,6 +23,7 @@ const userSchema = new mongoose.Schema({
   password: { type: mongoose.SchemaTypes.String },
   role: { type: mongoose.SchemaTypes.String },
   address: addressSchema,
+  paymentMethod: paymentSchema,
 }, { versionKey: false });
 
 // Creating a model that will indicate to the respective collection the infofrmation about the elements on it

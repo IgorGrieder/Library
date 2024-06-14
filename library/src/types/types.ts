@@ -27,5 +27,10 @@ export type User = {
     country: string | null;
     complement: string | null;
   };
+  paymentMethod: {
+    number: string | null;
+    cvv: string | null;
+    expDate: string | null;
+  };
   cartItems: { [key: string]: number };
 };

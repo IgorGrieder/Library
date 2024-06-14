@@ -1,6 +1,5 @@
 'use client';
 import { User } from '@/types/types';
-import { stringify } from 'querystring';
 import { createContext, ReactNode, useState } from 'react';
 
 type Props = {
@@ -26,6 +25,11 @@ const UserContext = ({ children }: Props) => {
       neighborhood: null,
       country: null,
       complement: null,
+    },
+    paymentMethod: {
+      cvv: null,
+      expDate: null,
+      number: null,
     },
     cartItems: {},
   });

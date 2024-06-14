@@ -7,7 +7,7 @@ class UserController {
     try {
       const userDB = await user.findOne({ name: req.query.name, password: req.query.password }) // Getting the proper user
       if (userDB != null) { // Checking if the user name and password are correct 
-        res.status(200).json({ found: true, userInfo: { name: userDB.name, id: userDB._id, role: userDB.role, address: userDB.address } })
+        res.status(200).json({ found: true, userInfo: { name: userDB.name, id: userDB._id, role: userDB.role, address: userDB.address, paymentMethod: userDB.paymentMethod } })
       } else {
         res.status(200).json({ found: false })
       }
