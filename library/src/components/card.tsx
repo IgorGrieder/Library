@@ -1,7 +1,8 @@
-import { userCtx } from '@/context/userContext';
+import UserContext, { userCtx } from '@/context/userContext';
 import { Book } from '@/types/types';
 import { useRouter } from 'next/navigation';
 import { useContext, useRef } from 'react';
+import { USER_ID_KEY } from './header';
 
 const Card = ({ name, category, price, author, image }: Book) => {
   const userContext = useContext(userCtx); // Getting the context
@@ -12,20 +13,30 @@ const Card = ({ name, category, price, author, image }: Book) => {
 
   // Function to make the logic of adding the books to the control hash
   const addItem = () => {
-    // If the user clicks on the Add to cart button it will just add the item to the user context
-    if (userContext?.user.cartItems[name] === undefined) {
-      // If the user haven`t added any quantity of the specific book
-      userContext?.setUser({
-        ...userContext.user,
-        cartItems: { ...userContext.user.cartItems, [name]: 1 },
-      });
-    } else {
-      const quantity = userContext.user.cartItems[name] + 1; // Getting the quantity of the book and incrementing it
-      userContext.setUser({
-        ...userContext.user,
-        cartItems: { ...userContext.user.cartItems, [name]: quantity },
-      });
-    }
+    if (!userContext) return; // in case userContext is actually null
+
+    const { user, setUser } = userContext;
+
+    // Update cartItems based on existing or new items
+    const updatedCartItems = {
+      ...user.cartItems,
+      [name]: (user.cartItems[name] || 0) + 1, // Increment quantity or start with 1
+    };
+
+    // Update userContext.user with new cartItems
+    setUser({
+      ...user,
+      cartItems: updatedCartItems,
+    });
+
+    // Update localStorage with updated user information
+    localStorage.setItem(
+      USER_ID_KEY,
+      JSON.stringify({
+        ...user,
+        cartItems: updatedCartItems, // Store only necessary data
+      }),
+    );
   };
 
   // Function to open the specific page relate to the book

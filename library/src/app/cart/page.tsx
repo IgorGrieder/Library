@@ -15,19 +15,32 @@ const Page = () => {
             Checkout
           </h4>
           <div className="mb-2 border-b border-green-500 px-3 py-5">
-            <h4 className="text-bold font-Barlow text-xl">Address</h4>
-            <h6 className="font-sans text-lg font-bold">
-              Street:{' '}
+            <h4 className="text-bold font-Barlow mb-2 text-2xl">Address</h4>
+            <h6 className="font-sans text-base font-bold">
+              Street location:{' '}
               <span className="font-normal">
-                {userContext?.user.address.street}
+                {userContext?.user.address.street} -{' '}
+                {userContext?.user.address.number},{' '}
+                {userContext?.user.address.neighborhood},{' '}
+                {userContext?.user.address.complement}
+              </span>
+            </h6>
+            <h6 className="font-sans text-base font-bold">
+              Country:{' '}
+              <span className="font-normal">
+                {userContext?.user.address.country}
               </span>
             </h6>
           </div>
           <div className="mb-2 border-b border-green-500 px-3 py-5">
-            <h4 className="text-bold font-Barlow text-xl">Payment method</h4>
+            <h4 className="text-bold font-Barlow mb-2 text-2xl">
+              Payment method
+            </h4>
           </div>
           <div className="border-b border-green-500 px-3 py-5">
-            <h4 className="text-bold font-Barlow mb-2 text-xl">Order review</h4>
+            <h4 className="text-bold font-Barlow mb-2 text-2xl">
+              Order review
+            </h4>
             <div className="grid grid-cols-1 gap-2">
               {userContext?.user &&
               Object.keys(userContext?.user.cartItems).length > 0 ? (

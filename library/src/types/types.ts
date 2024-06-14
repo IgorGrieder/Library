@@ -18,7 +18,7 @@ export type Book = {
 
 export type User = {
   user: string | null;
-  id: number | null;
+  id: string | null;
   role: string | null;
   address: {
     street: string | null;
