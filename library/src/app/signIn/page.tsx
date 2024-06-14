@@ -30,7 +30,12 @@ const SignIn = () => {
         let address = result.data.userInfo.address;
         let role = result.data.userInfo.role;
         let paymentMethod = result.data.userInfo.paymentMethod;
-        let cartItems = {};
+        let cartItems;
+
+        const local = localStorage.getItem(USER_ID_KEY);
+        if (local) {
+          cartItems = JSON.parse(local).cartItems;
+        } else cartItems = {};
 
         // Setting the user Context to the equivalent inputs
         userContext?.setUser({
@@ -55,7 +60,7 @@ const SignIn = () => {
           }),
         );
 
-        router.push('/'); // Returning to the main page if the login was sucessful
+        router.back(); // Returning to the page it was previously
       } else {
         setWrongLogIn(true);
       }

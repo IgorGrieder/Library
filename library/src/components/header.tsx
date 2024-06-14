@@ -47,6 +47,7 @@ const Header = () => {
         number: null,
         street: null,
       },
+      paymentMethod: [],
       cartItems: {},
     });
     localStorage.removeItem(USER_ID_KEY);

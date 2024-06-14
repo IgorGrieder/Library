@@ -27,10 +27,13 @@ export type User = {
     country: string | null;
     complement: string | null;
   };
-  paymentMethod: {
-    number: string | null;
-    cvv: string | null;
-    expDate: string | null;
-  };
+  paymentMethod: Card[];
   cartItems: { [key: string]: number };
+};
+
+export type Card = {
+  name: string | null;
+  number: string | null;
+  cvv: string | null;
+  expDate: string | null;
 };

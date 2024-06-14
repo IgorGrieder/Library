@@ -27,6 +27,7 @@ const UserContext = ({ children }: Props) => {
       complement: null,
     },
     paymentMethod: {
+      name: null,
       cvv: null,
       expDate: null,
       number: null,

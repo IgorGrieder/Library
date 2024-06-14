@@ -14,6 +14,7 @@ const paymentSchema = new mongoose.Schema({
   number: String,
   cvv: String,
   expDate: String,
+  name: String,
 })
 
 // Creating a user schema with the infos that a user will have
@@ -23,7 +24,7 @@ const userSchema = new mongoose.Schema({
   password: { type: mongoose.SchemaTypes.String },
   role: { type: mongoose.SchemaTypes.String },
   address: addressSchema,
-  paymentMethod: paymentSchema,
+  paymentMethod: [{ type: paymentSchema }],
 }, { versionKey: false });
 
 // Creating a model that will indicate to the respective collection the infofrmation about the elements on it
