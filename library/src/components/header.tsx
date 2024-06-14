@@ -1,5 +1,6 @@
 'use client';
 import { userCtx } from '@/context/userContext';
+import { User } from '@/types/types';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 
@@ -36,7 +37,9 @@ const Header = () => {
   // Function to handle the sign out
   const handleClickSignOut = () => {
     // Clearing the user data
-    userContext?.setUser({
+
+    const userEmpty = {
+      ...userContext?.user,
       user: null,
       id: null,
       role: null,
@@ -48,9 +51,10 @@ const Header = () => {
         street: null,
       },
       paymentMethod: [],
-      cartItems: {},
-    });
-    localStorage.removeItem(USER_ID_KEY);
+    };
+
+    userContext?.setUser(userEmpty as User);
+    localStorage.setItem(USER_ID_KEY, JSON.stringify(userEmpty));
     setShowSignOut(false);
   };
 

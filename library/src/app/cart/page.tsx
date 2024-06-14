@@ -42,22 +42,28 @@ const Page = () => {
                   Payment method
                 </h4>
                 {paymentCard === null ? (
-                  (userContext?.user.paymentMethod.length ?? 0) > 0 &&
-                  userContext?.user.paymentMethod.map((item) => {
-                    return (
-                      <PaymentCard
-                        key={crypto.randomUUID()}
-                        cvv={item.cvv}
-                        name={item.name}
-                        expDate={item.expDate}
-                        number={item.number}
-                        setPaymentCard={setPaymentCard}
-                      ></PaymentCard>
-                    );
-                  })
+                  <>
+                    <h4 className="mb-4">Please choose a card</h4>
+                    <h4 className="mb-4">Cards registered</h4>
+                    {(userContext?.user.paymentMethod.length ?? 0) > 0 &&
+                      userContext?.user.paymentMethod.map((item) => {
+                        return (
+                          <PaymentCard
+                            key={crypto.randomUUID()}
+                            selectedCard={paymentCard}
+                            cvv={item.cvv}
+                            name={item.name}
+                            expDate={item.expDate}
+                            number={item.number}
+                            setPaymentCard={setPaymentCard}
+                          ></PaymentCard>
+                        );
+                      })}
+                  </>
                 ) : (
                   <PaymentCard
                     key={crypto.randomUUID()}
+                    selectedCard={paymentCard}
                     cvv={paymentCard.cvv}
                     name={paymentCard.name}
                     number={paymentCard.number}
@@ -65,6 +71,9 @@ const Page = () => {
                     setPaymentCard={setPaymentCard}
                   ></PaymentCard>
                 )}
+                <button className="mt-4 text-green-400 hover:text-black hover:underline">
+                  Add a card
+                </button>
               </div>
             </>
           ) : (
@@ -93,12 +102,6 @@ const Page = () => {
           }
         </div>
       </div>
-      <button
-        className="bg-green-400 text-black"
-        onClick={() => console.log(paymentCard)}
-      >
-        Show current card
-      </button>
     </div>
   );
 };
