@@ -2,11 +2,21 @@
 import { userCtx } from '@/context/userContext';
 import { User } from '@/types/types';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 export const USER_ID_KEY = 'USER_ID';
 
-const Header = () => {
+type Props = {
+  setIsFinishedLocalStorage?: Dispatch<SetStateAction<boolean>>;
+};
+
+const Header = ({ setIsFinishedLocalStorage }: Props) => {
   const userContext = useContext(userCtx); // Getting the context
   const [showSignOut, setShowSignOut] = useState(false); // State variable to control the sign out box
   const [showBoxLogIn, setShowBoxLogIn] = useState(false); // State variable to control if the user box is going to be shown
@@ -22,6 +32,10 @@ const Header = () => {
 
     // Showing the box after the process is done
     setShowBoxLogIn(true);
+    if (setIsFinishedLocalStorage) {
+      // If the function is sent through the parent
+      setIsFinishedLocalStorage(true);
+    }
   }, []);
 
   // Function to handle the click on the log in zone
@@ -53,7 +67,7 @@ const Header = () => {
       paymentMethod: [],
     };
 
-    userContext?.setUser(userEmpty as User);
+    userContext?.setUser(userEmpty as User); //  Changing the user in the context
     localStorage.setItem(USER_ID_KEY, JSON.stringify(userEmpty));
     setShowSignOut(false);
   };
