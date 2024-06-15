@@ -38,7 +38,7 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-white pt-[100px] text-black">
       <Header></Header>
       {showError && <NameQueryError></NameQueryError>}
       <div className="flex justify-center">

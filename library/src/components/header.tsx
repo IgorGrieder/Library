@@ -14,9 +14,10 @@ export const USER_ID_KEY = 'USER_ID';
 
 type Props = {
   setIsFinishedLocalStorage?: Dispatch<SetStateAction<boolean>>;
+  handleCartClick?: VoidFunction;
 };
 
-const Header = ({ setIsFinishedLocalStorage }: Props) => {
+const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
   const userContext = useContext(userCtx); // Getting the context
   const [showSignOut, setShowSignOut] = useState(false); // State variable to control the sign out box
   const [showBoxLogIn, setShowBoxLogIn] = useState(false); // State variable to control if the user box is going to be shown
@@ -24,9 +25,10 @@ const Header = ({ setIsFinishedLocalStorage }: Props) => {
 
   useEffect(() => {
     // Capturing information from the localStorage
-    if (localStorage.getItem(USER_ID_KEY) !== null) {
+    const local = localStorage.getItem(USER_ID_KEY);
+    if (local !== null) {
       // In case there is information in the local storage
-      const userObj = JSON.parse(localStorage.getItem(USER_ID_KEY) ?? '');
+      const userObj = JSON.parse(local);
       userContext?.setUser({ ...userObj }); // Setting the user context to the information saved in the localStorage
     }
 
@@ -77,13 +79,8 @@ const Header = ({ setIsFinishedLocalStorage }: Props) => {
     router.push('/'); // Changing the url to the main one
   };
 
-  // Function to show the items in the cart
-  const handleShowCartItems = () => {
-    console.log(userContext?.user.cartItems);
-  };
-
   return (
-    <div className="relative flex items-center justify-center bg-green-700 px-10 py-8 text-white">
+    <div className="fixed left-0 right-0 top-0 z-10 flex items-center justify-center bg-green-700 px-10 py-8 text-white">
       <button className="absolute left-0 ml-10" onClick={handleBackMenu}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +98,7 @@ const Header = ({ setIsFinishedLocalStorage }: Props) => {
         </svg>
       </button>
       <h1 className="font-Barlow text-center text-3xl">Grieder`s Library</h1>
-      <button className="absolute right-0 mr-5" onClick={handleShowCartItems}>
+      <button className="absolute right-0 mr-5" onClick={handleCartClick}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

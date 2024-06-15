@@ -56,7 +56,7 @@ const Card = ({ name, category, price, author, image }: Book) => {
 
   return (
     <div
-      className="flex cursor-pointer flex-col gap-1 rounded-3xl border border-black px-5 py-10 text-black"
+      className="flex min-w-[300px] cursor-pointer flex-col gap-1 rounded-3xl border border-black px-5 py-10 text-black"
       onClick={handleOpenPage}
     >
       <img
@@ -101,7 +101,7 @@ const Card = ({ name, category, price, author, image }: Book) => {
           Add to Cart
         </button>
         <button
-          className="rounded-lg border border-black px-4 py-2 hover:bg-green-500 hover:text-black"
+          className="rounded-lg border border-black bg-green-500 px-4 py-2 text-black hover:text-white"
           ref={btnBuyNowRef}
         >
           Buy now

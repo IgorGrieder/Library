@@ -12,7 +12,7 @@ const Page = () => {
   // isFinishedLocalStorage is basically a flag to prevent the items to pre load during a short period of time without the localStorage information
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-white pt-[100px] text-black">
       <Header setIsFinishedLocalStorage={setIsFinishedLocalStorage}></Header>
       {isFinishedLocalStorage && (
         <div className="grid grid-cols-3 gap-2 sm:px-20 sm:py-10">
