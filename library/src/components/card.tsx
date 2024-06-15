@@ -1,17 +1,31 @@
 import { userCtx } from '@/context/userContext';
 import { Book } from '@/types/types';
 import { useRouter } from 'next/navigation';
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { USER_ID_KEY } from './header';
 import { bookCtx } from '@/context/booksContext';
 
-const Card = ({ name, category, price, author, image }: Book) => {
+type BookCard = Book & { handleClickCart: VoidFunction };
+
+const Card = ({
+  name,
+  category,
+  price,
+  author,
+  image,
+  handleClickCart,
+}: BookCard) => {
   const userContext = useContext(userCtx); // Getting the context
   const bookContext = useContext(bookCtx);
   const router = useRouter(); // Creating an instance of router
-  const linkRef = useRef<HTMLAnchorElement>(null); // Creating a refference to a element
-  const btnCartRef = useRef<HTMLButtonElement>(null); // Creating a refference to the Add to cart button
-  const btnBuyNowRef = useRef<HTMLButtonElement>(null); // Creating a refference to the Buy now button
+  const linkRef = useRef<HTMLAnchorElement>(null); // Creating a reference to a element
+  const btnCartRef = useRef<HTMLButtonElement>(null); // Creating a reference to the Add to cart button
+  const btnBuyNowRef = useRef<HTMLButtonElement>(null); // Creating a reference to the Buy now button
+  const [isAddedToCart, setIsAddedToCart] = useState(false); // State variable to control if an item was added to the cart
+
+  const alertItemAdded = () => {
+    setIsAddedToCart(true);
+  };
 
   // Function to make the logic of adding the books to the control hash
   const addItem = () => {
@@ -57,25 +71,44 @@ const Card = ({ name, category, price, author, image }: Book) => {
     );
   };
 
-  // Function to open the specific page relate to the book
-  const handleOpenPage = (event: React.MouseEvent<HTMLElement>) => {
-    if (event.target === linkRef.current) {
-      router.push(`/authors/search?name=${author.name}`);
-    } else if (event.target === btnCartRef.current) {
-      addItem();
-    } else if (event.target === btnBuyNowRef.current) {
-      addItem();
-      router.push('/cart');
-    } else {
-      router.push(`/books/search?name=${name}`);
-    }
+  // Function to handle adding item to cart
+  const handleAddToCart = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation(); // Prevent the event from propagating to the parent div
+    addItem();
+    alertItemAdded();
+  };
+
+  // Function to handle buying item now
+  const handleBuyNow = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation(); // Prevent the event from propagating to the parent div
+    addItem();
+    handleClickCart();
+    router.push('/cart');
+  };
+
+  // Function to handle clicking on the author link
+  const handleAuthorClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation(); // Prevent the event from propagating to the parent div
+    router.push(`/authors/search?name=${author.name}`);
+  };
+
+  // Function to handle clicking on the card
+  const handleCardClick = () => {
+    router.push(`/books/search?name=${name}`);
   };
 
   return (
     <div
       className="flex min-w-[300px] cursor-pointer flex-col gap-1 rounded-3xl border border-black px-5 py-10 text-black"
-      onClick={handleOpenPage}
+      onClick={handleCardClick}
     >
+      {isAddedToCart ? (
+        <div className="flex h-10 w-10 items-center justify-center bg-black text-white">
+          Adicionouuu
+        </div>
+      ) : (
+        <div>FOdeu</div>
+      )}
       <img
         src={`${image}`}
         alt="Book image"
@@ -83,18 +116,17 @@ const Card = ({ name, category, price, author, image }: Book) => {
       />
       <h1 className="font-Barlow text-bold text-2xl">
         {name}
-        <br />{' '}
+        <br />
         <a
           ref={linkRef}
           className="cursor-pointer text-lg hover:underline"
-          onClick={handleOpenPage}
+          onClick={handleAuthorClick}
         >
           {author.name}
         </a>
       </h1>
       <p>
-        {' '}
-        <span className="text-lg font-normal">Categorys: </span>
+        <span className="text-lg font-normal">Categories: </span>
         <span className="font-light">
           {category.map((item, index) => {
             if (index === category.length - 1) {
@@ -114,12 +146,14 @@ const Card = ({ name, category, price, author, image }: Book) => {
         <button
           className="rounded-lg border border-green-400 px-4 py-2 hover:border-black hover:bg-green-500 hover:text-white"
           ref={btnCartRef}
+          onClick={handleAddToCart}
         >
           Add to Cart
         </button>
         <button
           className="rounded-lg border border-black bg-green-500 px-4 py-2 text-black hover:text-white"
           ref={btnBuyNowRef}
+          onClick={handleBuyNow}
         >
           Buy now
         </button>

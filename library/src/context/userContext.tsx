@@ -26,6 +26,7 @@ const UserContext = ({ children }: Props) => {
       country: null,
       complement: null,
     },
+    shoppingValue: null,
     paymentMethod: [],
     cartItems: {},
   });
