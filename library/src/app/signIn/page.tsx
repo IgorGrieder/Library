@@ -31,11 +31,16 @@ const SignIn = () => {
         let role = result.data.userInfo.role;
         let paymentMethod = result.data.userInfo.paymentMethod;
         let cartItems;
+        let shoppingValue;
 
         const local = localStorage.getItem(USER_ID_KEY);
         if (local) {
           cartItems = JSON.parse(local).cartItems;
-        } else cartItems = {};
+          shoppingValue = JSON.parse(local).shoppingValue;
+        } else {
+          cartItems = {};
+          shoppingValue = '0.00';
+        }
 
         // Setting the user Context to the equivalent inputs
         userContext?.setUser({
@@ -45,6 +50,7 @@ const SignIn = () => {
           id,
           paymentMethod,
           cartItems,
+          shoppingValue,
         });
 
         // Setting the localStorage to have the user identification too
@@ -57,6 +63,7 @@ const SignIn = () => {
             role,
             paymentMethod,
             cartItems,
+            shoppingValue,
           }),
         );
 

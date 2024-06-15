@@ -3,9 +3,11 @@ import { Book } from '@/types/types';
 import { useRouter } from 'next/navigation';
 import { useContext, useRef } from 'react';
 import { USER_ID_KEY } from './header';
+import { bookCtx } from '@/context/booksContext';
 
 const Card = ({ name, category, price, author, image }: Book) => {
   const userContext = useContext(userCtx); // Getting the context
+  const bookContext = useContext(bookCtx);
   const router = useRouter(); // Creating an instance of router
   const linkRef = useRef<HTMLAnchorElement>(null); // Creating a refference to a element
   const btnCartRef = useRef<HTMLButtonElement>(null); // Creating a refference to the Add to cart button
@@ -24,10 +26,24 @@ const Card = ({ name, category, price, author, image }: Book) => {
         (user.cartItems[name] !== undefined ? user.cartItems[name] : 0) + 1, // Increment quantity or start with 1
     };
 
-    // Update userContext.user with new cartItems
+    const foundBook = bookContext?.listBooks.find((item) => item.name === name);
+    let updatedShoppingValue = user.shoppingValue;
+
+    if (foundBook) {
+      // Update shoppingValue according to the new items added
+      const currentShoppingValue = user.shoppingValue
+        ? parseFloat(user.shoppingValue)
+        : 0;
+      updatedShoppingValue = (currentShoppingValue + foundBook.price).toFixed(
+        2,
+      ); // Keep two decimal places
+    }
+
+    // Update userContext.user with new cartItems and shopping value
     setUser({
       ...user,
       cartItems: updatedCartItems,
+      shoppingValue: updatedShoppingValue,
     });
 
     // Update localStorage with updated user information
@@ -36,6 +52,7 @@ const Card = ({ name, category, price, author, image }: Book) => {
       JSON.stringify({
         ...user,
         cartItems: updatedCartItems, // Store only necessary data
+        shoppingValue: updatedShoppingValue,
       }),
     );
   };

@@ -3,5 +3,6 @@
   "/cart/page": "app/cart/page.js",
   "/signIn/page": "app/signIn/page.js",
   "/authors/search/page": "app/authors/search/page.js",
-  "/books/search/page": "app/books/search/page.js"
+  "/books/search/page": "app/books/search/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
 }

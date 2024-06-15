@@ -29,6 +29,7 @@ export type User = {
   };
   paymentMethod: Card[];
   cartItems: { [key: string]: number };
+  shoppingValue: string | null;
 };
 
 export type Card = {
