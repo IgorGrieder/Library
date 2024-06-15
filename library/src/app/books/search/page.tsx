@@ -1,5 +1,6 @@
 'use client';
 import BookPage from '@/components/bookPage';
+import CartSide from '@/components/cartSide';
 import Header from '@/components/header';
 import NameQueryError from '@/components/nameQueryError';
 import { Book } from '@/types/types';
@@ -11,6 +12,7 @@ const Page = () => {
   const [nameQuery, setNameQuery] = useState(false); // State variable to control if there's a name query
   const [isLoading, setIsLoading] = useState(false); // State variabel to control if the request is being made
   const showError = nameQuery && isLoading; // Variable to determine if the error box is going to appear
+  const [isShowingCart, setIsShowingCart] = useState(false); // State variable to control if the cart box is showing or not
 
   const useEffectCallback = async () => {
     // Getting the URL info to make the request
@@ -37,21 +39,34 @@ const Page = () => {
     useEffectCallback();
   }, []);
 
+  // Function to swap cart showing
+  const handleCartClick = () => {
+    setIsShowingCart(!isShowingCart);
+  };
+
   return (
     <div className="min-h-screen bg-white pt-[100px] text-black">
-      <Header></Header>
+      <Header handleCartClick={handleCartClick}></Header>
       {showError && <NameQueryError></NameQueryError>}
-      <div className="flex justify-center">
-        {book && (
-          <BookPage
-            id={book?.id}
-            category={book?.category}
-            author={book?.author}
-            name={book?.name}
-            price={book?.price}
-            image={book?.image[0]}
+      <div className="cols-1 relative grid">
+        <div className="flex justify-center">
+          {book && (
+            <BookPage
+              id={book?.id}
+              category={book?.category}
+              author={book?.author}
+              name={book?.name}
+              price={book?.price}
+              image={book?.image[0]}
+              key={crypto.randomUUID()}
+            ></BookPage>
+          )}
+        </div>
+        {isShowingCart && (
+          <CartSide
+            handleCartClick={handleCartClick}
             key={crypto.randomUUID()}
-          ></BookPage>
+          ></CartSide>
         )}
       </div>
     </div>

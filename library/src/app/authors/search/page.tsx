@@ -1,5 +1,6 @@
 'use client';
 import AuthorPage from '@/components/authorPage';
+import CartSide from '@/components/cartSide';
 import Header from '@/components/header';
 import NameQueryError from '@/components/nameQueryError';
 import { Author } from '@/types/types';
@@ -10,6 +11,7 @@ const Page = () => {
   const [Author, setAuthor] = useState<Author | null>(null); // State variable to control the Author information
   const [nameQuery, setNameQuery] = useState(false); // State variable to control if there's a name query
   const [isLoading, setIsLoading] = useState(false); // State variabel to control if the request is being made
+  const [isShowingCart, setIsShowingCart] = useState(false); // State variable to control if the cart box is showing or not
   const showError = nameQuery && isLoading; // Variable to determine if the error box is going to appear
 
   const useEffectCallback = async () => {
@@ -37,21 +39,37 @@ const Page = () => {
     useEffectCallback();
   }, []);
 
+  // Function to swap cart showing
+  const handleCartClick = () => {
+    setIsShowingCart(!isShowingCart);
+  };
+
   return (
     <div className="min-h-screen bg-white pt-[100px] text-black">
-      <Header></Header>
+      <Header
+        handleCartClick={handleCartClick}
+        key={crypto.randomUUID()}
+      ></Header>
       {showError && <NameQueryError></NameQueryError>}
-      <div className="flex justify-center">
-        {Author && (
-          <AuthorPage
-            books={Author.books}
-            id={Author.id}
-            age={Author?.age}
-            image={Author?.image}
-            name={Author?.name}
+      <div className="relative grid grid-cols-1">
+        <div className="flex justify-center">
+          {Author && (
+            <AuthorPage
+              books={Author.books}
+              id={Author.id}
+              age={Author?.age}
+              image={Author?.image}
+              name={Author?.name}
+              key={crypto.randomUUID()}
+              nationality={Author?.nationality}
+            ></AuthorPage>
+          )}
+        </div>
+        {isShowingCart && (
+          <CartSide
             key={crypto.randomUUID()}
-            nationality={Author?.nationality}
-          ></AuthorPage>
+            handleCartClick={handleCartClick}
+          ></CartSide>
         )}
       </div>
     </div>
