@@ -26,7 +26,7 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
   useEffect(() => {
     // Capturing information from the localStorage
     const local = localStorage.getItem(USER_ID_KEY);
-    if (local !== null) {
+    if (local) {
       // In case there is information in the local storage
       const userObj = JSON.parse(local);
       userContext?.setUser({ ...userObj }); // Setting the user context to the information saved in the localStorage
@@ -81,6 +81,7 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
 
   return (
     <div className="fixed left-0 right-0 top-0 z-10 flex items-center justify-center bg-green-700 px-10 py-8 text-white">
+      <button onClick={() => console.log(userContext?.user)}>user ctx</button>
       <button className="absolute left-0 ml-10" onClick={handleBackMenu}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

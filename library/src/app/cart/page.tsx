@@ -1,15 +1,26 @@
 'use client';
+import CartSideItems from '@/components/cartSideItems';
 import Header from '@/components/header';
 import PaymentCard from '@/components/paymentCard';
+import { bookCtx } from '@/context/booksContext';
 import { userCtx } from '@/context/userContext';
-import { Card } from '@/types/types';
+import { Book, Card } from '@/types/types';
 import { useContext, useState } from 'react';
 
 const Page = () => {
   const userContext = useContext(userCtx); // Getting the context
+  const bookContext = useContext(bookCtx);
   const [paymentCard, setPaymentCard] = useState<Card | null>(null); // State varible to control the card currently being used to make the payment
   const [isFinishedLocalStorage, setIsFinishedLocalStorage] = useState(false); // State variable to control if the local storage load is done
   // isFinishedLocalStorage is basically a flag to prevent the items to pre load during a short period of time without the localStorage information
+
+  // Function to find the relative book
+  const findBook = (bookName: string): Book | undefined => {
+    let foundBook = bookContext?.listBooks.find(
+      (item) => item.name === bookName,
+    );
+    return foundBook;
+  };
 
   return (
     <div className="min-h-screen bg-white pt-[100px] text-black">
@@ -85,15 +96,32 @@ const Page = () => {
               <h6>Please log in to finish the setup</h6>
             )}
 
-            <div className="border-b border-green-500 px-3 py-5">
+            <div className="px-3 py-5">
               <h4 className="text-bold font-Barlow mb-2 text-2xl">
                 Order review
               </h4>
-              <div className="grid grid-cols-1 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {userContext?.user &&
                 Object.keys(userContext?.user.cartItems).length > 0 ? (
                   Object.keys(userContext.user.cartItems).map((item) => {
-                    return <div key={crypto.randomUUID()}>{item}</div>; // Assuming each item has an id and a name
+                    const book = findBook(item);
+                    if (book) {
+                      return (
+                        <div
+                          className="border-b border-gray-600 pb-2"
+                          key={crypto.randomUUID()}
+                        >
+                          <CartSideItems
+                            isCheckout={true}
+                            image={book?.image}
+                            name={book.name}
+                            price={book.price}
+                            quantity={userContext.user.cartItems[book.name]}
+                            key={crypto.randomUUID()}
+                          ></CartSideItems>
+                        </div>
+                      ); // Assuming each item has an id and a name
+                    }
                   })
                 ) : (
                   <div> No items in the current cart</div>

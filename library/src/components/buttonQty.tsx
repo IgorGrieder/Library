@@ -6,9 +6,10 @@ import { bookCtx } from '@/context/booksContext';
 type Props = {
   icon: string;
   name: string;
+  isCheckout?: boolean;
 };
 
-const ButtonQty = ({ icon, name }: Props) => {
+const ButtonQty = ({ icon, name, isCheckout }: Props) => {
   const signal = icon === '+' ? true : false; // boolean variable to set the operation to be done
   const userContext = useContext(userCtx); // Getting the context
   const bookContext = useContext(bookCtx);
@@ -99,7 +100,7 @@ const ButtonQty = ({ icon, name }: Props) => {
 
   return (
     <button
-      className="rounded-xl border border-white px-1"
+      className={`rounded-xl border px-1 ${isCheckout ? 'border-black' : 'border-white'}`}
       onClick={() => addItem()}
     >
       {icon}
