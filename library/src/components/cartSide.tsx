@@ -91,7 +91,9 @@ const CartSide = ({ handleCartClick }: Props) => {
             }
           })
         ) : (
-          <div>No items in the cart</div>
+          <div className="text-center text-black">
+            No items in the current cart
+          </div>
         )}
       </div>
     </div>

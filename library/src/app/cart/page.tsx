@@ -96,7 +96,7 @@ const Page = () => {
                     return <div key={crypto.randomUUID()}>{item}</div>; // Assuming each item has an id and a name
                   })
                 ) : (
-                  <div>No items in the cart</div>
+                  <div> No items in the current cart</div>
                 )}
               </div>
             </div>

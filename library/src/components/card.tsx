@@ -1,9 +1,10 @@
 import { userCtx } from '@/context/userContext';
 import { Book } from '@/types/types';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { USER_ID_KEY } from './header';
 import { bookCtx } from '@/context/booksContext';
+import Price from './price';
 
 type BookCard = Book & {
   handleClickCart: VoidFunction;
@@ -133,12 +134,7 @@ const Card = ({
           })}
         </span>
       </p>
-      <h4 className="mb-5 font-semibold">
-        Price:{' '}
-        <span className="cursor-pointer font-light text-blue-600 hover:underline">
-          ${price}
-        </span>
-      </h4>
+      <Price key={crypto.randomUUID()} price={price}></Price>
       <div className="mt-auto grid grid-cols-2 justify-around gap-5">
         <button
           className="rounded-lg border border-green-400 px-4 py-2 hover:border-black hover:bg-green-500 hover:text-white"
