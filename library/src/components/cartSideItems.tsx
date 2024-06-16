@@ -22,6 +22,7 @@ const CartSideItems = ({
 }: BookCart) => {
   const bookContext = useContext(bookCtx); // Getting the context
   const userContext = useContext(userCtx);
+  const isCart = window.location.href.includes('cart') ? true : false; //  Variable to identify where the component is to set margin-top
 
   // Function to remove properties from a object
   const removeProperty = (obj: { [key: string]: number }, prop: string) => {
@@ -75,7 +76,10 @@ const CartSideItems = ({
       <img src={image} alt="" className="mb-2 w-[80px]" />
       <div className="font-barlow text-center text-xl">{name}</div>
       <Price price={price}></Price>
-      <div className="mt-auto flex items-center gap-2">
+      <div
+        className="mt-auto flex items-center gap-2"
+        style={{ marginTop: isCart ? 'auto' : '0px' }}
+      >
         <div>Qty: {quantity}</div>
         <div className="flex gap-2">
           <ButtonQty
