@@ -28,7 +28,10 @@ const CartSide = ({ handleCartClick }: Props) => {
   };
 
   return (
-    <div className="fixed right-0 h-screen w-[250px] bg-green-400 px-4 py-5">
+    <div
+      className="fixed right-0 flex w-[250px] flex-col bg-green-400 px-4 pt-2"
+      style={{ height: 'calc(100% - 100px)' }}
+    >
       <button className="fixed right-5 top-5" onClick={handleCartClick}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -63,27 +66,33 @@ const CartSide = ({ handleCartClick }: Props) => {
             Go to cart
           </button>
         </div>
-        <div className="grid grid-cols-1 gap-2 py-4">
-          {userContext?.user &&
-          Object.keys(userContext?.user.cartItems).length > 0 ? (
-            Object.keys(userContext.user.cartItems).map((item) => {
-              let book = findBook(item);
-              if (book) {
-                return (
-                  <CartSideItems
-                    key={crypto.randomUUID()}
-                    quantity={userContext.user.cartItems[book.name]}
-                    name={book.name}
-                    image={book.image}
-                    price={book.price}
-                  ></CartSideItems>
-                );
-              }
-            })
-          ) : (
-            <div>No items in the cart</div>
-          )}
-        </div>
+      </div>
+      <div
+        className="mt-auto grid h-full grid-cols-1 gap-2 overflow-y-scroll pb-4 pt-2"
+        style={{
+          scrollbarColor: 'gray transparent',
+          scrollbarWidth: 'thin',
+        }}
+      >
+        {userContext?.user &&
+        Object.keys(userContext?.user.cartItems).length > 0 ? (
+          Object.keys(userContext.user.cartItems).map((item) => {
+            let book = findBook(item);
+            if (book) {
+              return (
+                <CartSideItems
+                  key={crypto.randomUUID()}
+                  quantity={userContext.user.cartItems[book.name]}
+                  name={book.name}
+                  image={book.image}
+                  price={book.price}
+                ></CartSideItems>
+              );
+            }
+          })
+        ) : (
+          <div>No items in the cart</div>
+        )}
       </div>
     </div>
   );

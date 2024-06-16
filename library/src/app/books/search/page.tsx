@@ -52,7 +52,7 @@ const Page = () => {
         <div className="flex justify-center">
           {book && (
             <BookPage
-              id={book?.id}
+              _id={book._id}
               category={book?.category}
               author={book?.author}
               name={book?.name}

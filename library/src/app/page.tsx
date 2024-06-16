@@ -1,11 +1,9 @@
 'use client';
 import Card from '@/components/card';
 import CartSide from '@/components/cartSide';
-import Header, { USER_ID_KEY } from '@/components/header';
+import Header from '@/components/header';
 import { bookCtx } from '@/context/booksContext';
-import { userCtx } from '@/context/userContext';
-import axiosInstance from '@/utils/axios';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 const Home = () => {
   const bookContext = useContext(bookCtx);
@@ -29,7 +27,8 @@ const Home = () => {
             return (
               <Card
                 key={crypto.randomUUID()}
-                id={item.id}
+                _id={item._id}
+                isShowingCart={isShowingCart}
                 handleClickCart={handleCartClick}
                 image={item.image[0]}
                 author={item.author}

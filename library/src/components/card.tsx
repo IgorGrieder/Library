@@ -5,7 +5,10 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { USER_ID_KEY } from './header';
 import { bookCtx } from '@/context/booksContext';
 
-type BookCard = Book & { handleClickCart: VoidFunction };
+type BookCard = Book & {
+  handleClickCart: VoidFunction;
+  isShowingCart: boolean;
+};
 
 const Card = ({
   name,
@@ -14,6 +17,7 @@ const Card = ({
   author,
   image,
   handleClickCart,
+  isShowingCart,
 }: BookCard) => {
   const userContext = useContext(userCtx); // Getting the context
   const bookContext = useContext(bookCtx);
@@ -22,10 +26,6 @@ const Card = ({
   const btnCartRef = useRef<HTMLButtonElement>(null); // Creating a reference to the Add to cart button
   const btnBuyNowRef = useRef<HTMLButtonElement>(null); // Creating a reference to the Buy now button
   const [isAddedToCart, setIsAddedToCart] = useState(false); // State variable to control if an item was added to the cart
-
-  const alertItemAdded = () => {
-    setIsAddedToCart(true);
-  };
 
   // Function to make the logic of adding the books to the control hash
   const addItem = () => {
@@ -73,9 +73,13 @@ const Card = ({
 
   // Function to handle adding item to cart
   const handleAddToCart = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation(); // Prevent the event from propagating to the parent div
+    event.stopPropagation();
+    // Logic to add item to cart
+    setIsAddedToCart(true);
     addItem();
-    alertItemAdded();
+    setTimeout(() => {
+      setIsAddedToCart(false);
+    }, 1000);
   };
 
   // Function to handle buying item now
@@ -99,16 +103,9 @@ const Card = ({
 
   return (
     <div
-      className="flex min-w-[300px] cursor-pointer flex-col gap-1 rounded-3xl border border-black px-5 py-10 text-black"
+      className="flex min-w-[300px] cursor-pointer flex-col gap-1 rounded-3xl px-5 py-10 text-black"
       onClick={handleCardClick}
     >
-      {isAddedToCart ? (
-        <div className="flex h-10 w-10 items-center justify-center bg-black text-white">
-          Adicionouuu
-        </div>
-      ) : (
-        <div>FOdeu</div>
-      )}
       <img
         src={`${image}`}
         alt="Book image"
@@ -142,7 +139,7 @@ const Card = ({
           ${price}
         </span>
       </h4>
-      <div className="mt-auto flex justify-around">
+      <div className="mt-auto grid grid-cols-2 justify-around gap-5">
         <button
           className="rounded-lg border border-green-400 px-4 py-2 hover:border-black hover:bg-green-500 hover:text-white"
           ref={btnCartRef}
@@ -157,6 +154,13 @@ const Card = ({
         >
           Buy now
         </button>
+        {isAddedToCart && (
+          <div
+            className={`fixed ${isShowingCart ? 'right-[280px]' : 'right-5'} top-[120px] z-20 flex h-10 w-[162px] items-center justify-center rounded-2xl bg-black px-4 py-2 text-white`}
+          >
+            Added to cart
+          </div>
+        )}
       </div>
     </div>
   );
