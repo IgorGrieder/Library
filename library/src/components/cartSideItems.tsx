@@ -71,11 +71,11 @@ const CartSideItems = ({
   };
 
   return (
-    <div className="flex flex-col items-center gap-1 py-4 text-black">
+    <div className="flex h-full flex-col items-center gap-1 py-4 text-black">
       <img src={image} alt="" className="mb-2 w-[80px]" />
       <div className="font-barlow text-center text-xl">{name}</div>
       <Price price={price}></Price>
-      <div className="flex items-center gap-2">
+      <div className="mt-auto flex items-center gap-2">
         <div>Qty: {quantity}</div>
         <div className="flex gap-2">
           <ButtonQty
@@ -90,7 +90,9 @@ const CartSideItems = ({
             name={name}
             isCheckout={isCheckout}
           ></ButtonQty>
-          <button onClick={hanldeRemoveItem}>Remove</button>
+          <button onClick={hanldeRemoveItem} className="hover:underline">
+            Remove
+          </button>
         </div>
       </div>
     </div>
