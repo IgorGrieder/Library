@@ -1,5 +1,6 @@
 'use client';
 import CartSideItems from '@/components/cartSideItems';
+import ErrorBox from '@/components/ErrorBox';
 import Header from '@/components/header';
 import PaymentCard from '@/components/paymentCard';
 import { bookCtx } from '@/context/booksContext';
@@ -27,7 +28,7 @@ const Page = () => {
 
   // Function to simulate a order being done
   const handleFakeProcedure = () => {
-    if (!userContext) return;
+    if (userContext?.user.id === null || !userContext) return;
 
     if (Object.keys(userContext?.user.cartItems).length !== 0) {
       router.push('/checkout');
@@ -35,7 +36,7 @@ const Page = () => {
       setShowAlert(true);
       setTimeout(() => {
         setShowAlert(false);
-      }, 5000);
+      }, 3000);
     }
   };
 
@@ -76,8 +77,24 @@ const Page = () => {
                   </h4>
                   {paymentCard === null ? (
                     <>
-                      <h4 className="mb-4">Please choose a card</h4>
-                      <h4 className="mb-4">Cards registered</h4>
+                      <ErrorBox text="Please select a card"></ErrorBox>
+                      <h4 className="mb-4">
+                        Currently registered cards{' '}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="ml-2 inline-block size-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25"
+                          />
+                        </svg>
+                      </h4>
                       {(userContext?.user.paymentMethod.length ?? 0) > 0 &&
                         userContext?.user.paymentMethod.map((item) => {
                           return (
@@ -110,7 +127,9 @@ const Page = () => {
                 </div>
               </>
             ) : (
-              <h6>Please log in to finish the setup</h6>
+              <div className="flex justify-center">
+                <ErrorBox text="Please log in to finish the checkout"></ErrorBox>
+              </div>
             )}
 
             <div className="px-3 py-5">

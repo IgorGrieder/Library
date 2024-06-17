@@ -4,7 +4,7 @@ const Page = () => {
   return (
     <div className="h-screen bg-white pt-[100px] text-black">
       <Header></Header>
-      <div>
+      <div className="flex h-full items-center justify-center">
         <h1>Thanks for buying from us!</h1>
       </div>
     </div>

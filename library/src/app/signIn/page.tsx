@@ -1,6 +1,6 @@
 'use client';
 import { USER_ID_KEY } from '@/components/header';
-import LogInErrorBox from '@/components/logInErrorBox';
+import ErrorBox from '@/components/ErrorBox';
 import { userCtx } from '@/context/userContext';
 import axiosInstance from '@/utils/axios';
 import { useRouter } from 'next/navigation';
@@ -110,7 +110,9 @@ const SignIn = () => {
           onChange={handleInputs}
           required
         />
-        {wrongLogIn && <LogInErrorBox></LogInErrorBox>}
+        {wrongLogIn && (
+          <ErrorBox text="Incorrect username and/or password. Please try again."></ErrorBox>
+        )}
         <button
           type="submit"
           className="w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black"
