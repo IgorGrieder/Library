@@ -20,13 +20,7 @@ export type User = {
   user: string | null;
   id: string | null;
   role: string | null;
-  address: {
-    street: string | null;
-    number: string | null;
-    neighborhood: string | null;
-    country: string | null;
-    complement: string | null;
-  };
+  address: UserLocation[];
   paymentMethod: Card[];
   cartItems: { [key: string]: number };
   shoppingValue: string | null;
@@ -37,4 +31,12 @@ export type Card = {
   number: string | null;
   cvv: string | null;
   expDate: string | null;
+};
+
+export type UserLocation = {
+  street: string | null;
+  number: string | null;
+  neighborhood: string | null;
+  country: string | null;
+  complement: string | null;
 };

@@ -2,10 +2,11 @@
 import CartSideItems from '@/components/cartSideItems';
 import ErrorBox from '@/components/ErrorBox';
 import Header from '@/components/header';
+import LocationSection from '@/components/LocationSection';
 import PaymentCard from '@/components/paymentCard';
 import { bookCtx } from '@/context/booksContext';
 import { userCtx } from '@/context/userContext';
-import { Book, Card } from '@/types/types';
+import { Book, Card, UserLocation } from '@/types/types';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 
@@ -13,10 +14,12 @@ const Page = () => {
   const userContext = useContext(userCtx); // Getting the context
   const bookContext = useContext(bookCtx);
   const [paymentCard, setPaymentCard] = useState<Card | null>(null); // State varible to control the card currently being used to make the payment
+  const [location, setLocation] = useState<UserLocation | null>(null); // State varible to control the address currently being used to make the delivery
   const [isFinishedLocalStorage, setIsFinishedLocalStorage] = useState(false); // State variable to control if the local storage load is done
   const [showAlert, setShowAlert] = useState(false); // State variable to show that teh cart is empty
   // isFinishedLocalStorage is basically a flag to prevent the items to pre load during a short period of time without the localStorage information
   const router = useRouter(); // Creating an instance of router
+  const isDisabled = location === null || paymentCard === null; // Flag to enbale and disable the button
 
   // Function to find the relative book
   const findBook = (bookName: string): Book | undefined => {
@@ -55,21 +58,56 @@ const Page = () => {
                   <h4 className="text-bold font-Barlow mb-2 text-2xl">
                     Address
                   </h4>
-                  <h6 className="font-sans text-base font-bold">
-                    Street location:{' '}
-                    <span className="font-normal">
-                      {userContext?.user.address.street} -{' '}
-                      {userContext?.user.address.number},{' '}
-                      {userContext?.user.address.neighborhood},{' '}
-                      {userContext?.user.address.complement}
-                    </span>
-                  </h6>
-                  <h6 className="font-sans text-base font-bold">
-                    Country:{' '}
-                    <span className="font-normal">
-                      {userContext?.user.address.country}
-                    </span>
-                  </h6>
+                  {location === null ? (
+                    <>
+                      <ErrorBox text="Please select a address"></ErrorBox>
+                      <h4 className="mb-4">
+                        Currently registered addresses{' '}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="ml-2 inline-block size-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0-3.75-3.75M17.25 21 21 17.25"
+                          />
+                        </svg>
+                      </h4>
+                      {userContext?.user.address.map((item) => {
+                        return (
+                          <LocationSection
+                            key={crypto.randomUUID()}
+                            address={location}
+                            setAddress={setLocation}
+                            complement={item.complement}
+                            country={item.country}
+                            street={item.street}
+                            number={item.number}
+                            neighborhood={item.neighborhood}
+                          ></LocationSection>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <LocationSection
+                      key={crypto.randomUUID()}
+                      address={location}
+                      setAddress={setLocation}
+                      complement={location.complement}
+                      country={location.country}
+                      street={location.street}
+                      number={location.number}
+                      neighborhood={location.neighborhood}
+                    ></LocationSection>
+                  )}
+                  <button className="mt-4 text-green-400 hover:text-black hover:underline">
+                    Add a address
+                  </button>
                 </div>
                 <div className="mb-2 border-b border-green-500 px-3 py-5">
                   <h4 className="text-bold font-Barlow mb-2 text-2xl">
@@ -177,14 +215,15 @@ const Page = () => {
             </h4>
             <div className="relative">
               <button
-                className="rounded-lg border border-black bg-green-500 px-4 py-2 text-black hover:text-white"
+                className={`rounded-lg border border-black bg-green-500 px-4 py-2 text-black ${!isDisabled && 'hover:text-white'}`}
                 onClick={handleFakeProcedure}
+                disabled={isDisabled}
               >
                 Process order
               </button>
               {showAlert && (
                 <div
-                  className="absolute flex h-[42px] w-[250px] items-center justify-center border border-black py-4"
+                  className="absolute z-10 flex h-[42px] w-[250px] items-center justify-center border border-black bg-white py-4"
                   style={{
                     bottom: 'calc(50% - 21px)',
                     right: 'calc(100% + 40px)',

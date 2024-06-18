@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // Defining Address Schema
-const addressSchema = new mongoose.Schema({
+const locationSchema = new mongoose.Schema({
   street: String,
   number: String,
   neighborhood: String,
@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema({
   name: { type: mongoose.SchemaTypes.String },
   password: { type: mongoose.SchemaTypes.String },
   role: { type: mongoose.SchemaTypes.String },
-  address: addressSchema,
+  address: [{ type: locationSchema }],
   paymentMethod: [{ type: paymentSchema }],
 }, { versionKey: false });
 

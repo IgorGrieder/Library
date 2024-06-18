@@ -59,13 +59,7 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
       user: null,
       id: null,
       role: null,
-      address: {
-        complement: null,
-        country: null,
-        neighborhood: null,
-        number: null,
-        street: null,
-      },
+      location: [],
       paymentMethod: [],
     };
 
