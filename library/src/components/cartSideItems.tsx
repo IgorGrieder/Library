@@ -73,7 +73,7 @@ const CartSideItems = ({
 
   return (
     <div className="flex h-full flex-col items-center gap-1 py-4 text-black">
-      <img src={image} alt="" className="mb-2 w-[80px]" />
+      <img src={`/${image}`} alt="" className="mb-2 w-[80px]" />
       <div className="font-barlow text-center text-xl">{name}</div>
       <Price price={price}></Price>
       <div

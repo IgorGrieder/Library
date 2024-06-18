@@ -23,13 +23,16 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
   const [showBoxLogIn, setShowBoxLogIn] = useState(false); // State variable to control if the user box is going to be shown
   const router = useRouter(); // Instance of router to change the url
 
-  // Function to check the current enviroment
+  // Function to check the current environment
   const checkCurrentEnviroment = (url: string) => {
     if (url.includes('checkout') || url.includes('cart')) return false;
     return true;
   };
 
-  const isCartIconShow = checkCurrentEnviroment(window.location.href); // varibale to define if the cart icon should or not be shown
+  let isCartIconShow = true;
+  if (typeof window !== 'undefined') {
+    isCartIconShow = checkCurrentEnviroment(window.location.href);
+  }
 
   useEffect(() => {
     // Capturing information from the localStorage
@@ -61,7 +64,6 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
   // Function to handle the sign out
   const handleClickSignOut = () => {
     // Clearing the user data
-
     const userEmpty = {
       ...userContext?.user,
       user: null,
@@ -71,7 +73,7 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
       paymentMethod: [],
     };
 
-    userContext?.setUser(userEmpty as User); //  Changing the user in the context
+    userContext?.setUser(userEmpty as User); // Changing the user in the context
     localStorage.setItem(USER_ID_KEY, JSON.stringify(userEmpty));
     setShowSignOut(false);
   };
