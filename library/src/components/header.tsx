@@ -23,6 +23,14 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
   const [showBoxLogIn, setShowBoxLogIn] = useState(false); // State variable to control if the user box is going to be shown
   const router = useRouter(); // Instance of router to change the url
 
+  // Function to check the current enviroment
+  const checkCurrentEnviroment = (url: string) => {
+    if (url.includes('checkout') || url.includes('cart')) return false;
+    return true;
+  };
+
+  const isCartIconShow = checkCurrentEnviroment(window.location.href); // varibale to define if the cart icon should or not be shown
+
   useEffect(() => {
     // Capturing information from the localStorage
     const local = localStorage.getItem(USER_ID_KEY);
@@ -92,22 +100,24 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
         </svg>
       </button>
       <h1 className="font-Barlow text-center text-3xl">Grieder`s Library</h1>
-      <button className="absolute right-0 mr-5" onClick={handleCartClick}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-          />
-        </svg>
-      </button>
+      {isCartIconShow && (
+        <button className="absolute right-0 mr-5" onClick={handleCartClick}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+            />
+          </svg>
+        </button>
+      )}
       {showBoxLogIn && (
         <div className="grid-cols-custom absolute right-0 mr-16 grid gap-2 rounded-xl border p-3">
           <button
