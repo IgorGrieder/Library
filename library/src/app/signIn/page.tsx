@@ -9,12 +9,20 @@ import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 const SignIn = () => {
   const [userInput, setUserInput] = useState({ user: '', password: '' }); // State object to control the user and the password input
   const [wrongLogIn, setWrongLogIn] = useState(false); // State to check if the user typed a wrong log in information
+  const [inputError, setInputError] = useState(false); // State to check if the user didn't type the right in information
   const userContext = useContext(userCtx); // Importing the user context
   const router = useRouter(); // Creating an instance of router
 
   // Function to handle the submit process on the form
   const handleLogIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Preventing the event to happen
+
+    // Checking if the inputs are empty
+    if (userInput.user.length < 0 || userInput.password.length < 0) {
+      setInputError(true);
+      return;
+    }
+
     try {
       const result = await axiosInstance.get(`/signIn`, {
         params: {
@@ -112,6 +120,9 @@ const SignIn = () => {
         />
         {wrongLogIn && (
           <ErrorBox text="Incorrect username and/or password. Please try again."></ErrorBox>
+        )}
+        {inputError && (
+          <ErrorBox text="Please fill the fields correctly"></ErrorBox>
         )}
         <button
           type="submit"

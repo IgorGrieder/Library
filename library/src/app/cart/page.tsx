@@ -17,8 +17,9 @@ const Page = () => {
   const [paymentCard, setPaymentCard] = useState<Card | null>(null); // State varible to control the card currently being used to make the payment
   const [location, setLocation] = useState<UserLocation | null>(null); // State varible to control the address currently being used to make the delivery
   const [isFinishedLocalStorage, setIsFinishedLocalStorage] = useState(false); // State variable to control if the local storage load is done
-  const [showAlert, setShowAlert] = useState(false); // State variable to show that teh cart is empty
   // isFinishedLocalStorage is basically a flag to prevent the items to pre load during a short period of time without the localStorage information
+  const [showAlert, setShowAlert] = useState(false); // State variable to show that teh cart is empty
+  const [showModalAddress, setShowModalAddress] = useState(false); // State variable to control if the address modal is going to be shown
   const router = useRouter(); // Creating an instance of router
   const isDisabled = location === null || paymentCard === null; // Flag to enbale and disable the button
 
@@ -44,10 +45,20 @@ const Page = () => {
     }
   };
 
+  // Function to hide the address modal
+  const hideModal = () => {
+    setShowModalAddress(false);
+  };
+
+  // Function to show the modal
+  const handleShowModalAddress = () => {
+    setShowModalAddress(true);
+  };
+
   return (
     <div className="min-h-screen bg-white pt-[100px] text-black">
       <Header setIsFinishedLocalStorage={setIsFinishedLocalStorage}></Header>
-      <AddressModal></AddressModal>
+      {showModalAddress && <AddressModal hideModal={hideModal}></AddressModal>}
       {isFinishedLocalStorage && (
         <div className="grid grid-cols-3 gap-2 sm:px-20 sm:py-10">
           <div className="col-span-2 grid grid-cols-1 gap-4 px-2 py-4">
@@ -107,7 +118,10 @@ const Page = () => {
                       neighborhood={location.neighborhood}
                     ></LocationSection>
                   )}
-                  <button className="mt-4 text-green-400 hover:text-black hover:underline">
+                  <button
+                    className="mt-4 text-green-400 hover:text-black hover:underline"
+                    onClick={handleShowModalAddress}
+                  >
                     Add a address
                   </button>
                 </div>
