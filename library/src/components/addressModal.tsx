@@ -2,6 +2,7 @@
 import { userCtx } from '@/context/userContext';
 import { UserLocation } from '@/types/types';
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import ErrorBox from './ErrorBox';
 
 type Props = {
   hideModal: VoidFunction;
@@ -15,7 +16,7 @@ const AddressModal = ({ hideModal }: Props) => {
     country: '',
     complement: '',
   }); // State variable to control the current inputs of the user
-  const [inputError, setInputError] = useState([]); // State variable to control possible errors
+  const [inputError, setInputError] = useState(false); // State variable to control possible errors
   const userContext = useContext(userCtx); // Getting the context
 
   // Function to handle chagens on the inputs
@@ -41,7 +42,7 @@ const AddressModal = ({ hideModal }: Props) => {
         controlKeys.push(key as string);
       }
     });
-
+    console.log(controlKeys.length);
     return controlKeys;
   };
 
@@ -49,14 +50,22 @@ const AddressModal = ({ hideModal }: Props) => {
   const handleForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Preventing the default submit behavior
 
-    if (checkInputs().length < 0) {
+    if (checkInputs().length === 0) {
+      // If all the fields were correctly filled
+      const newAddress = {
+        ...userInput,
+      };
+
       userContext?.setUser({
+        // Updating the user context
         ...userContext.user,
-        address: [...userContext.user.address, userInput],
+        address: [...userContext.user.address, newAddress],
       });
+
+      // Updating the database
+
       hideModal(); // Reseting the modal
-    } else {
-    }
+    } else setInputError(true);
   };
 
   // Function to handle the closing of the modal
@@ -130,6 +139,9 @@ const AddressModal = ({ hideModal }: Props) => {
             required
             onChange={handleInputs}
           />
+          {inputError && (
+            <ErrorBox text="Please fill the fields correctly"></ErrorBox>
+          )}
           <button className="mx-auto w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black">
             Save
           </button>
