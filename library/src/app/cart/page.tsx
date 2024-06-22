@@ -1,4 +1,5 @@
 'use client';
+import AddressModal from '@/components/addressModal';
 import CartSideItems from '@/components/cartSideItems';
 import ErrorBox from '@/components/ErrorBox';
 import Header from '@/components/header';
@@ -46,6 +47,7 @@ const Page = () => {
   return (
     <div className="min-h-screen bg-white pt-[100px] text-black">
       <Header setIsFinishedLocalStorage={setIsFinishedLocalStorage}></Header>
+      <AddressModal></AddressModal>
       {isFinishedLocalStorage && (
         <div className="grid grid-cols-3 gap-2 sm:px-20 sm:py-10">
           <div className="col-span-2 grid grid-cols-1 gap-4 px-2 py-4">
