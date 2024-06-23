@@ -31,13 +31,46 @@ const PaymentModal = ({ hideModal }: Props) => {
     });
   };
 
+  // Function to check the card number
+  const isValidCardNumber = (cardNumber: string) => {
+    // Remove any spaces or dashes from the card number input
+    cardNumber = cardNumber.replace(/\s+/g, '').replace(/-/g, '');
+
+    // Check if the card number matches the pattern for 16-digit numbers
+    return /^\d{16}$/.test(cardNumber);
+  };
+
+  // Function to check the expDate
+  const isValidExpirationDate = (expDate: string) => {
+    // Check if the expiration date matches the MM/YYYY pattern
+    return /^(0[1-9]|1[0-2])\/\d{4}$/.test(expDate);
+  };
+
+  // Function to check the CVV
+  const isValidCVV = (cvv: string) => {
+    // Check if the CVV matches the pattern for 3 or 4 digits
+    return /^\d{3,4}$/.test(cvv);
+  };
+
+  // Function to check the name
+  const isValidCardholderName = (name: string) => {
+    // Check if the cardholder name matches alphanumeric and space pattern
+    return /^[a-zA-Z0-9 ]+$/.test(name);
+  };
+
   // Function to check if the inputs are filled
   const checkInputs = () => {
     const keys = Object.keys(userInput) as Array<keyof Card>;
     keys.forEach((key) => {
-      const value = userInput[key];
-      if (typeof value !== 'string' || value.length === 0) {
-        controlKeys.push(key as string);
+      const value = userInput[key] ?? '';
+      if (key === 'number' && !isValidCardNumber(value)) {
+        controlKeys.push(key);
+      } else if (key === 'cvv' && !isValidCVV(value)) {
+        controlKeys.push(key);
+      } else if (key === 'name' && !isValidCardholderName(value)) {
+        controlKeys.push(key);
+      } else if (key === 'expDate' && !isValidExpirationDate(value)) {
+        controlKeys.push(key);
       }
     });
 
