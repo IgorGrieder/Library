@@ -28,6 +28,7 @@ class UserController {
     }
   }
 
+  // Method to add another address
   static async addAddress(req, res) {
     try {
       const filter = { _id: req.body.id };
@@ -46,6 +47,32 @@ class UserController {
         res
           .status(200)
           .json({ message: 'Address added successfully', found: true });
+      } else {
+        res.status(404).json({ found: false });
+      }
+    } catch (err) {
+      res.status(500).json({ message: `Error: ${err.message}` }); // Sending the response if a error happens
+    }
+  }
+
+  // method to add another card
+  static async addPayment(req, res) {
+    try {
+      const filter = { _id: req.body.id };
+      const cardInfo = {
+        cvv: req.body.cvv,
+        expDate: req.body.expDate,
+        name: req.body.name,
+        number: req.body.number,
+      };
+
+      const userDB = await user.findOne(filter); // Getting the proper user
+
+      if (userDB) {
+        await user.updateOne(filter, { $push: { paymentMethod: cardInfo } });
+        res
+          .status(200)
+          .json({ message: 'Card added successfully', found: true });
       } else {
         res.status(404).json({ found: false });
       }
