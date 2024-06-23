@@ -28,16 +28,17 @@ class UserController {
     }
   }
 
-  static async addAddresss(req, res) {
+  static async addAddress(req, res) {
     try {
-      const filter = { name: req.query.id };
+      const filter = { _id: req.body.id };
       const addressInfo = {
-        street: req.query.street,
-        country: req.query.country,
-        complement: req.query.country ?? 'None',
-        neighborhood: req.query.neighborhood,
-        number: req.query.number,
+        street: req.body.street,
+        country: req.body.country,
+        complement: req.body.complement,
+        neighborhood: req.body.neighborhood,
+        number: req.body.number,
       };
+
       const userDB = await user.findOne(filter); // Getting the proper user
 
       if (userDB) {
@@ -46,7 +47,7 @@ class UserController {
           .status(200)
           .json({ message: 'Address added successfully', found: true });
       } else {
-        res.status(200).json({ found: false });
+        res.status(404).json({ found: false });
       }
     } catch (err) {
       res.status(500).json({ message: `Error: ${err.message}` }); // Sending the response if a error happens

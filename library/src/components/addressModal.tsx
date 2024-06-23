@@ -3,6 +3,7 @@ import { userCtx } from '@/context/userContext';
 import { UserLocation } from '@/types/types';
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import ErrorBox from './ErrorBox';
+import axiosInstance from '@/utils/axios';
 
 type Props = {
   hideModal: VoidFunction;
@@ -17,6 +18,7 @@ const AddressModal = ({ hideModal }: Props) => {
     complement: '',
   }); // State variable to control the current inputs of the user
   const [inputError, setInputError] = useState(false); // State variable to control possible errors
+  const [requestError, setRequestError] = useState(false); // State variable to control possible request errors
   const userContext = useContext(userCtx); // Getting the context
 
   // Function to handle chagens on the inputs
@@ -42,30 +44,58 @@ const AddressModal = ({ hideModal }: Props) => {
         controlKeys.push(key as string);
       }
     });
-    console.log(controlKeys.length);
+
     return controlKeys;
   };
 
+  // Fcuntion to clear the inputs
+  const clearInputs = () => {
+    setUserInput({
+      street: '',
+      number: '',
+      neighborhood: '',
+      country: '',
+      complement: '',
+    });
+  };
+
   // Function to handle the submit of the form
-  const handleForm = (e: FormEvent<HTMLFormElement>) => {
+  const handleForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Preventing the default submit behavior
 
     if (checkInputs().length === 0) {
-      // If all the fields were correctly filled
-      const newAddress = {
+      // If all the fields are filled correctly
+      // Update user context if it's available
+      if (userContext) {
+        userContext.setUser({
+          ...userContext.user,
+          address: [...userContext.user.address, { ...userInput }],
+        });
+      }
+
+      const requestData = {
+        id: userContext?.user.id,
         ...userInput,
       };
 
-      userContext?.setUser({
-        // Updating the user context
-        ...userContext.user,
-        address: [...userContext.user.address, newAddress],
-      });
-
       // Updating the database
+      try {
+        const result = await axiosInstance.patch('/cart', requestData);
 
-      hideModal(); // Reseting the modal
-    } else setInputError(true);
+        if (result.data.found) {
+          // In case it was a successful request to add a new address
+          hideModal(); // Resetting the modal
+        } else {
+          setRequestError(true); // Showing that we had an error in the request
+          clearInputs();
+        }
+      } catch (err) {
+        console.log(err); // Log detailed error
+        setRequestError(true); // Show request error to the user
+      }
+    } else {
+      setInputError(true);
+    }
   };
 
   // Function to handle the closing of the modal
@@ -107,6 +137,7 @@ const AddressModal = ({ hideModal }: Props) => {
             placeholder="Street..."
             required
             onChange={handleInputs}
+            value={userInput.street ?? ''}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -115,6 +146,7 @@ const AddressModal = ({ hideModal }: Props) => {
             placeholder="Number..."
             required
             onChange={handleInputs}
+            value={userInput.number ?? ''}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -123,6 +155,7 @@ const AddressModal = ({ hideModal }: Props) => {
             placeholder="Neighborhood..."
             required
             onChange={handleInputs}
+            value={userInput.neighborhood ?? ''}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -130,6 +163,7 @@ const AddressModal = ({ hideModal }: Props) => {
             type="text"
             placeholder="Complement..."
             onChange={handleInputs}
+            value={userInput.complement ?? ''}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -138,7 +172,11 @@ const AddressModal = ({ hideModal }: Props) => {
             placeholder="Country..."
             required
             onChange={handleInputs}
+            value={userInput.country ?? ''}
           />
+          {requestError && (
+            <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>
+          )}
           {inputError && (
             <ErrorBox text="Please fill the fields correctly"></ErrorBox>
           )}
