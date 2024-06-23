@@ -31,6 +31,31 @@ const AddressModal = ({ hideModal }: Props) => {
     });
   };
 
+  // Function to check the stret
+  const isValidStreet = (street: string) => {
+    return /^[a-zA-Z0-9\s.,'-]+$/.test(street);
+  };
+
+  // Function to check the complement
+  const isValidComplement = (complement: string) => {
+    return /^[a-zA-Z0-9\s.,'-]*$/.test(complement);
+  };
+
+  // Function to check the country
+  const isValidCountry = (country: string) => {
+    return /^[a-zA-Z\s-]+$/.test(country);
+  };
+
+  // Function to check the number
+  const isValidNumber = (number: string) => {
+    return /^[a-zA-Z0-9\s-]+$/.test(number);
+  };
+
+  // Function to check the neighborgood
+  const isValidNeighborhood = (neighborhood: string) => {
+    return /^[a-zA-Z0-9\s.,'-]*$/.test(neighborhood);
+  };
+
   // Function to check if the inputs are filled
   const checkInputs = () => {
     const keys = Object.keys(userInput) as Array<keyof UserLocation>;
