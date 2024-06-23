@@ -80,7 +80,7 @@ const AddressModal = ({ hideModal }: Props) => {
 
       // Updating the database
       try {
-        const result = await axiosInstance.patch('/cart', requestData);
+        const result = await axiosInstance.patch('/cart/address', requestData);
 
         if (result.data.found) {
           // In case it was a successful request to add a new address

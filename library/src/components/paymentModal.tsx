@@ -75,7 +75,7 @@ const PaymentModal = ({ hideModal }: Props) => {
 
       // Updating the database
       try {
-        const result = await axiosInstance.patch('/cart', requestData);
+        const result = await axiosInstance.patch('/cart/payment', requestData);
 
         if (result.data.found) {
           // In case it was a successful request to add a new address
@@ -127,12 +127,12 @@ const PaymentModal = ({ hideModal }: Props) => {
         >
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
-            name="street"
+            name="name"
             type="text"
-            placeholder="Street..."
+            placeholder="Name..."
             required
             onChange={handleInputs}
-            value={userInput.street ?? ''}
+            value={userInput.name ?? ''}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -145,29 +145,20 @@ const PaymentModal = ({ hideModal }: Props) => {
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
-            name="neighborhood"
+            name="expDate"
             type="text"
-            placeholder="Neighborhood..."
+            placeholder="expDate..."
             required
             onChange={handleInputs}
-            value={userInput.neighborhood ?? ''}
+            value={userInput.expDate ?? ''}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
-            name="complement"
+            name="cvv"
             type="text"
-            placeholder="Complement..."
+            placeholder="CVV..."
             onChange={handleInputs}
-            value={userInput.complement ?? ''}
-          />
-          <input
-            className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
-            name="country"
-            type="text"
-            placeholder="Country..."
-            required
-            onChange={handleInputs}
-            value={userInput.country ?? ''}
+            value={userInput.cvv ?? ''}
           />
           {requestError && (
             <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>
