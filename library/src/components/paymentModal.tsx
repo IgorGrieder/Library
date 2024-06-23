@@ -19,6 +19,7 @@ const PaymentModal = ({ hideModal }: Props) => {
   const [inputError, setInputError] = useState(false); // State variable to control possible errors
   const [requestError, setRequestError] = useState(false); // State variable to control possible request errors
   const userContext = useContext(userCtx); // Getting the context
+  const controlKeys: string[] = []; // Array to control the missing fields
 
   // Function to handle chagens on the inputs
   const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +33,6 @@ const PaymentModal = ({ hideModal }: Props) => {
 
   // Function to check if the inputs are filled
   const checkInputs = () => {
-    const controlKeys: string[] = [];
     const keys = Object.keys(userInput) as Array<keyof Card>;
     keys.forEach((key) => {
       const value = userInput[key];
@@ -164,7 +164,9 @@ const PaymentModal = ({ hideModal }: Props) => {
             <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>
           )}
           {inputError && (
-            <ErrorBox text="Please fill the fields correctly"></ErrorBox>
+            <ErrorBox
+              text={`Please fill the fields correctly: ${controlKeys.join(', ')}`}
+            ></ErrorBox>
           )}
           <button className="mx-auto w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black">
             Save

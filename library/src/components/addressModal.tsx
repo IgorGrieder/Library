@@ -20,7 +20,7 @@ const AddressModal = ({ hideModal }: Props) => {
   const [inputError, setInputError] = useState(false); // State variable to control possible errors
   const [requestError, setRequestError] = useState(false); // State variable to control possible request errors
   const userContext = useContext(userCtx); // Getting the context
-
+  const controlKeys: string[] = []; // Array to control de fields
   // Function to handle chagens on the inputs
   const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
     const eTarget = e.target.name; // Getting the name of the event target input element
@@ -33,7 +33,6 @@ const AddressModal = ({ hideModal }: Props) => {
 
   // Function to check if the inputs are filled
   const checkInputs = () => {
-    const controlKeys: string[] = [];
     const keys = Object.keys(userInput) as Array<keyof UserLocation>;
     keys.forEach((key) => {
       const value = userInput[key];
@@ -134,7 +133,7 @@ const AddressModal = ({ hideModal }: Props) => {
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
             name="street"
             type="text"
-            placeholder="Street..."
+            placeholder="Enter your street address"
             required
             onChange={handleInputs}
             value={userInput.street ?? ''}
@@ -143,7 +142,7 @@ const AddressModal = ({ hideModal }: Props) => {
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
             name="number"
             type="text"
-            placeholder="Number..."
+            placeholder="Enter your house/building number"
             required
             onChange={handleInputs}
             value={userInput.number ?? ''}
@@ -152,7 +151,7 @@ const AddressModal = ({ hideModal }: Props) => {
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
             name="neighborhood"
             type="text"
-            placeholder="Neighborhood..."
+            placeholder="Enter your neighborhood or district"
             required
             onChange={handleInputs}
             value={userInput.neighborhood ?? ''}
@@ -161,7 +160,7 @@ const AddressModal = ({ hideModal }: Props) => {
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
             name="complement"
             type="text"
-            placeholder="Complement..."
+            placeholder="Enter any additional address details"
             onChange={handleInputs}
             value={userInput.complement ?? ''}
           />
@@ -169,7 +168,7 @@ const AddressModal = ({ hideModal }: Props) => {
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
             name="country"
             type="text"
-            placeholder="Country..."
+            placeholder="Enter your country"
             required
             onChange={handleInputs}
             value={userInput.country ?? ''}
@@ -178,7 +177,9 @@ const AddressModal = ({ hideModal }: Props) => {
             <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>
           )}
           {inputError && (
-            <ErrorBox text="Please fill the fields correctly"></ErrorBox>
+            <ErrorBox
+              text={`Please fill the fields correctly: ${controlKeys.join(', ')}`}
+            ></ErrorBox>
           )}
           <button className="mx-auto w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black">
             Save
