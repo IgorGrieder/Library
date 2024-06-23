@@ -45,6 +45,7 @@ const AddressModal = ({ hideModal }: Props) => {
   // Function to handle chagens on the inputs
   const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
     const eTarget = e.target.name; // Getting the name of the event target input element
+    e.target.style.border = ''; // Cleaning the possible border due to highlighting
     setUserInput({
       // cloning the object and changing the info dinamically for the specific field
       ...userInput,
@@ -80,11 +81,13 @@ const AddressModal = ({ hideModal }: Props) => {
   // Function to highlight the inputs that have errors
   const highlightInputs = (str: string) => {
     if (str in refs) {
-      // Checking if the str is a key of refs
-      const inputRef = refs[str]; // Getting the actual input
+      const inputRef = refs[str];
       if (inputRef.current) {
-        inputRef.current.style.border = '2px solid red'; // Changin the color of the border to highlight
-        inputRef.current.value = ''; // Cleaning the value of the input
+        inputRef.current.style.border = '2px solid red'; // Highlight the input
+        setUserInput((prevUserInputs) => ({
+          ...prevUserInputs,
+          [str]: '', // Reset only the specific field
+        }));
       }
     }
   };
@@ -97,16 +100,20 @@ const AddressModal = ({ hideModal }: Props) => {
       if (key === 'street' && !isValidStreet(value)) {
         controlKeys.push(key);
         highlightInputs(key);
-      } else if (key === 'country' && !isValidCountry(value)) {
+      }
+      if (key === 'country' && !isValidCountry(value)) {
         controlKeys.push(key);
         highlightInputs(key);
-      } else if (key === 'neighborhood' && !isValidNeighborhood(value)) {
+      }
+      if (key === 'neighborhood' && !isValidNeighborhood(value)) {
         controlKeys.push(key);
         highlightInputs(key);
-      } else if (key === 'number' && !isValidNumber(value)) {
+      }
+      if (key === 'number' && !isValidNumber(value)) {
         controlKeys.push(key);
         highlightInputs(key);
-      } else if (key === 'complement' && !isValidComplement(value)) {
+      }
+      if (key === 'complement' && !isValidComplement(value)) {
         controlKeys.push(key);
         highlightInputs(key);
       }

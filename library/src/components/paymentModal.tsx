@@ -42,6 +42,7 @@ const PaymentModal = ({ hideModal }: Props) => {
   // Function to handle chagens on the inputs
   const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
     const eTarget = e.target.name; // Getting the name of the event target input element
+    e.target.style.border = ''; // Cleaning the possible border due to highlighting
     setUserInput({
       // cloning the object and changing the info dinamically for the specific field
       ...userInput,
@@ -79,11 +80,13 @@ const PaymentModal = ({ hideModal }: Props) => {
   // Function to highlight the inputs that have errors
   const highlightInputs = (str: string) => {
     if (str in refs) {
-      // Checking if the str is a key of refs
-      const inputRef = refs[str]; // Getting the actual input
+      const inputRef = refs[str];
       if (inputRef.current) {
-        inputRef.current.style.border = '2px solid red'; // Changin the color of the border to highlight
-        inputRef.current.value = ''; // Cleaning the value of the input
+        inputRef.current.style.border = '2px solid red'; // Highlight the input
+        setUserInput((prevUserInputs) => ({
+          ...prevUserInputs,
+          [str]: '', // Reset only the specific field
+        }));
       }
     }
   };
@@ -96,13 +99,16 @@ const PaymentModal = ({ hideModal }: Props) => {
       if (key === 'number' && !isValidCardNumber(value)) {
         controlKeys.push(key);
         highlightInputs(key);
-      } else if (key === 'cvv' && !isValidCVV(value)) {
+      }
+      if (key === 'cvv' && !isValidCVV(value)) {
         controlKeys.push(key);
         highlightInputs(key);
-      } else if (key === 'name' && !isValidCardholderName(value)) {
+      }
+      if (key === 'name' && !isValidCardholderName(value)) {
         controlKeys.push(key);
         highlightInputs(key);
-      } else if (key === 'expDate' && !isValidExpirationDate(value)) {
+      }
+      if (key === 'expDate' && !isValidExpirationDate(value)) {
         controlKeys.push(key);
         highlightInputs(key);
       }
@@ -113,19 +119,19 @@ const PaymentModal = ({ hideModal }: Props) => {
 
   // Fcuntion to clear the inputs
   const clearInputs = () => {
-    setUserInput({
+    setUserInput((prevUserInput) => ({
       cvv: '',
       expDate: '',
       name: '',
       number: '',
-    });
+    }));
   };
 
   // Function to handle the submit of the form
   const handleForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Preventing the default submit behavior
-
-    if (checkInputs().length === 0) {
+    const inputsLenght = checkInputs();
+    if (inputsLenght.length === 0) {
       // If all the fields are filled correctly
       // Update user context if it's available
       if (userContext) {
@@ -138,7 +144,10 @@ const PaymentModal = ({ hideModal }: Props) => {
           USER_ID_KEY,
           JSON.stringify({
             ...userContext.user,
-            address: [...userContext.user.address, { ...userInput }],
+            paymentMethod: [
+              ...userContext.user.paymentMethod,
+              { ...userInput },
+            ],
           }),
         );
       }
