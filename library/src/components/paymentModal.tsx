@@ -4,6 +4,7 @@ import { Card } from '@/types/types';
 import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 import ErrorBox from './ErrorBox';
 import axiosInstance from '@/utils/axios';
+import { USER_ID_KEY } from './header';
 
 type Props = {
   hideModal: VoidFunction;
@@ -99,6 +100,14 @@ const PaymentModal = ({ hideModal }: Props) => {
           ...userContext.user,
           paymentMethod: [...userContext.user.paymentMethod, { ...userInput }],
         });
+        // Updating in the local storage
+        localStorage.setItem(
+          USER_ID_KEY,
+          JSON.stringify({
+            ...userContext.user,
+            address: [...userContext.user.address, { ...userInput }],
+          }),
+        );
       }
 
       const requestData = {
@@ -194,12 +203,14 @@ const PaymentModal = ({ hideModal }: Props) => {
             value={userInput.cvv ?? ''}
           />
           {requestError && (
-            <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>
+            <div className="flex justify-center">
+              <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>
+            </div>
           )}
           {inputError && (
-            <ErrorBox
-              text={`Please fill the fields correctly: ${controlKeys.join(', ')}`}
-            ></ErrorBox>
+            <div className="flex justify-center">
+              <ErrorBox text={`Please fill the fields correctly`}></ErrorBox>
+            </div>
           )}
           <button className="mx-auto w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black">
             Save

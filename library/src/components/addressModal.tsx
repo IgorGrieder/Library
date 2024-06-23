@@ -69,7 +69,7 @@ const AddressModal = ({ hideModal }: Props) => {
 
   // Function to check the number
   const isValidNumber = (number: string) => {
-    return /^[a-zA-Z0-9\s-]+$/.test(number);
+    return /^[0-9\s-]+$/.test(number);
   };
 
   // Function to check the neighborgood
@@ -83,7 +83,8 @@ const AddressModal = ({ hideModal }: Props) => {
       // Checking if the str is a key of refs
       const inputRef = refs[str]; // Getting the actual input
       if (inputRef.current) {
-        inputRef.current.style.border = '2px solid red';
+        inputRef.current.style.border = '2px solid red'; // Changin the color of the border to highlight
+        inputRef.current.value = ''; // Cleaning the value of the input
       }
     }
   };
@@ -254,12 +255,14 @@ const AddressModal = ({ hideModal }: Props) => {
             ref={refCountry}
           />
           {requestError && (
-            <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>
+            <div className="flex justify-center">
+              <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>
+            </div>
           )}
           {inputError && (
-            <ErrorBox
-              text={`Please fill the fields correctly: ${controlKeys.join(', ')}`}
-            ></ErrorBox>
+            <div className="flex justify-center">
+              <ErrorBox text={`Please fill the fields correctly`}></ErrorBox>
+            </div>
           )}
           <button className="mx-auto w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black">
             Save
