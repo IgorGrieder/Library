@@ -117,9 +117,9 @@ const PaymentModal = ({ hideModal }: Props) => {
             />
           </svg>
         </button>
-        <h1 className="font-Barlow text-center text-xl">Add an address</h1>
+        <h1 className="font-Barlow text-center text-xl">Add a card</h1>
         <p className="mt-2">
-          Please complete the following steps to add a new address!
+          Please complete the following steps to add a new payment method!
         </p>
         <form
           className="mx-auto mt-5 flex w-3/4 flex-col gap-2"
@@ -129,7 +129,7 @@ const PaymentModal = ({ hideModal }: Props) => {
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
             name="name"
             type="text"
-            placeholder="Name..."
+            placeholder="Enter cardholder name"
             required
             onChange={handleInputs}
             value={userInput.name ?? ''}
@@ -138,7 +138,7 @@ const PaymentModal = ({ hideModal }: Props) => {
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
             name="number"
             type="text"
-            placeholder="Number..."
+            placeholder="Enter your card number"
             required
             onChange={handleInputs}
             value={userInput.number ?? ''}
@@ -147,7 +147,7 @@ const PaymentModal = ({ hideModal }: Props) => {
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
             name="expDate"
             type="text"
-            placeholder="expDate..."
+            placeholder="Enter expiration date (MM/YYYY)"
             required
             onChange={handleInputs}
             value={userInput.expDate ?? ''}
@@ -156,7 +156,7 @@ const PaymentModal = ({ hideModal }: Props) => {
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
             name="cvv"
             type="text"
-            placeholder="CVV..."
+            placeholder="Enter CVV (Card Verification Value)"
             onChange={handleInputs}
             value={userInput.cvv ?? ''}
           />

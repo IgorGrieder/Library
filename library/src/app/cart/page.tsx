@@ -5,6 +5,7 @@ import ErrorBox from '@/components/ErrorBox';
 import Header from '@/components/header';
 import LocationSection from '@/components/LocationSection';
 import PaymentCard from '@/components/paymentCard';
+import PaymentModal from '@/components/paymentModal';
 import { bookCtx } from '@/context/booksContext';
 import { userCtx } from '@/context/userContext';
 import { Book, Card, UserLocation } from '@/types/types';
@@ -20,6 +21,7 @@ const Page = () => {
   // isFinishedLocalStorage is basically a flag to prevent the items to pre load during a short period of time without the localStorage information
   const [showAlert, setShowAlert] = useState(false); // State variable to show that teh cart is empty
   const [showModalAddress, setShowModalAddress] = useState(false); // State variable to control if the address modal is going to be shown
+  const [showModalPayment, setShowModalPayment] = useState(false); // State variable to control if the payment modal is going to be shown
   const router = useRouter(); // Creating an instance of router
   const isDisabled = location === null || paymentCard === null; // Flag to enbale and disable the button
 
@@ -46,8 +48,13 @@ const Page = () => {
   };
 
   // Function to hide the address modal
-  const hideModal = () => {
+  const hideModalAddress = () => {
     setShowModalAddress(false);
+  };
+
+  // Function to hide the payment modal
+  const hideModalPayment = () => {
+    setShowModalPayment(false);
   };
 
   // Function to show the modal
@@ -55,10 +62,20 @@ const Page = () => {
     setShowModalAddress(true);
   };
 
+  // Function to show the modal
+  const handleShowPaymentAddress = () => {
+    setShowModalPayment(true);
+  };
+
   return (
     <div className="min-h-screen bg-white pt-[100px] text-black">
       <Header setIsFinishedLocalStorage={setIsFinishedLocalStorage}></Header>
-      {showModalAddress && <AddressModal hideModal={hideModal}></AddressModal>}
+      {showModalAddress && (
+        <AddressModal hideModal={hideModalAddress}></AddressModal>
+      )}
+      {showModalPayment && (
+        <PaymentModal hideModal={hideModalPayment}></PaymentModal>
+      )}
       {isFinishedLocalStorage && (
         <div className="grid grid-cols-3 gap-2 sm:px-20 sm:py-10">
           <div className="col-span-2 grid grid-cols-1 gap-4 px-2 py-4">
@@ -175,7 +192,10 @@ const Page = () => {
                       setPaymentCard={setPaymentCard}
                     ></PaymentCard>
                   )}
-                  <button className="mt-4 text-green-400 hover:text-black hover:underline">
+                  <button
+                    className="mt-4 text-green-400 hover:text-black hover:underline"
+                    onClick={handleShowPaymentAddress}
+                  >
                     Add a card
                   </button>
                 </div>
