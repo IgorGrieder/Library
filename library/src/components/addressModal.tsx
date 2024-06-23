@@ -1,9 +1,17 @@
 'use client';
 import { userCtx } from '@/context/userContext';
 import { UserLocation } from '@/types/types';
-import { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  RefObject,
+  useContext,
+  useRef,
+  useState,
+} from 'react';
 import ErrorBox from './ErrorBox';
 import axiosInstance from '@/utils/axios';
+import { USER_ID_KEY } from './header';
 
 type Props = {
   hideModal: VoidFunction;
@@ -21,6 +29,19 @@ const AddressModal = ({ hideModal }: Props) => {
   const [requestError, setRequestError] = useState(false); // State variable to control possible request errors
   const userContext = useContext(userCtx); // Getting the context
   const controlKeys: string[] = []; // Array to control de fields
+  const refStreet = useRef(null); // Ref for the street input
+  const refCountry = useRef(null); // Ref for the Country input
+  const refNumber = useRef(null); // Ref for the Number input
+  const refNeighborhood = useRef(null); // Ref for the Neighborhood input
+  const refComplement = useRef(null); // Ref for the Complement input
+  const refs: Record<string, RefObject<HTMLInputElement>> = {
+    street: refStreet,
+    country: refCountry,
+    number: refNumber,
+    complement: refComplement,
+    neighborhood: refNeighborhood,
+  }; // Map for the respective refferences
+
   // Function to handle chagens on the inputs
   const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
     const eTarget = e.target.name; // Getting the name of the event target input element
@@ -56,16 +77,37 @@ const AddressModal = ({ hideModal }: Props) => {
     return /^[a-zA-Z0-9\s.,'-]*$/.test(neighborhood);
   };
 
+  // Function to highlight the inputs that have errors
+  const highlightInputs = (str: string) => {
+    if (str in refs) {
+      // Checking if the str is a key of refs
+      const inputRef = refs[str]; // Getting the actual input
+      if (inputRef.current) {
+        inputRef.current.style.border = '2px solid red';
+      }
+    }
+  };
+
   // Function to check if the inputs are filled
   const checkInputs = () => {
     const keys = Object.keys(userInput) as Array<keyof UserLocation>;
     keys.forEach((key) => {
-      const value = userInput[key];
-      if (
-        key !== 'complement' &&
-        (typeof value !== 'string' || value.length === 0)
-      ) {
-        controlKeys.push(key as string);
+      const value = userInput[key] ?? '';
+      if (key === 'street' && !isValidStreet(value)) {
+        controlKeys.push(key);
+        highlightInputs(key);
+      } else if (key === 'country' && !isValidCountry(value)) {
+        controlKeys.push(key);
+        highlightInputs(key);
+      } else if (key === 'neighborhood' && !isValidNeighborhood(value)) {
+        controlKeys.push(key);
+        highlightInputs(key);
+      } else if (key === 'number' && !isValidNumber(value)) {
+        controlKeys.push(key);
+        highlightInputs(key);
+      } else if (key === 'complement' && !isValidComplement(value)) {
+        controlKeys.push(key);
+        highlightInputs(key);
       }
     });
 
@@ -95,6 +137,14 @@ const AddressModal = ({ hideModal }: Props) => {
           ...userContext.user,
           address: [...userContext.user.address, { ...userInput }],
         });
+        // Updating in the local storage
+        localStorage.setItem(
+          USER_ID_KEY,
+          JSON.stringify({
+            ...userContext.user,
+            address: [...userContext.user.address, { ...userInput }],
+          }),
+        );
       }
 
       const requestData = {
@@ -162,6 +212,7 @@ const AddressModal = ({ hideModal }: Props) => {
             required
             onChange={handleInputs}
             value={userInput.street ?? ''}
+            ref={refStreet}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -171,6 +222,7 @@ const AddressModal = ({ hideModal }: Props) => {
             required
             onChange={handleInputs}
             value={userInput.number ?? ''}
+            ref={refNumber}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -180,6 +232,7 @@ const AddressModal = ({ hideModal }: Props) => {
             required
             onChange={handleInputs}
             value={userInput.neighborhood ?? ''}
+            ref={refNeighborhood}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -188,6 +241,7 @@ const AddressModal = ({ hideModal }: Props) => {
             placeholder="Enter any additional address details"
             onChange={handleInputs}
             value={userInput.complement ?? ''}
+            ref={refComplement}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -197,6 +251,7 @@ const AddressModal = ({ hideModal }: Props) => {
             required
             onChange={handleInputs}
             value={userInput.country ?? ''}
+            ref={refCountry}
           />
           {requestError && (
             <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>

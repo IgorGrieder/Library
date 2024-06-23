@@ -80,8 +80,11 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
     router.push('/'); // Changing the url to the main one
   };
 
-  // Determine if cart icon should be shown
-  let isCartIconShow = checkCurrentEnviroment(window.location.href);
+  let isCartIconShow;
+  if (typeof window !== 'undefined') {
+    // Determine if cart icon should be shown
+    isCartIconShow = checkCurrentEnviroment(window.location.href);
+  }
 
   return (
     <div className="fixed left-0 right-0 top-0 z-10 flex items-center justify-center bg-green-700 px-10 py-8 text-white">
