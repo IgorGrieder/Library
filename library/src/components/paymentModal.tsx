@@ -1,7 +1,14 @@
 'use client';
 import { userCtx } from '@/context/userContext';
 import { Card } from '@/types/types';
-import { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  RefObject,
+  useContext,
+  useRef,
+  useState,
+} from 'react';
 import ErrorBox from './ErrorBox';
 import axiosInstance from '@/utils/axios';
 import { USER_ID_KEY } from './header';
@@ -21,6 +28,16 @@ const PaymentModal = ({ hideModal }: Props) => {
   const [requestError, setRequestError] = useState(false); // State variable to control possible request errors
   const userContext = useContext(userCtx); // Getting the context
   const controlKeys: string[] = []; // Array to control the missing fields
+  const refNumber = useRef(null); // Ref for the Number input
+  const refName = useRef(null); // Ref for the Name input
+  const refExpDate = useRef(null); // Ref for the ExpDate input
+  const refCvv = useRef(null); // Ref for the Cvv input
+  const refs: Record<string, RefObject<HTMLInputElement>> = {
+    number: refNumber,
+    cvv: refCvv,
+    expDate: refExpDate,
+    name: refName,
+  }; // Map for the respective refferences
 
   // Function to handle chagens on the inputs
   const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +76,18 @@ const PaymentModal = ({ hideModal }: Props) => {
     return /^[a-zA-Z0-9 ]+$/.test(name);
   };
 
+  // Function to highlight the inputs that have errors
+  const highlightInputs = (str: string) => {
+    if (str in refs) {
+      // Checking if the str is a key of refs
+      const inputRef = refs[str]; // Getting the actual input
+      if (inputRef.current) {
+        inputRef.current.style.border = '2px solid red'; // Changin the color of the border to highlight
+        inputRef.current.value = ''; // Cleaning the value of the input
+      }
+    }
+  };
+
   // Function to check if the inputs are filled
   const checkInputs = () => {
     const keys = Object.keys(userInput) as Array<keyof Card>;
@@ -66,12 +95,16 @@ const PaymentModal = ({ hideModal }: Props) => {
       const value = userInput[key] ?? '';
       if (key === 'number' && !isValidCardNumber(value)) {
         controlKeys.push(key);
+        highlightInputs(key);
       } else if (key === 'cvv' && !isValidCVV(value)) {
         controlKeys.push(key);
+        highlightInputs(key);
       } else if (key === 'name' && !isValidCardholderName(value)) {
         controlKeys.push(key);
+        highlightInputs(key);
       } else if (key === 'expDate' && !isValidExpirationDate(value)) {
         controlKeys.push(key);
+        highlightInputs(key);
       }
     });
 
@@ -175,6 +208,7 @@ const PaymentModal = ({ hideModal }: Props) => {
             required
             onChange={handleInputs}
             value={userInput.name ?? ''}
+            ref={refName}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -184,6 +218,7 @@ const PaymentModal = ({ hideModal }: Props) => {
             required
             onChange={handleInputs}
             value={userInput.number ?? ''}
+            ref={refNumber}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -193,6 +228,7 @@ const PaymentModal = ({ hideModal }: Props) => {
             required
             onChange={handleInputs}
             value={userInput.expDate ?? ''}
+            ref={refExpDate}
           />
           <input
             className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
@@ -201,6 +237,7 @@ const PaymentModal = ({ hideModal }: Props) => {
             placeholder="Enter CVV (Card Verification Value)"
             onChange={handleInputs}
             value={userInput.cvv ?? ''}
+            ref={refCvv}
           />
           {requestError && (
             <div className="flex justify-center">
