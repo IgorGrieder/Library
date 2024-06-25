@@ -1,8 +1,1 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/page": "app/page.js",
-  "/cart/page": "app/cart/page.js",
-  "/signIn/page": "app/signIn/page.js",
-  "/books/search/page": "app/books/search/page.js",
-  "/authors/search/page": "app/authors/search/page.js"
-}
+{}
