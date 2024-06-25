@@ -50,7 +50,7 @@ const LocationSection = ({
         <span className="font-Barlow font-bold">
           Street:{' '}
           <span className="font-sans font-normal">
-            {street} {number}, {complement} - {neighborhood}
+            {street} {number}, {complement} {neighborhood}
           </span>
         </span>
         <span className="font-Barlow font-bold">

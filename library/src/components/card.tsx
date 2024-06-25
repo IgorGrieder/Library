@@ -87,7 +87,6 @@ const Card = ({
   const handleBuyNow = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation(); // Prevent the event from propagating to the parent div
     addItem();
-    handleClickCart();
     router.push('/cart');
   };
 
