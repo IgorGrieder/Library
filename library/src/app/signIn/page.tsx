@@ -86,6 +86,9 @@ const SignIn = () => {
 
         router.back(); // Returning to the page it was previously
       } else {
+        // Cleaning the messages
+        setEmailSent(false);
+        setInputError(false);
         setWrongLogIn(true);
       }
     } catch (err: any) {
@@ -132,6 +135,11 @@ const SignIn = () => {
     }, 5000);
   };
 
+  //  Function to open the sign in page
+  const handleOpenSignIn = () => {
+    router.push('/signin');
+  };
+
   return (
     <div className="flex h-screen items-center justify-center overflow-hidden bg-white p-40 text-black">
       <form
@@ -176,28 +184,36 @@ const SignIn = () => {
         >
           Forgot my password
         </button>
-        {wrongLogIn && (
-          <div className="absolute right-14 top-10">
-            <ErrorBox text="Incorrect username and/or password. Please try again."></ErrorBox>
-          </div>
-        )}
-        {inputError && (
-          <div className="absolute right-14 top-10">
-            <ErrorBox text="Please fill the fields correctly"></ErrorBox>
-          </div>
-        )}
-        {emailSent && (
-          <div className="absolute right-14 top-10">
-            <ConfirmationBox text="Email sent, please check your inbox."></ConfirmationBox>
-          </div>
-        )}
-        <button
-          type="submit"
-          className="w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black"
-        >
-          Log in
-        </button>
+        <div className="flex gap-5">
+          <button
+            type="submit"
+            className="w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black"
+          >
+            Log in
+          </button>
+          <button
+            className="w-[100px] rounded-2xl border border-white bg-sky-700 px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black"
+            onClick={handleOpenSignIn}
+          >
+            Sign in
+          </button>
+        </div>
       </form>
+      {wrongLogIn && (
+        <div className="absolute right-14 top-10">
+          <ErrorBox text="Incorrect username and/or password. Please try again."></ErrorBox>
+        </div>
+      )}
+      {inputError && (
+        <div className="absolute right-14 top-10">
+          <ErrorBox text="Please fill the fields correctly"></ErrorBox>
+        </div>
+      )}
+      {emailSent && (
+        <div className="absolute right-14 top-10">
+          <ConfirmationBox text="Email sent, please check your inbox."></ConfirmationBox>
+        </div>
+      )}
     </div>
   );
 };
