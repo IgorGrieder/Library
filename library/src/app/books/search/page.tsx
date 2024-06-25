@@ -59,6 +59,8 @@ const Page = () => {
               price={book?.price}
               image={book?.image[0]}
               key={crypto.randomUUID()}
+              isShowingCart={isShowingCart}
+              handleClickCart={handleCartClick}
             ></BookPage>
           )}
         </div>
