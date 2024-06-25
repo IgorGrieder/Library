@@ -12,13 +12,14 @@ import {
   useRef,
   useState,
 } from 'react';
+import ConfirmationBox from '@/components/confirmationBox';
 
 const SignIn = () => {
   const [userInput, setUserInput] = useState({ user: '', password: '' }); // State object to control the user and the password input
   const [wrongLogIn, setWrongLogIn] = useState(false); // State to check if the user typed a wrong log in information
   const [inputError, setInputError] = useState(false); // State to check if the user didn't type the right in information
+  const [emailSent, setEmailSent] = useState(false); // State to show a message confirmation
   const refPasswordInput = useRef<HTMLInputElement>(null); // Refference to the password input
-  const refPasswordText = useRef<HTMLInputElement>(null); // Refference to the password input
   const userContext = useContext(userCtx); // Importing the user context
   const router = useRouter(); // Creating an instance of router
 
@@ -96,6 +97,8 @@ const SignIn = () => {
   // Function to handle chagens on the inputs
   const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
     const eTarget = e.target.name; // Getting the name of the event target input element
+    setWrongLogIn(false);
+    setInputError(false);
     setUserInput({
       // cloning the object and changing the info dinamically for the specific field
       ...userInput,
@@ -112,6 +115,21 @@ const SignIn = () => {
     } else {
       refPasswordInput.current.type = 'password';
     }
+  };
+
+  // Function to simulate an email being sent
+  const handleShowSentEmail: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault(); // Preventing the default behvaior
+
+    // Cleaning the possible alerts from the screen
+    setWrongLogIn(false);
+    setInputError(false);
+    setEmailSent(true);
+
+    // Configuring the time that the element will be shown for
+    setTimeout(() => {
+      setEmailSent(false);
+    }, 5000);
   };
 
   return (
@@ -138,7 +156,7 @@ const SignIn = () => {
           ref={refPasswordInput}
           required
         />
-        <div className="mb-auto flex items-center gap-2 self-start">
+        <div className="mb-2 flex items-center gap-2 self-start">
           <input
             type="checkbox"
             id="showPasswordCheckbox"
@@ -152,11 +170,26 @@ const SignIn = () => {
             Show password
           </label>
         </div>
+        <button
+          className="mb-auto self-start text-sky-600 hover:underline"
+          onClick={handleShowSentEmail}
+        >
+          Forgot my password
+        </button>
         {wrongLogIn && (
-          <ErrorBox text="Incorrect username and/or password. Please try again."></ErrorBox>
+          <div className="absolute right-14 top-10">
+            <ErrorBox text="Incorrect username and/or password. Please try again."></ErrorBox>
+          </div>
         )}
         {inputError && (
-          <ErrorBox text="Please fill the fields correctly"></ErrorBox>
+          <div className="absolute right-14 top-10">
+            <ErrorBox text="Please fill the fields correctly"></ErrorBox>
+          </div>
+        )}
+        {emailSent && (
+          <div className="absolute right-14 top-10">
+            <ConfirmationBox text="Email sent, please check your inbox."></ConfirmationBox>
+          </div>
         )}
         <button
           type="submit"
