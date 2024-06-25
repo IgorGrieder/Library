@@ -4,12 +4,21 @@ import ErrorBox from '@/components/ErrorBox';
 import { userCtx } from '@/context/userContext';
 import axiosInstance from '@/utils/axios';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useContext, useState } from 'react';
+import {
+  ChangeEvent,
+  FormEvent,
+  MouseEventHandler,
+  useContext,
+  useRef,
+  useState,
+} from 'react';
 
 const SignIn = () => {
   const [userInput, setUserInput] = useState({ user: '', password: '' }); // State object to control the user and the password input
   const [wrongLogIn, setWrongLogIn] = useState(false); // State to check if the user typed a wrong log in information
   const [inputError, setInputError] = useState(false); // State to check if the user didn't type the right in information
+  const refPasswordInput = useRef<HTMLInputElement>(null); // Refference to the password input
+  const refPasswordText = useRef<HTMLInputElement>(null); // Refference to the password input
   const userContext = useContext(userCtx); // Importing the user context
   const router = useRouter(); // Creating an instance of router
 
@@ -94,6 +103,17 @@ const SignIn = () => {
     });
   };
 
+  // Function to show the password clicking in the checkbox
+  const handlePasswordCheckbox: MouseEventHandler<HTMLInputElement> = (e) => {
+    if (!refPasswordInput.current) return; // In case the ref is null end the function
+    // Switch the input type between 'password' and 'text'
+    if (refPasswordInput.current.type === 'password') {
+      refPasswordInput.current.type = 'text';
+    } else {
+      refPasswordInput.current.type = 'password';
+    }
+  };
+
   return (
     <div className="flex h-screen items-center justify-center overflow-hidden bg-white p-40 text-black">
       <form
@@ -112,11 +132,26 @@ const SignIn = () => {
         <input
           type="password"
           name="password"
-          className="mb-auto w-full rounded-lg border border-black px-4 py-2 outline-none"
+          className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
           placeholder="Password"
           onChange={handleInputs}
+          ref={refPasswordInput}
           required
         />
+        <div className="mb-auto flex items-center gap-2 self-start">
+          <input
+            type="checkbox"
+            id="showPasswordCheckbox"
+            onClick={handlePasswordCheckbox}
+            className="cursor-pointer hover:bg-black/20"
+          />
+          <label
+            htmlFor="showPasswordCheckbox"
+            className="cursor-pointer select-none text-black"
+          >
+            Show password
+          </label>
+        </div>
         {wrongLogIn && (
           <ErrorBox text="Incorrect username and/or password. Please try again."></ErrorBox>
         )}
