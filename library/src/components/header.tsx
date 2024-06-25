@@ -20,10 +20,11 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
   const userContext = useContext(userCtx); // Getting the context
   const [showSignOut, setShowSignOut] = useState(false); // State variable to control the sign out box
   const [showBoxLogIn, setShowBoxLogIn] = useState(false); // State variable to control if the user box is going to be shown
+  const [isCartIconShow, setIsCartIconShow] = useState(false); // State to manage cart icon visibility
   const router = useRouter(); // Instance of router to change the url
 
   useEffect(() => {
-    // Skip local storage access during SSR
+    // Ensure local storage access and window-specific code is run only on the client
     if (typeof window !== 'undefined') {
       // Capturing information from the localStorage
       const local = localStorage.getItem(USER_ID_KEY);
@@ -32,13 +33,16 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
         const userObj = JSON.parse(local);
         userContext?.setUser({ ...userObj }); // Setting the user context to the information saved in the localStorage
       }
-    }
 
-    // Showing the box after the process is done
-    setShowBoxLogIn(true);
-    if (setIsFinishedLocalStorage) {
-      // If the function is sent through the parent
-      setIsFinishedLocalStorage(true);
+      // Determine if cart icon should be shown
+      setIsCartIconShow(checkCurrentEnviroment(window.location.href));
+
+      // Showing the box after the process is done
+      setShowBoxLogIn(true);
+      if (setIsFinishedLocalStorage) {
+        // If the function is sent through the parent
+        setIsFinishedLocalStorage(true);
+      }
     }
   }, []);
 
@@ -79,12 +83,6 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
   const handleBackMenu = () => {
     router.push('/'); // Changing the url to the main one
   };
-
-  let isCartIconShow;
-  if (typeof window !== 'undefined') {
-    // Determine if cart icon should be shown
-    isCartIconShow = checkCurrentEnviroment(window.location.href);
-  }
 
   return (
     <div className="fixed left-0 right-0 top-0 z-10 flex items-center justify-center bg-green-700 px-10 py-8 text-white">
