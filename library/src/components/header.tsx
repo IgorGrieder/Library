@@ -56,7 +56,7 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
   const handleClickSignIn = () => {
     // Checking if the user has already logged on or not
     if (userContext?.user?.id === null) {
-      router.push('/signIn');
+      router.push('/login');
     } else {
       setShowSignOut(!showSignOut);
     }
