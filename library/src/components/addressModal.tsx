@@ -28,7 +28,6 @@ const AddressModal = ({ hideModal }: Props) => {
   const [inputError, setInputError] = useState(false); // State variable to control possible errors
   const [requestError, setRequestError] = useState(false); // State variable to control possible request errors
   const userContext = useContext(userCtx); // Getting the context
-  const controlKeys: string[] = []; // Array to control de fields
   const refStreet = useRef(null); // Ref for the street input
   const refCountry = useRef(null); // Ref for the Country input
   const refNumber = useRef(null); // Ref for the Number input
@@ -95,6 +94,7 @@ const AddressModal = ({ hideModal }: Props) => {
   // Function to check if the inputs are filled
   const checkInputs = () => {
     const keys = Object.keys(userInput) as Array<keyof UserLocation>;
+    const controlKeys: string[] = []; // Array to control de fields
     keys.forEach((key) => {
       const value = userInput[key] ?? '';
       if (key === 'street' && !isValidStreet(value)) {

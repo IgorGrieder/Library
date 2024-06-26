@@ -20,16 +20,23 @@ type UserToDB = {
   passwordTwo: string;
 };
 
+type InputError = {
+  show: boolean;
+  message: string;
+};
+
 const SignIn = () => {
   const [userInput, setUserInput] = useState<UserToDB>({
     name: '',
     passwordOne: '',
     passwordTwo: '',
   }); // State object to control the user and the password input
-  const [inputError, setInputError] = useState(false); // State to check if the user didn't type the right in information
+  const [inputError, setInputError] = useState<InputError>({
+    show: false,
+    message: '',
+  }); // State to check if the user didn't type the right in information
   const refUser = useRef(null); // Username input ref
   const refPasswordOne = useRef(null); // Password 1 input ref
-  const controlKeys: string[] = []; // Array to control de fields
   const refPasswordTwo = useRef(null); // Password 2 input ref
   const refs: Record<string, RefObject<HTMLInputElement>> = {
     user: refUser,
@@ -52,10 +59,14 @@ const SignIn = () => {
   };
 
   // Function to highlight the inputs that have errors
-  const highlightInputs = (str: string) => {
+  const highlightInputs = (str: string, message: string) => {
     if (str in refs) {
       const inputRef = refs[str];
       if (inputRef.current) {
+        setInputError({
+          show: true,
+          message,
+        });
         inputRef.current.style.border = '2px solid red'; // Highlight the input
         setUserInput((prevUserInputs) => ({
           ...prevUserInputs,
@@ -77,20 +88,51 @@ const SignIn = () => {
   };
 
   // Function to validate the username
-  const isValidUsername = async (username: string) => {};
+  const isValidUsername = async (username: string) => {
+    let hasUser = true;
+
+    // Making the request trying to find an specific user
+    try {
+      const result = await axiosInstance.get('signIn', {
+        params: { name: username },
+      });
+      if (result.data.found) {
+        // If there`s already a user in the DB
+        hasUser = false;
+        return hasUser;
+      } else return hasUser;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Function to check if the passwords match
+  const isValidPasswordCheck = () => {
+    if (userInput) {
+      return userInput.passwordOne === userInput.passwordTwo;
+    }
+  };
 
   // Function to check if the inputs are filled
   const checkInputs = () => {
     const keys = Object.keys(userInput) as Array<keyof UserToDB>;
+    const controlKeys: string[] = []; // Array to control de fields
+    let errorMessage = ''; // Error message to be displayed
     keys.forEach((key) => {
       const value = userInput[key] ?? '';
-      if (key === 'passwordOne' && !isValidPassword(value)) {
-        controlKeys.push(key);
-        highlightInputs(key);
-      }
       if (key === 'name' && !isValidUsername(value)) {
+        errorMessage = `User with the name ${userInput.name} already exists, try another one.`;
         controlKeys.push(key);
-        highlightInputs(key);
+        highlightInputs(key, errorMessage);
+      }
+      if (key === 'passwordOne' && !isValidPassword(value)) {
+        errorMessage = `${errorMessage.length > 0 ? '\n' : ''}Password must be 6-20 characters long, contain at least one uppercase letter, and at least one special character.`;
+        controlKeys.push(key);
+        highlightInputs(key, errorMessage);
+      } else if (key === 'passwordTwo' && !isValidPasswordCheck()) {
+        errorMessage = `${errorMessage.length > 0 ? '\n' : ''}Passwords must match.`;
+        controlKeys.push(key);
+        highlightInputs(key, errorMessage);
       }
     });
 
@@ -110,6 +152,13 @@ const SignIn = () => {
   const handleSignIn = (e: FormEvent<HTMLFormElement>) => {
     if (userInput.name.length === 0 || userInput.passwordOne.length === 0)
       return; // End the function if one of the inputs are empty
+
+    if (checkInputs().length === 0) {
+      // If there aren`t any error occuring with the
+
+      // TO DO - Make the registration in the DB
+      clearInputs();
+    }
   };
 
   return (
@@ -125,6 +174,7 @@ const SignIn = () => {
           name="user"
           className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
           placeholder="User"
+          value={userInput.name}
           onChange={handleInputs}
           required
         />
@@ -134,6 +184,7 @@ const SignIn = () => {
           name="passwordOne"
           className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
           placeholder="Password"
+          value={userInput.passwordOne}
           onChange={handleInputs}
           required
         />
@@ -143,6 +194,7 @@ const SignIn = () => {
           name="passwordOne"
           className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
           placeholder="Password"
+          value={userInput.passwordTwo}
           onChange={handleInputs}
           required
         />
@@ -153,9 +205,9 @@ const SignIn = () => {
           Sign in
         </input>
       </form>
-      {inputError && (
+      {inputError.show && (
         <div className="absolute right-14 top-10">
-          <ErrorBox text="Incorrect username and/or password. Please try again."></ErrorBox>
+          <ErrorBox text={inputError.message}></ErrorBox>
         </div>
       )}
     </div>

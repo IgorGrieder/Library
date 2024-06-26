@@ -28,6 +28,24 @@ class UserController {
     }
   }
 
+  // Method to find a user in the DB
+  static async hasUser(req, res) {
+    try {
+      const userDB = await user.findOne({
+        name: req.query.name,
+      });
+      if (userDB) {
+        // If there`s a user with that name it should return to the front end that the username is not available
+        res.status(200).json({
+          found: true,
+        });
+      } else {
+        res.status(200).json({ found: false }); // If the username is available
+      }
+    } catch (err) {
+      res.status(500).json({ message: `Error: ${err.message}` }); // Sending the response if a error happens
+    }
+  }
   // Method to add another address
   static async addAddress(req, res) {
     try {
