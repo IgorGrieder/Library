@@ -14,20 +14,22 @@ import {
 import ConfirmationBox from '@/components/confirmationBox';
 import { Card, User, UserLocation } from '@/types/types';
 
-type UserinDB = {
+type UserToDB = {
   name: string;
-  _id: string;
-  password: string;
-  role: string | null;
-  address: UserLocation[];
-  paymentMethod: Card[];
+  passwordOne: string;
+  passwordTwo: string;
 };
 
 const SignIn = () => {
-  const [userInput, setUserInput] = useState({ user: '', password: '' }); // State object to control the user and the password input
+  const [userInput, setUserInput] = useState<UserToDB>({
+    name: '',
+    passwordOne: '',
+    passwordTwo: '',
+  }); // State object to control the user and the password input
   const [inputError, setInputError] = useState(false); // State to check if the user didn't type the right in information
   const refUser = useRef(null); // Username input ref
   const refPasswordOne = useRef(null); // Password 1 input ref
+  const controlKeys: string[] = []; // Array to control de fields
   const refPasswordTwo = useRef(null); // Password 2 input ref
   const refs: Record<string, RefObject<HTMLInputElement>> = {
     user: refUser,
@@ -63,28 +65,30 @@ const SignIn = () => {
     }
   };
 
+  // Function to validate the password
+  const isValidPassword = (password: string) => {
+    // Regular expression to check the conditions:
+    // 1. At least one uppercase letter
+    // 2. At least one special character
+    // 3. Length between 6 and 20 characters
+    const pattern = /^(?=.*[A-Z])(?=.*[\W_]).{6,20}$/;
+
+    return pattern.test(password);
+  };
+
+  // Function to validate the username
+  const isValidUsername = async (username: string) => {};
+
   // Function to check if the inputs are filled
   const checkInputs = () => {
-    const keys = Object.keys(userInput) as Array<keyof User>;
+    const keys = Object.keys(userInput) as Array<keyof UserToDB>;
     keys.forEach((key) => {
       const value = userInput[key] ?? '';
-      if (key === 'street' && !isValidStreet(value)) {
+      if (key === 'passwordOne' && !isValidPassword(value)) {
         controlKeys.push(key);
         highlightInputs(key);
       }
-      if (key === 'country' && !isValidCountry(value)) {
-        controlKeys.push(key);
-        highlightInputs(key);
-      }
-      if (key === 'neighborhood' && !isValidNeighborhood(value)) {
-        controlKeys.push(key);
-        highlightInputs(key);
-      }
-      if (key === 'number' && !isValidNumber(value)) {
-        controlKeys.push(key);
-        highlightInputs(key);
-      }
-      if (key === 'complement' && !isValidComplement(value)) {
+      if (key === 'name' && !isValidUsername(value)) {
         controlKeys.push(key);
         highlightInputs(key);
       }
@@ -96,7 +100,7 @@ const SignIn = () => {
   // Fcuntion to clear the inputs
   const clearInputs = () => {
     setUserInput({
-      user: '',
+      name: '',
       passwordOne: '',
       passwordTwo: '',
     });
@@ -104,7 +108,8 @@ const SignIn = () => {
 
   // Function to control the sign in registration
   const handleSignIn = (e: FormEvent<HTMLFormElement>) => {
-    if (userInput.user.length === 0 || userInput.password.length === 0) return; // End the function if one of the inputs are empty
+    if (userInput.name.length === 0 || userInput.passwordOne.length === 0)
+      return; // End the function if one of the inputs are empty
   };
 
   return (
