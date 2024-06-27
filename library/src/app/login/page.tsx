@@ -34,7 +34,7 @@ const SignIn = () => {
     }
 
     try {
-      const result = await axiosInstance.get(`/signIn`, {
+      const result = await axiosInstance.get(`/login`, {
         params: {
           name: userInput.user,
           password: userInput.password,

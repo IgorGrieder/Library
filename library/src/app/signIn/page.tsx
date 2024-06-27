@@ -61,17 +61,13 @@ const SignIn = () => {
 
   // Function to highlight the inputs that have errors
   const highlightInputs = (str: string, message: string) => {
-    console.log(str + '  ' + message);
-
     if (str in refs) {
       const inputRef = refs[str];
-      console.log(inputRef);
       if (inputRef.current) {
         setInputError({
           show: true,
           message,
         });
-        console.log('mudou' + inputRef.current.value);
 
         inputRef.current.style.border = '2px solid red'; // Highlight the input
         setUserInput((prevUserInputs) => ({
@@ -120,7 +116,7 @@ const SignIn = () => {
   };
 
   // Function to check if the inputs are filled
-  const checkInputs = () => {
+  const checkInputs = async () => {
     const keys = Object.keys(userInput) as Array<keyof UserToDB>;
     const controlKeys: string[] = []; // Array to control de fields
     let errorMessage = ''; // Error message to be displayed
@@ -139,16 +135,16 @@ const SignIn = () => {
       }
     };
 
-    keys.forEach((key) => {
-      const value = userInput[key] ?? '';
+    for (let key of keys) {
+      const value = userInput[key];
       if (key === 'name') {
-        handleSearchUsername(value).then((usernameSearch) => {
-          if (!usernameSearch) {
-            errorMessage = `User with the name ${userInput.name} already exists, try another one.`;
-            controlKeys.push(key);
-            highlightInputs(key, errorMessage);
-          }
-        });
+        const userNameSearch = await handleSearchUsername(value);
+
+        if (!userNameSearch) {
+          errorMessage = `User with the name ${userInput.name} already exists, try another one.`;
+          controlKeys.push(key);
+          highlightInputs(key, errorMessage);
+        }
       } else {
         if (key === 'passwordOne' && !isValidPassword(value)) {
           errorMessage = `Password must be 6-20 characters long, contain at least one uppercase letter, and at least one special character.`;
@@ -166,29 +162,33 @@ const SignIn = () => {
           highlightInputs(key, errorMessage);
         }
       }
-    });
+    }
 
     return controlKeys;
   };
 
-  // Fcuntion to clear the inputs
-  const clearInputs = () => {
-    setUserInput({
-      name: '',
-      passwordOne: '',
-      passwordTwo: '',
-    });
-  };
-
   // Function to control the sign in registration
-  const handleSignIn: MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleSignIn: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault(); // Prevanting the default behavior
     if (userInput.name.length === 0 || userInput.passwordOne.length === 0)
       return; // End the function if one of the inputs are empty
 
-    if (checkInputs().length === 0) {
-      // If there aren`t any error occuring with the
-      // TO DO - Make the registration in the DB
+    const hasError = await checkInputs();
+    if (hasError.length === 0) {
+      try {
+        // If there aren`t any error occuring with the validation
+        const result = await axiosInstance.post('/signIn', {
+          name: userInput.name,
+          password: userInput.passwordOne,
+        });
+
+        if (result.data.created) {
+          // If the user was created we will send the user back to the home page
+          router.push('/');
+        }
+      } catch (err: any) {
+        console.log(err.message);
+      }
     }
   };
 

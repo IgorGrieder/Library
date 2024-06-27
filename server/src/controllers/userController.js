@@ -28,6 +28,30 @@ class UserController {
     }
   }
 
+  // Method to add a user
+  static async addUser(req, res) {
+    try {
+      // Creating a new user
+      const userDB = await user.create({
+        name: req.body.name,
+        password: req.body.password,
+        role: 'user',
+        address: [],
+        paymentMethod: [],
+      });
+      if (userDB._id) {
+        // Checking if the user was created
+        res.status(200).json({
+          created: true,
+        });
+      } else {
+        res.status(200).json({ created: false });
+      }
+    } catch (err) {
+      res.status(500).json({ message: `Error: ${err.message}` }); // Sending the response if a error happens
+    }
+  }
+
   // Method to find a user in the DB
   static async hasUser(req, res) {
     try {
@@ -46,6 +70,7 @@ class UserController {
       res.status(500).json({ message: `Error: ${err.message}` }); // Sending the response if a error happens
     }
   }
+
   // Method to add another address
   static async addAddress(req, res) {
     try {
