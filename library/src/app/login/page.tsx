@@ -137,7 +137,7 @@ const SignIn = () => {
 
   //  Function to open the sign in page
   const handleOpenSignIn = () => {
-    router.push('/signin');
+    router.push('/signIn');
   };
 
   return (
