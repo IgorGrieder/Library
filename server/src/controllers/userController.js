@@ -1,4 +1,6 @@
 import user from '../models/usersModel.js';
+import bcrypt from 'bcrypt';
+const salt = 10; // Salt for the hash
 
 class UserController {
   // Method to validate if the user is a admin or not
@@ -6,20 +8,30 @@ class UserController {
     try {
       const userDB = await user.findOne({
         name: req.query.name,
-        password: req.query.password,
       }); // Getting the proper user
       if (userDB) {
-        // Checking if the user name and password are correct
-        res.status(200).json({
-          found: true,
-          userInfo: {
-            name: userDB.name,
-            id: userDB._id,
-            role: userDB.role,
-            address: userDB.address,
-            paymentMethod: userDB.paymentMethod,
-          },
-        });
+        // Checking the password with the hash
+        const result = await bcrypt.compare(
+          req.query.password,
+          userDB.password,
+        );
+        if (result) {
+          // If the password matches the hash in the DB
+          // Checking if the user name and password are correct
+          res.status(200).json({
+            found: true,
+            userInfo: {
+              name: userDB.name,
+              id: userDB._id,
+              role: userDB.role,
+              address: userDB.address,
+              paymentMethod: userDB.paymentMethod,
+            },
+          });
+        } else {
+          // If the password doesnt match
+          res.status(200).json({ found: false });
+        }
       } else {
         res.status(200).json({ found: false });
       }
@@ -34,7 +46,7 @@ class UserController {
       // Creating a new user
       const userDB = await user.create({
         name: req.body.name,
-        password: req.body.password,
+        password: await bcrypt.hash(req.body.password, salt),
         role: 'user',
         address: [],
         paymentMethod: [],
