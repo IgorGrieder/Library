@@ -608,6 +608,18 @@ video {
 .top-\[120px\] {
   top: 120px;
 }
+.left-20 {
+  left: 5rem;
+}
+.left-2 {
+  left: 0.5rem;
+}
+.left-5 {
+  left: 1.25rem;
+}
+.bottom-0 {
+  bottom: 0px;
+}
 .z-10 {
   z-index: 10;
 }

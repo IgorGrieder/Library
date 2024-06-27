@@ -1,13 +1,11 @@
 'use client';
 import ErrorBox from '@/components/ErrorBox';
-import { userCtx } from '@/context/userContext';
 import axiosInstance from '@/utils/axios';
 import { useRouter } from 'next/navigation';
 import {
   ChangeEvent,
   MouseEventHandler,
   RefObject,
-  useContext,
   useRef,
   useState,
 } from 'react';
@@ -209,9 +207,31 @@ const SignIn = () => {
     }
   };
 
+  // Function to get back to the main menu
+  const handleBackMenu: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.preventDefault();
+    router.push('/'); // Changing the url to the main one
+  };
+
   return (
     <div className="flex h-screen items-center justify-center overflow-hidden bg-white p-40 text-black">
-      <form className="flex w-full flex-col items-center rounded-3xl border border-black bg-green-300 px-8 py-16 sm:min-h-[500px] sm:w-auto sm:min-w-[400px]">
+      <form className="relative flex w-full flex-col items-center rounded-3xl border border-black bg-green-300 px-8 py-16 sm:min-h-[500px] sm:w-auto sm:min-w-[400px]">
+        <button className="absolute left-5 top-5" onClick={handleBackMenu}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+            />
+          </svg>
+        </button>
         <h1 className="font-Barlow mb-20 text-center text-3xl">Sign in</h1>
         <input
           ref={refName}
