@@ -5,7 +5,6 @@ import axiosInstance from '@/utils/axios';
 import { useRouter } from 'next/navigation';
 import {
   ChangeEvent,
-  FormEvent,
   MouseEventHandler,
   RefObject,
   useContext,
@@ -35,6 +34,7 @@ const SignIn = () => {
     show: false,
     message: '',
   }); // State to check if the user didn't type the right in information
+  const [confirmationShow, setConfirmationShow] = useState(false); // State varibale to confirm to the user that its user was created
   const refName = useRef(null); // Username input ref
   const refPasswordOne = useRef(null); // Password 1 input ref
   const refPasswordTwo = useRef(null); // Password 2 input ref
@@ -43,8 +43,6 @@ const SignIn = () => {
     passwordOne: refPasswordOne,
     passwordTwo: refPasswordTwo,
   }; // Control object to call the respective refferences
-
-  const userContext = useContext(userCtx); // Importing the user context
   const router = useRouter(); // Creating an instance of router
 
   // Function to handle chagens on the inputs
@@ -167,6 +165,15 @@ const SignIn = () => {
     return controlKeys;
   };
 
+  // Function to clear the fields
+  const clearUser = () => {
+    setUserInput({
+      name: '',
+      passwordOne: '',
+      passwordTwo: '',
+    });
+  };
+
   // Function to control the sign in registration
   const handleSignIn: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault(); // Prevanting the default behavior
@@ -184,7 +191,17 @@ const SignIn = () => {
 
         if (result.data.created) {
           // If the user was created we will send the user back to the home page
-          router.push('/');
+          setConfirmationShow(true); // Show to the user it was created
+          clearUser();
+          setTimeout(() => {
+            router.push('/');
+          }, 3000);
+        } else {
+          setInputError({
+            show: true,
+            message:
+              'An error occured while creating your user, please try again',
+          });
         }
       } catch (err: any) {
         console.log(err.message);
@@ -235,6 +252,11 @@ const SignIn = () => {
           Create a new account
         </button>
       </form>
+      {confirmationShow && (
+        <div className="absolute right-14 top-10">
+          <ConfirmationBox text="User created, please log in!"></ConfirmationBox>
+        </div>
+      )}
       {inputError.show && (
         <div className="absolute right-14 top-10">
           <ErrorBox text={inputError.message}></ErrorBox>
