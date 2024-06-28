@@ -103,7 +103,7 @@ const Card = ({
 
   return (
     <div
-      className="flex min-w-[300px] cursor-pointer flex-col gap-1 rounded-3xl px-5 py-10 text-black"
+      className="animate-fade-up relative flex min-w-[300px] cursor-pointer flex-col gap-1 rounded-3xl px-5 py-10 text-black"
       onClick={handleCardClick}
     >
       <img
@@ -151,7 +151,7 @@ const Card = ({
         </button>
         {isAddedToCart && (
           <div
-            className={`fixed ${isShowingCart ? 'right-[280px]' : 'right-5'} top-[120px] z-20 flex h-10 w-[162px] items-center justify-center rounded-2xl bg-black px-4 py-2 text-white`}
+            className={`animate-jump-in absolute top-[20px] z-20 flex h-10 w-[162px] items-center justify-center rounded-2xl bg-black px-4 py-2 text-white`}
           >
             Added to cart
           </div>

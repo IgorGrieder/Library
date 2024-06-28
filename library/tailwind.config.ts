@@ -10,6 +10,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         Barlow: ['Barlow', 'sans-serif'],
+        Decorativa: ['Playwrite ES Deco, cursive', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -21,6 +22,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-animated')],
 };
 export default config;

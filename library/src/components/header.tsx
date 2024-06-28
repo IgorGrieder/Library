@@ -1,3 +1,4 @@
+'use client';
 import { userCtx } from '@/context/userContext';
 import { User } from '@/types/types';
 import { useRouter } from 'next/navigation';
@@ -21,6 +22,7 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
   const [showSignOut, setShowSignOut] = useState(false); // State variable to control the sign out box
   const [showBoxLogIn, setShowBoxLogIn] = useState(false); // State variable to control if the user box is going to be shown
   const [isCartIconShow, setIsCartIconShow] = useState(false); // State to manage cart icon visibility
+  const [isHomeIconShow, setIsHomeIconShow] = useState(false); // State to manage home icon visibility
   const router = useRouter(); // Instance of router to change the url
 
   useEffect(() => {
@@ -36,6 +38,7 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
 
       // Determine if cart icon should be shown
       setIsCartIconShow(checkCurrentEnviroment(window.location.href));
+      setIsHomeIconShow(window.location.href === 'http://localhost:3000/');
 
       // Showing the box after the process is done
       setShowBoxLogIn(true);
@@ -86,23 +89,29 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
 
   return (
     <div className="fixed left-0 right-0 top-0 z-10 flex items-center justify-center bg-green-700 px-10 py-8 text-white">
-      <button className="absolute left-0 ml-10" onClick={handleBackMenu}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-          />
-        </svg>
-      </button>
-      <h1 className="font-Barlow text-center text-3xl">Grieder's Library</h1>
+      {!isHomeIconShow && (
+        <button className="absolute left-0 ml-10" onClick={handleBackMenu}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+            />
+          </svg>
+        </button>
+      )}
+      <h1
+        className={`font-Decorativa ${isHomeIconShow && 'animate-fade-right'} text-center text-5xl font-thin`}
+      >
+        Grieder's Library
+      </h1>
       {isCartIconShow && (
         <button className="absolute right-0 mr-5" onClick={handleCartClick}>
           <svg
@@ -119,6 +128,7 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
               d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
             />
           </svg>
+          <div className="absolute right-0 top-0 size-2 animate-ping rounded-full border border-white bg-transparent"></div>
         </button>
       )}
       {showBoxLogIn && (
