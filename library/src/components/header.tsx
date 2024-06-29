@@ -88,7 +88,7 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
   };
 
   return (
-    <div className="fixed left-0 right-0 top-0 z-10 flex items-center justify-center bg-green-700 px-10 py-8 text-white">
+    <div className="fixed left-0 right-0 top-0 z-10 flex h-[112px] items-center justify-center bg-green-700 px-10 py-8 text-white">
       {!isHomeIconShow && (
         <button className="absolute left-0 ml-10" onClick={handleBackMenu}>
           <svg

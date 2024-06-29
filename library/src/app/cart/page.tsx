@@ -78,7 +78,7 @@ const Page = () => {
       )}
       {isFinishedLocalStorage && (
         <div className="grid grid-cols-3 gap-2 sm:px-20 sm:py-10">
-          <div className="col-span-2 grid grid-cols-1 gap-4 px-2 py-4">
+          <div className="animate-fade-right col-span-2 grid grid-cols-1 gap-4 px-2 py-4">
             <div className="mx-auto mb-5 flex items-center gap-5">
               <h4 className="text-bold font-Barlow text-center text-3xl">
                 Checkout
@@ -249,6 +249,7 @@ const Page = () => {
             </div>
           </div>
           <div className="flex flex-col items-center px-2 py-4">
+            <img src="/processing.png" alt="" className="w-64" />
             <h1 className="mb-2 text-center text-2xl">Subtotal</h1>
             <h4 className="mb-4 text-center text-red-500">
               $
@@ -258,7 +259,7 @@ const Page = () => {
                   : '0.00'
                 : '0.00'}
             </h4>
-            <div className="relative">
+            <div className="animate-flip-down relative">
               <button
                 className={`rounded-lg border border-black bg-green-500 px-4 py-2 text-black ${!isDisabled && 'hover:text-white'}`}
                 onClick={handleFakeProcedure}

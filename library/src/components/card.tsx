@@ -140,7 +140,7 @@ const Card = ({
           ref={btnCartRef}
           onClick={handleAddToCart}
         >
-          Add to Cart
+          Add to Cart 🛒
         </button>
         <button
           className="rounded-lg border border-black bg-green-500 px-4 py-2 text-black hover:text-white"

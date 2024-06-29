@@ -17,9 +17,9 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white pt-[112px]">
       <Header handleCartClick={handleCartClick}></Header>
-      <div className="grid grid-cols-3 px-10">
+      <div className="animate-flip-up grid grid-cols-3 px-10">
         <img src="sapiens.png" alt="" className="col-span-2 mx-auto w-3/4" />
-        <h1 className="font-Libre my-auto text-left text-6xl font-thin text-black">
+        <h1 className="font-Libre my-auto text-center text-6xl font-thin text-black">
           The best place to find the best books!
         </h1>
       </div>
