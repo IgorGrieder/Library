@@ -17,12 +17,17 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white pt-[112px]">
       <Header handleCartClick={handleCartClick}></Header>
-      <img src="sapiens.png" alt="" />
+      <div className="grid grid-cols-3 px-10">
+        <img src="sapiens.png" alt="" className="col-span-2 mx-auto w-3/4" />
+        <h1 className="font-Libre my-auto text-left text-6xl font-thin text-black">
+          The best place to find the best books!
+        </h1>
+      </div>
       <div
         className={`${isShowingCart ? 'grid-cols-5' : 'grid-cols-1'} relative grid`}
       >
         <div
-          className={`grid grid-cols-3 gap-4 ${isShowingCart ? 'sm:mx-auto sm:pl-4' : 'sm:px-20'} sm:py-10 ${isShowingCart && 'col-span-4'}`}
+          className={`grid grid-cols-3 gap-4 ${isShowingCart ? 'sm:mx-auto sm:pl-4' : 'sm:px-20'} ${isShowingCart && 'col-span-4'}`}
         >
           {bookContext?.listBooks.map((item) => {
             return (

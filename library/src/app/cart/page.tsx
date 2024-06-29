@@ -79,15 +79,21 @@ const Page = () => {
       {isFinishedLocalStorage && (
         <div className="grid grid-cols-3 gap-2 sm:px-20 sm:py-10">
           <div className="col-span-2 grid grid-cols-1 gap-4 px-2 py-4">
-            <h4 className="text-bold font-Barlow text-center text-3xl">
-              Checkout
-            </h4>
+            <div className="mx-auto mb-5 flex items-center gap-5">
+              <h4 className="text-bold font-Barlow text-center text-3xl">
+                Checkout
+              </h4>
+              <img src="/order.png" alt="" className="w-36" />
+            </div>
             {userContext?.user.user ? (
               <>
                 <div className="mb-2 border-b border-green-500 px-3 py-5">
-                  <h4 className="text-bold font-Barlow mb-2 text-2xl">
-                    Address
-                  </h4>
+                  <div className="mx-auto mb-5 flex items-center gap-5">
+                    <h4 className="text-bold font-Barlow mb-2 text-2xl">
+                      Address
+                    </h4>
+                    <img src="/checkout.png" alt="" className="w-20" />
+                  </div>
                   {location === null ? (
                     <>
                       <ErrorBox text="Please select a address"></ErrorBox>
@@ -143,9 +149,12 @@ const Page = () => {
                   </button>
                 </div>
                 <div className="mb-2 border-b border-green-500 px-3 py-5">
-                  <h4 className="text-bold font-Barlow mb-2 text-2xl">
-                    Payment method
-                  </h4>
+                  <div className="mb-5 flex items-center gap-5">
+                    <h4 className="text-bold font-Barlow mb-2 text-2xl">
+                      Payment method
+                    </h4>
+                    <img src="/creditCard.png" alt="" className="w-20" />
+                  </div>
                   {paymentCard === null ? (
                     <>
                       <ErrorBox text="Please select a card"></ErrorBox>

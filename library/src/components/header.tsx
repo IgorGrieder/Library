@@ -107,9 +107,7 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
           </svg>
         </button>
       )}
-      <h1
-        className={`font-Decorativa ${isHomeIconShow && 'animate-fade-right'} text-center text-5xl font-thin`}
-      >
+      <h1 className={`font-PLayfair text-center text-5xl font-thin`}>
         Grieder's Library
       </h1>
       {isCartIconShow && (

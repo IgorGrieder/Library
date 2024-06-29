@@ -11,6 +11,8 @@ const config: Config = {
       fontFamily: {
         Barlow: ['Barlow', 'sans-serif'],
         Decorativa: ['Playwrite ES Deco, cursive', 'sans-serif'],
+        Libre: ['Libre Franklin', 'sans-serif'],
+        PLayfair: ['Playfair Display', 'serif'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
