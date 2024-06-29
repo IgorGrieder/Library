@@ -232,7 +232,7 @@ const Page = () => {
                         >
                           <CartSideItems
                             isCheckout={true}
-                            image={book?.image}
+                            image="book.png"
                             name={book.name}
                             price={book.price}
                             quantity={userContext.user.cartItems[book.name]}

@@ -48,7 +48,7 @@ const Page = () => {
     <div className="min-h-screen bg-white pt-[100px] text-black">
       <Header handleCartClick={handleCartClick}></Header>
       {showError && <NameQueryError></NameQueryError>}
-      <div className="cols-1 relative grid">
+      <div className="cols-1 relative grid pt-5">
         <div className="flex justify-center">
           {book && (
             <BookPage

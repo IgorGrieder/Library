@@ -187,94 +187,101 @@ const AddressModal = ({ hideModal }: Props) => {
 
   return (
     <div className="fixed inset-0 z-20 flex items-center justify-center bg-black/60">
-      <div className="relative w-[500px] rounded-xl border border-black bg-white p-5">
-        <button className="absolute right-5" onClick={handleCloseModal}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18 18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-        <h1 className="font-Barlow text-center text-xl">Add an address</h1>
-        <p className="mt-2">
-          Please complete the following steps to add a new address!
-        </p>
-        <form
-          className="mx-auto mt-5 flex w-3/4 flex-col gap-2"
-          onSubmit={handleForm}
-        >
-          <input
-            className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
-            name="street"
-            type="text"
-            placeholder="Enter your street address"
-            required
-            onChange={handleInputs}
-            value={userInput.street ?? ''}
-            ref={refStreet}
-          />
-          <input
-            className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
-            name="number"
-            type="text"
-            placeholder="Enter your house/building number"
-            required
-            onChange={handleInputs}
-            value={userInput.number ?? ''}
-            ref={refNumber}
-          />
-          <input
-            className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
-            name="neighborhood"
-            type="text"
-            placeholder="Enter your neighborhood or district"
-            required
-            onChange={handleInputs}
-            value={userInput.neighborhood ?? ''}
-            ref={refNeighborhood}
-          />
-          <input
-            className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
-            name="complement"
-            type="text"
-            placeholder="Enter any additional address details"
-            onChange={handleInputs}
-            value={userInput.complement ?? ''}
-            ref={refComplement}
-          />
-          <input
-            className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
-            name="country"
-            type="text"
-            placeholder="Enter your country"
-            required
-            onChange={handleInputs}
-            value={userInput.country ?? ''}
-            ref={refCountry}
-          />
-          {requestError && (
-            <div className="flex justify-center">
-              <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>
-            </div>
-          )}
-          {inputError && (
-            <div className="flex justify-center">
-              <ErrorBox text={`Please fill the fields correctly`}></ErrorBox>
-            </div>
-          )}
-          <button className="mx-auto w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black">
-            Save
+      <div className="relative pl-[40px] pt-[34px]">
+        <img
+          src="/modal2.png"
+          alt=""
+          className="absolute left-0 top-0 z-10 w-20 rounded-xl"
+        />
+        <div className="relative w-[500px] rounded-xl border border-black bg-white p-5">
+          <button className="absolute right-5" onClick={handleCloseModal}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
           </button>
-        </form>
+          <h1 className="font-Barlow text-center text-xl">Add an address</h1>
+          <p className="mt-2">
+            Please complete the following steps to add a new address!
+          </p>
+          <form
+            className="mx-auto mt-5 flex w-3/4 flex-col gap-2"
+            onSubmit={handleForm}
+          >
+            <input
+              className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
+              name="street"
+              type="text"
+              placeholder="Enter your street address"
+              required
+              onChange={handleInputs}
+              value={userInput.street ?? ''}
+              ref={refStreet}
+            />
+            <input
+              className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
+              name="number"
+              type="text"
+              placeholder="Enter your house/building number"
+              required
+              onChange={handleInputs}
+              value={userInput.number ?? ''}
+              ref={refNumber}
+            />
+            <input
+              className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
+              name="neighborhood"
+              type="text"
+              placeholder="Enter your neighborhood or district"
+              required
+              onChange={handleInputs}
+              value={userInput.neighborhood ?? ''}
+              ref={refNeighborhood}
+            />
+            <input
+              className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
+              name="complement"
+              type="text"
+              placeholder="Enter any additional address details"
+              onChange={handleInputs}
+              value={userInput.complement ?? ''}
+              ref={refComplement}
+            />
+            <input
+              className="mb-5 w-full rounded-lg border border-black px-4 py-2 outline-none"
+              name="country"
+              type="text"
+              placeholder="Enter your country"
+              required
+              onChange={handleInputs}
+              value={userInput.country ?? ''}
+              ref={refCountry}
+            />
+            {requestError && (
+              <div className="flex justify-center">
+                <ErrorBox text="We encountered an error processing your request, please try again"></ErrorBox>
+              </div>
+            )}
+            {inputError && (
+              <div className="flex justify-center">
+                <ErrorBox text={`Please fill the fields correctly`}></ErrorBox>
+              </div>
+            )}
+            <button className="mx-auto w-[100px] rounded-2xl border border-white bg-black px-4 py-2 text-center text-white hover:border-black hover:bg-transparent hover:text-black">
+              Save
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

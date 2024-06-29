@@ -1108,6 +1108,9 @@ video {
 .p-5 {
   padding: 1.25rem;
 }
+.p-10 {
+  padding: 2.5rem;
+}
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -1178,6 +1181,15 @@ video {
 }
 .pt-\[112px\] {
   padding-top: 112px;
+}
+.pt-5 {
+  padding-top: 1.25rem;
+}
+.pl-\[40px\] {
+  padding-left: 40px;
+}
+.pt-\[34px\] {
+  padding-top: 34px;
 }
 .text-left {
   text-align: left;

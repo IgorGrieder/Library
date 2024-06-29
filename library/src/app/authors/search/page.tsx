@@ -51,7 +51,7 @@ const Page = () => {
         key={crypto.randomUUID()}
       ></Header>
       {showError && <NameQueryError></NameQueryError>}
-      <div className="relative grid grid-cols-1">
+      <div className="relative grid grid-cols-1 pt-5">
         <div className="flex justify-center">
           {Author && (
             <AuthorPage
