@@ -150,11 +150,10 @@ const Card = ({
           Buy now
         </button>
         {isAddedToCart && (
-          <div
-            className={`animate-jump-in absolute top-[20px] z-20 flex h-10 w-[162px] items-center justify-center rounded-2xl bg-black px-4 py-2 text-white`}
-          >
-            Added to cart
-          </div>
+          <img
+            src="/add.png"
+            className={`animate-jump-in absolute top-[20px] z-20 w-40`}
+          ></img>
         )}
       </div>
     </div>

@@ -97,7 +97,9 @@ const BookPage = ({
   return (
     <div className="flex flex-col items-center gap-2 py-5">
       <h1 className="font-Barlow mx-auto text-3xl">{name}</h1>
-      <div className="m-5 h-80 w-96 bg-gray-500"></div>
+      <div className="m-5 w-60">
+        <img src={`/${image}`} alt="" />
+      </div>
       <h4 className="font-bold">
         by:{' '}
         <a
@@ -146,11 +148,11 @@ const BookPage = ({
           Buy now
         </button>
         {isAddedToCart && (
-          <div
-            className={`fixed ${isShowingCart ? 'right-[280px]' : 'right-5'} top-[120px] z-20 flex h-10 w-[162px] items-center justify-center rounded-2xl bg-black px-4 py-2 text-white`}
-          >
-            Added to cart
-          </div>
+          <img
+            src="/add.png"
+            alt=""
+            className={`fixed ${isShowingCart ? 'right-[280px]' : 'right-5'} animate-jump-in top-[120px] z-20 w-40`}
+          />
         )}
       </div>
     </div>

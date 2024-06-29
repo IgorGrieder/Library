@@ -84,7 +84,7 @@ const CartSide = ({ handleCartClick }: Props) => {
                   key={crypto.randomUUID()}
                   quantity={userContext.user.cartItems[book.name]}
                   name={book.name}
-                  image={book.image}
+                  image="book2.png"
                   price={book.price}
                 ></CartSideItems>
               );

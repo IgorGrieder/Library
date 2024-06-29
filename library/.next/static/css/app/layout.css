@@ -593,6 +593,9 @@ video {
 .right-14 {
   right: 3.5rem;
 }
+.right-2 {
+  right: 0.5rem;
+}
 .right-5 {
   right: 1.25rem;
 }
@@ -604,6 +607,9 @@ video {
 }
 .top-10 {
   top: 2.5rem;
+}
+.top-2 {
+  top: 0.5rem;
 }
 .top-5 {
   top: 1.25rem;
@@ -667,9 +673,6 @@ video {
 .ml-2 {
   margin-left: 0.5rem;
 }
-.ml-5 {
-  margin-left: 1.25rem;
-}
 .ml-auto {
   margin-left: auto;
 }
@@ -720,8 +723,8 @@ video {
 .h-80 {
   height: 20rem;
 }
-.h-\[200px\] {
-  height: 200px;
+.h-\[112px\] {
+  height: 112px;
 }
 .h-\[42px\] {
   height: 42px;
@@ -732,14 +735,14 @@ video {
 .h-screen {
   height: 100vh;
 }
-.h-\[112px\] {
-  height: 112px;
-}
 .min-h-screen {
   min-height: 100vh;
 }
 .w-1\/4 {
   width: 25%;
+}
+.w-10 {
+  width: 2.5rem;
 }
 .w-2\/4 {
   width: 50%;
@@ -752,6 +755,12 @@ video {
 }
 .w-36 {
   width: 9rem;
+}
+.w-6 {
+  width: 1.5rem;
+}
+.w-60 {
+  width: 15rem;
 }
 .w-64 {
   width: 16rem;
@@ -783,8 +792,8 @@ video {
 .w-full {
   width: 100%;
 }
-.w-60 {
-  width: 15rem;
+.w-40 {
+  width: 10rem;
 }
 .min-w-\[300px\] {
   min-width: 300px;
@@ -829,6 +838,21 @@ video {
 .animate-fade-left {
   animation: fade-left var(--tw-animate-duration, 1s) var(--tw-animate-easing, ease) var(--tw-animate-delay, 0s) var(--tw-animate-iteration, 1) var(--tw-animate-fill, both);
 }
+@keyframes fade-right {
+
+  0% {
+    opacity: 0;
+    transform: translateX(-2rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-fade-right {
+  animation: fade-right var(--tw-animate-duration, 1s) var(--tw-animate-easing, ease) var(--tw-animate-delay, 0s) var(--tw-animate-iteration, 1) var(--tw-animate-fill, both);
+}
 @keyframes fade-up {
 
   0% {
@@ -843,6 +867,36 @@ video {
 }
 .animate-fade-up {
   animation: fade-up var(--tw-animate-duration, 1s) var(--tw-animate-easing, ease) var(--tw-animate-delay, 0s) var(--tw-animate-iteration, 1) var(--tw-animate-fill, both);
+}
+@keyframes flip-down {
+
+  0% {
+    transform: rotateX(-90deg);
+    transform-origin: top;
+  }
+
+  100% {
+    transform: rotateX(0);
+    transform-origin: top;
+  }
+}
+.animate-flip-down {
+  animation: flip-down var(--tw-animate-duration, 1s) var(--tw-animate-easing, ease) var(--tw-animate-delay, 0s) var(--tw-animate-iteration, 1) var(--tw-animate-fill, both);
+}
+@keyframes flip-up {
+
+  0% {
+    transform: rotateX(90deg);
+    transform-origin: bottom;
+  }
+
+  100% {
+    transform: rotateX(0);
+    transform-origin: bottom;
+  }
+}
+.animate-flip-up {
+  animation: flip-up var(--tw-animate-duration, 1s) var(--tw-animate-easing, ease) var(--tw-animate-delay, 0s) var(--tw-animate-iteration, 1) var(--tw-animate-fill, both);
 }
 @keyframes jump-in {
 
@@ -870,51 +924,6 @@ video {
 }
 .animate-ping {
   animation: ping var(--tw-animate-duration, 1s) var(--tw-animate-easing, cubic-bezier(0, 0, 0.2, 1)) var(--tw-animate-delay, 0s) var(--tw-animate-iteration, infinite) var(--tw-animate-fill, none);
-}
-@keyframes flip-up {
-
-  0% {
-    transform: rotateX(90deg);
-    transform-origin: bottom;
-  }
-
-  100% {
-    transform: rotateX(0);
-    transform-origin: bottom;
-  }
-}
-.animate-flip-up {
-  animation: flip-up var(--tw-animate-duration, 1s) var(--tw-animate-easing, ease) var(--tw-animate-delay, 0s) var(--tw-animate-iteration, 1) var(--tw-animate-fill, both);
-}
-@keyframes fade-right {
-
-  0% {
-    opacity: 0;
-    transform: translateX(-2rem);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-.animate-fade-right {
-  animation: fade-right var(--tw-animate-duration, 1s) var(--tw-animate-easing, ease) var(--tw-animate-delay, 0s) var(--tw-animate-iteration, 1) var(--tw-animate-fill, both);
-}
-@keyframes flip-down {
-
-  0% {
-    transform: rotateX(-90deg);
-    transform-origin: top;
-  }
-
-  100% {
-    transform: rotateX(0);
-    transform-origin: top;
-  }
-}
-.animate-flip-down {
-  animation: flip-down var(--tw-animate-duration, 1s) var(--tw-animate-easing, ease) var(--tw-animate-delay, 0s) var(--tw-animate-iteration, 1) var(--tw-animate-fill, both);
 }
 .cursor-pointer {
   cursor: pointer;
@@ -1135,10 +1144,6 @@ video {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
 }
-.py-10 {
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
-}
 .py-16 {
   padding-top: 4rem;
   padding-bottom: 4rem;
@@ -1269,10 +1274,6 @@ video {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-.animate-add {
-  --tw-animate-composition: add;
-  animation-composition: var(--tw-animate-composition);
-}
 .animate-ease-out {
   --tw-animate-easing: cubic-bezier(0, 0, 0.2, 1);
   animation-timing-function: var(--tw-animate-easing);
@@ -1297,12 +1298,7 @@ root {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: white;
 }
 
 .hover\:border-black:hover {

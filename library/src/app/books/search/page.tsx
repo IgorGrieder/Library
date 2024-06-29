@@ -57,7 +57,7 @@ const Page = () => {
               author={book?.author}
               name={book?.name}
               price={book?.price}
-              image={book?.image[0]}
+              image="book.png"
               key={crypto.randomUUID()}
               isShowingCart={isShowingCart}
               handleClickCart={handleCartClick}

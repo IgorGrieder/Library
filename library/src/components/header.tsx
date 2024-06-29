@@ -107,9 +107,12 @@ const Header = ({ setIsFinishedLocalStorage, handleCartClick }: Props) => {
           </svg>
         </button>
       )}
-      <h1 className={`font-PLayfair text-center text-5xl font-thin`}>
-        Grieder's Library
-      </h1>
+      <div className="flex gap-2">
+        <h1 className={`font-PLayfair text-center text-5xl font-thin`}>
+          Grieder's Library
+        </h1>
+        <img src="/cactus.png" alt="" className="w-10" />
+      </div>
       {isCartIconShow && (
         <button className="absolute right-0 mr-5" onClick={handleCartClick}>
           <svg

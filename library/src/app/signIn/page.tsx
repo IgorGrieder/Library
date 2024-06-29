@@ -216,6 +216,11 @@ const SignIn = () => {
   return (
     <div className="flex h-screen items-center justify-center overflow-hidden bg-white p-40 text-black">
       <form className="relative flex w-full flex-col items-center rounded-3xl border border-black bg-green-300 px-8 py-16 sm:min-h-[500px] sm:w-auto sm:min-w-[400px]">
+        <img
+          src="/signin.png"
+          alt="sign in icon"
+          className="absolute right-2 top-2 w-20"
+        />
         <button className="absolute left-5 top-5" onClick={handleBackMenu}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
