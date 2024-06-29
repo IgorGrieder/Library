@@ -48,9 +48,6 @@ const Page = () => {
     <div className="min-h-screen bg-white pt-[100px] text-black">
       <Header handleCartClick={handleCartClick}></Header>
       {showError && <NameQueryError></NameQueryError>}
-      <div className="absolute ml-5 mt-5">
-        <img src="/bookReader.png" alt="" className="w-[200px]" />
-      </div>
       <div className="cols-1 relative grid">
         <div className="flex justify-center">
           {book && (

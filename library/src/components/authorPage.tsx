@@ -16,7 +16,9 @@ const AuthorPage = ({ name, age, image, nationality, books }: Author) => {
         {name}
         {ageDisplay}
       </h1>
-      <div className="m-5 h-80 w-96 bg-gray-500"></div>
+      <div className="m-5 w-60">
+        <img src={`/${image[0]}`} alt="" />
+      </div>
       <h4 className="w-full text-left font-bold">
         Nationality: <span className="font-light">{nationality}</span>
       </h4>

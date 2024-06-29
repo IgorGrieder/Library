@@ -103,13 +103,13 @@ const Card = ({
 
   return (
     <div
-      className="animate-fade-up relative flex min-w-[300px] cursor-pointer flex-col gap-1 rounded-3xl px-5 py-10 text-black"
+      className="animate-fade-up relative mb-5 flex min-w-[300px] cursor-pointer flex-col gap-1 rounded-3xl px-5 text-black"
       onClick={handleCardClick}
     >
       <img
-        src={`${image}`}
+        src="/book.png"
         alt="Book image"
-        className="mx-auto mb-4 h-[200px] w-2/4 bg-gray-400"
+        className="mx-auto mb-4 w-2/4 bg-gray-400"
       />
       <h1 className="font-Barlow text-bold text-2xl">
         {name}
