@@ -29,10 +29,10 @@ const CartSide = ({ handleCartClick }: Props) => {
 
   return (
     <div
-      className="animate-fade fixed right-0 flex w-[250px] flex-col bg-green-400 px-4 pt-2"
+      className="animate-fade fixed right-0 top-[112px] flex w-[250px] flex-col bg-green-400 px-4 pt-2"
       style={{ height: 'calc(100% - 100px)' }}
     >
-      <button className="fixed right-5 top-5" onClick={handleCartClick}>
+      <button className="absolute" onClick={handleCartClick}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

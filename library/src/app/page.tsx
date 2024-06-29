@@ -15,9 +15,12 @@ const Home = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pt-[100px]">
+    <div className="min-h-screen bg-white pt-[112px]">
       <Header handleCartClick={handleCartClick}></Header>
-      <div className={`${isShowingCart ? 'grid-cols-5' : 'grid-cols-1'} grid`}>
+      <img src="sapiens.png" alt="" />
+      <div
+        className={`${isShowingCart ? 'grid-cols-5' : 'grid-cols-1'} relative grid`}
+      >
         <div
           className={`grid grid-cols-3 gap-4 ${isShowingCart ? 'sm:mx-auto sm:pl-4' : 'sm:px-20'} sm:py-10 ${isShowingCart && 'col-span-4'}`}
         >
