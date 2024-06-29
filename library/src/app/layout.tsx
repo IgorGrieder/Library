@@ -4,6 +4,7 @@ import './globals.css';
 import UserContext from '@/context/userContext';
 import BookContext from '@/context/booksContext';
 import AuthorContext from '@/context/authorsContext';
+import Header from '@/components/header';
 
 const inter = Inter({ subsets: ['latin'] });
 

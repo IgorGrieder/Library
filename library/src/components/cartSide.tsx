@@ -60,7 +60,7 @@ const CartSide = ({ handleCartClick }: Props) => {
               : '0.00'}
           </h4>
           <button
-            className="w-full rounded-2xl border border-black px-6 py-1 text-sm"
+            className="w-full rounded-2xl border border-black px-6 py-1 text-sm hover:bg-white"
             onClick={goToCart}
           >
             Go to cart
